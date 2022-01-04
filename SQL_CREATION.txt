@@ -1,0 +1,10 @@
+CREATE TABLE Category (id INT NOT NULL IDENTITY,
+                        name NVARCHAR(1000));
+CREATE TABLE CatMovie (id INT NOT NULL IDENTITY,
+                        CategoryID INT NOT NULL,
+                        MovieID INT NOT NULL);
+CREATE TABLE Movie (id INT NOT NULL IDENTITY,
+                    name NVARCHAR(1000),
+                    rating INT,
+                    fileLink NVARCHAR(1000),
+                    lastView datetime2(3) );
