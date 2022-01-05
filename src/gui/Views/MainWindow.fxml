@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.media.MediaView?>
 
-<AnchorPane prefHeight="530.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
+<AnchorPane prefHeight="600.0" prefWidth="939.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
    <children>
-      <MediaView fx:id="vidScreen" fitHeight="200.0" fitWidth="350.0" layoutX="39.0" layoutY="34.0" />
-      <Button fx:id="btnStart" layoutX="188.0" layoutY="272.0" mnemonicParsing="false" onAction="#playPauseVideo" text="Button" />
-      <Slider fx:id="vidSlider" layoutX="39.0" layoutY="244.0" onMousePressed="#moveProgressSlider" onMouseReleased="#setProgress" prefHeight="14.0" prefWidth="350.0" />
-      <TableView fx:id="tableMovie" layoutX="442.0" layoutY="34.0" prefHeight="200.0" prefWidth="299.0">
+      <MediaView fx:id="vidScreen" fitHeight="200.0" fitWidth="350.0" layoutX="551.0" layoutY="38.0" />
+      <Button fx:id="btnStart" layoutX="762.0" layoutY="506.0" mnemonicParsing="false" onAction="#playPauseVideo" text="Button" />
+      <Slider fx:id="vidSlider" layoutX="734.0" layoutY="217.0" onMousePressed="#moveProgressSlider" onMouseReleased="#setProgress" prefHeight="84.0" prefWidth="161.0" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="734.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="217.0" />
+      <TableView fx:id="tableMovie" layoutX="34.0" layoutY="30.0" prefHeight="533.0" prefWidth="318.0" AnchorPane.bottomAnchor="37.0" AnchorPane.rightAnchor="576.0" AnchorPane.topAnchor="30.0">
         <columns>
-          <TableColumn fx:id="title" prefWidth="60.79998779296875" text="Title" />
+          <TableColumn fx:id="title" maxWidth="1.7976931348623157E308" prefWidth="60.79998779296875" text="Title" />
           <TableColumn fx:id="rating" prefWidth="72.79998779296875" text="Rating" />
             <TableColumn fx:id="imdbRating" prefWidth="64.0" text="Imdb" />
             <TableColumn fx:id="lastViewed" text="Last Access" />
         </columns>
       </TableView>
-      <Button layoutX="457.0" layoutY="271.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="26.0" prefWidth="77.0" text="Add Movie" />
-      <Button layoutX="640.0" layoutY="271.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="26.0" prefWidth="89.0" text="Delete Movie" />
-      <Button layoutX="549.0" layoutY="271.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="26.0" prefWidth="78.0" text="Edit Movie" />
+      <Button layoutX="648.0" layoutY="492.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="26.0" prefWidth="77.0" text="Add Movie" />
+      <Button layoutX="705.0" layoutY="363.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="26.0" prefWidth="89.0" text="Delete Movie" />
+      <Button layoutX="710.0" layoutY="424.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="26.0" prefWidth="78.0" text="Edit Movie" />
    </children>
 </AnchorPane>

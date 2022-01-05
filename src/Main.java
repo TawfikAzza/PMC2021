@@ -9,6 +9,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 
 public class Main extends Application {
@@ -16,11 +17,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Views/MainWindow.fxml"));
         Parent root = loader.load();
-
-        Scene scene = new Scene(root);
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        float width = gd.getDisplayMode().getWidth();
+        float height = gd.getDisplayMode().getHeight();
+        width = width/3;
+        height = height/3;
+        Scene scene = new Scene(root,(width*2),(height*2)); //Responsive design
         primaryStage.setScene(scene);
-
+        primaryStage.setResizable(true);
         primaryStage.show();
+
         /*primaryStage.setTitle("Media");
         Group root = new Group();
         Media media = new Media(new File("C:/Users/EASV/Desktop/file_example_MP4_480_1_5MG.mp4").toURI().toString());
