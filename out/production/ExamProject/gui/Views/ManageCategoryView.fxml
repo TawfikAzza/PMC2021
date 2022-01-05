@@ -5,13 +5,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="108.0" prefWidth="234.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.ManageCategoryController">
    <children>
       <TextField fx:id="newCatName" layoutX="59.0" layoutY="28.0" />
-      <Button layoutX="59.0" layoutY="68.0" mnemonicParsing="false" onAction="#createCategory" text="Create" />
+      <Button layoutX="59.0" layoutY="68.0" mnemonicParsing="false" onAction="#createCategory" text="Confirm" />
       <Button fx:id="closeBtn" layoutX="151.0" layoutY="68.0" mnemonicParsing="false" onAction="#closeWindow" text="Cancel" />
       <Label layoutX="14.0" layoutY="32.0" text="Name" />
-      <Label layoutX="59.0" layoutY="6.0" text="New Category:" />
+      <Label layoutX="59.0" layoutY="6.0" text="Add/Edit Category:" />
    </children>
 </AnchorPane>
