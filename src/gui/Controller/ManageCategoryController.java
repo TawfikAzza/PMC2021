@@ -17,10 +17,10 @@ import java.util.ResourceBundle;
 
 public class ManageCategoryController implements Initializable {
     @FXML
-    private Button closeBtn;
+    private Button closeBtn,createBtn;
     @FXML
     private TextField newCatName;
-
+    private CategoryMovie currentCategory;
     private String operationType;
     private CategoryModel categoryModel;
     ManageMovieController manageMovieController;
@@ -29,6 +29,7 @@ public class ManageCategoryController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             categoryModel = new CategoryModel();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,6 +46,14 @@ public class ManageCategoryController implements Initializable {
             stage.close();
         }
         if(operationType.equals("modification")) {
+            if(newCatName.getText()!=""){
+                currentCategory.setName(newCatName.getText());
+                categoryModel.updateCategory(currentCategory);
+                manageMovieController.setupListCategory();
+            }
+
+            Stage stage = (Stage) closeBtn.getScene().getWindow();
+            stage.close();
 
         }
     }
@@ -62,5 +71,9 @@ public class ManageCategoryController implements Initializable {
 
     }
 
+    public void setFields(CategoryMovie selectedItem) {
+        currentCategory=selectedItem;
+        newCatName.setText(selectedItem.getName());
 
+    }
 }

@@ -29,4 +29,8 @@ public class MovieModel {
     public void updateMovie(Movie movie) throws SQLException {
         pmcFacade.updateMovie(movie);
     }
+
+    public void deleteMovie(Movie selectedItem) throws SQLException {
+        pmcFacade.deleteMovie(selectedItem);
+    }
 }

@@ -37,6 +37,11 @@ public class DALController implements IDALFacade {
     }
 
     @Override
+    public void deleteMovie(Movie movie) throws SQLException {
+        iMovieDataAccess.deleteMovie(movie);
+    }
+
+    @Override
     public List<CategoryMovie> getAllCategories() throws SQLException {
         return iCategoryDataAccess.getAllCategories();
     }
@@ -69,5 +74,10 @@ public class DALController implements IDALFacade {
     @Override
     public void updateCategory(CategoryMovie categoryMovie) throws SQLException {
         iCategoryDataAccess.updateCategory(categoryMovie);
+    }
+
+    @Override
+    public void deleteCategory(CategoryMovie category) throws SQLException {
+        iCategoryDataAccess.removeCategory(category);
     }
 }

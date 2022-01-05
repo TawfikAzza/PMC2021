@@ -52,4 +52,19 @@ public class PMCManager implements PMCFacade{
     public CategoryMovie addNewCategory(CategoryMovie categoryMovie) throws SQLException {
         return dalController.addCategory(categoryMovie);
     }
+
+    @Override
+    public void deleteMovie(Movie selectedItem) throws SQLException {
+        dalController.deleteMovie(selectedItem);
+    }
+
+    @Override
+    public void updateCategory(CategoryMovie category) throws SQLException {
+        dalController.updateCategory(category);
+    }
+
+    @Override
+    public void deleteCategory(CategoryMovie category) throws SQLException {
+        dalController.deleteCategory(category);
+    }
 }

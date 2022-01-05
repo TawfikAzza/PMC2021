@@ -23,8 +23,8 @@
       <Label layoutX="13.0" layoutY="233.0" text="File Path:" />
       <Button fx:id="confirmBtn" layoutX="122.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveMovie" text="Confirm" />
       <Button fx:id="cancelBtn" layoutX="211.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelEntry" text="Cancel" />
-      <Button layoutX="621.0" layoutY="290.0" mnemonicParsing="false" onAction="#createCategory" text="Add" />
-      <Button layoutX="667.0" layoutY="290.0" mnemonicParsing="false" text="Edit" />
-      <Button layoutX="712.0" layoutY="290.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="655.0" layoutY="255.0" mnemonicParsing="false" onAction="#createCategory" prefHeight="26.0" prefWidth="95.0" text="Add Category" />
+      <Button layoutX="655.0" layoutY="288.0" mnemonicParsing="false" onAction="#editCategory" prefHeight="26.0" prefWidth="95.0" text="Edit Category" />
+      <Button layoutX="655.0" layoutY="322.0" mnemonicParsing="false" onAction="#deleteCategory" prefHeight="26.0" prefWidth="95.0" text="Delete Category" />
    </children>
 </AnchorPane>

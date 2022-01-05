@@ -15,6 +15,7 @@ public interface IDALFacade {
     public List<Movie> getAllMovies() throws SQLException;
     public Movie createMovie(Movie movie) throws SQLException;
     public void updateMovie(Movie movie) throws SQLException;
+    public void deleteMovie(Movie movie) throws SQLException;
 
     public List<CategoryMovie> getAllCategories() throws SQLException;
     public CategoryMovie getCategory(int idCategory) throws SQLException;
@@ -23,6 +24,5 @@ public interface IDALFacade {
     public CategoryMovie addCategory(CategoryMovie categoryMovie) throws SQLException;
     public void removeCategory(CategoryMovie categoryMovie) throws SQLException;
     public void updateCategory(CategoryMovie categoryMovie) throws SQLException;
-
-
+    public void deleteCategory(CategoryMovie category) throws SQLException;
 }

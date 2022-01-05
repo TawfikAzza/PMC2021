@@ -35,4 +35,12 @@ public class CategoryModel {
     public CategoryMovie addNewCategory(CategoryMovie categoryMovie) throws SQLException {
         return pmcFacade.addNewCategory(categoryMovie);
     }
+
+    public void updateCategory(CategoryMovie category) throws SQLException {
+        pmcFacade.updateCategory(category);
+    }
+
+    public void deleteCategory(CategoryMovie category) throws SQLException {
+        pmcFacade.deleteCategory(category);
+    }
 }

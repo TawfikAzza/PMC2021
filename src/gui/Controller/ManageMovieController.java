@@ -175,4 +175,35 @@ public class ManageMovieController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    public void editCategory(ActionEvent actionEvent) {
+        if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("gui/Views/ManageCategoryView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                // displayError(e);
+            }
+            ManageCategoryController manageCategoryController = loader.getController();
+            manageCategoryController.setMainController(this);
+            manageCategoryController.setOperationType("modification");
+            manageCategoryController.setFields(listCategory.getSelectionModel().getSelectedItem());
+            // manageMovieController.setTheme(topPane);
+            Stage stage = new Stage();
+            stage.setTitle("New/Edit Category");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+    }
+
+    public void deleteCategory(ActionEvent actionEvent) throws SQLException {
+        if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
+            categoryModel.deleteCategory(listCategory.getSelectionModel().getSelectedItem());
+            listCategory.getItems().remove(listCategory.getSelectionModel().getSelectedIndex());
+        }
+    }
+
+
 }

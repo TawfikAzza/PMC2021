@@ -153,4 +153,11 @@ public class MainController implements Initializable {
             stage.show();
         }
     }
+
+    public void deleteMovie(ActionEvent actionEvent) throws SQLException {
+        if(tableMovie.getSelectionModel().getSelectedIndex()!=-1) {
+            movieModel.deleteMovie(tableMovie.getSelectionModel().getSelectedItem());
+            tableMovie.getItems().remove(tableMovie.getSelectionModel().getSelectedIndex());
+        }
+    }
 }

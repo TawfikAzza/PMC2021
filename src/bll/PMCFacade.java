@@ -19,4 +19,10 @@ public interface PMCFacade {
     void updateMovie(Movie movie) throws SQLException;
 
     CategoryMovie addNewCategory(CategoryMovie categoryMovie) throws SQLException;
+
+    void deleteMovie(Movie selectedItem) throws SQLException;
+
+    void updateCategory(CategoryMovie category) throws SQLException;
+
+    void deleteCategory(CategoryMovie category) throws SQLException;
 }

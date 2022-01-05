@@ -89,6 +89,19 @@ public class MovieDAO implements IMovieDataAccess {
 
         }
     }
+    public void deleteMovie(Movie movie) throws SQLException {
+        try(Connection con = cm.getConnection()) {
+            String sqlDeleteFromMovie = "DELETE FROM MOVIE WHERE ID=?";
+            PreparedStatement statementDeleteFromMovie = con.prepareStatement(sqlDeleteFromMovie);
+            statementDeleteFromMovie.setInt(1,movie.getId());
+            String sqlDeleteFromCatMovie = "DELETE FROM CATMOVIE WHERE MovieID=?";
+            PreparedStatement statementDeleteFromCatMovie = con.prepareStatement(sqlDeleteFromCatMovie);
+            statementDeleteFromCatMovie.setInt(1,movie.getId());
+            statementDeleteFromMovie.execute();
+            statementDeleteFromCatMovie.execute();
+
+        }
+    }
     private HashMap<Integer, CategoryMovie> getAllCategories() throws SQLException {
         List<CategoryMovie> allCats =categoryDAO.getAllCategories();
         HashMap<Integer,CategoryMovie> mapCategories= new HashMap<>();
