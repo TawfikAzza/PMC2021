@@ -20,8 +20,8 @@
             <TableColumn fx:id="lastViewed" text="Last Access" />
         </columns>
       </TableView>
-      <Button layoutX="520.0" layoutY="271.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="26.0" prefWidth="42.0" text="Add" />
-      <Button layoutX="646.0" layoutY="271.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="42.0" text="Del" />
-      <Button layoutX="583.0" layoutY="271.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="26.0" prefWidth="42.0" text="Mod" />
+      <Button layoutX="457.0" layoutY="271.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="26.0" prefWidth="77.0" text="Add Movie" />
+      <Button layoutX="640.0" layoutY="271.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="26.0" prefWidth="89.0" text="Delete Movie" />
+      <Button layoutX="549.0" layoutY="271.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="26.0" prefWidth="78.0" text="Edit Movie" />
    </children>
 </AnchorPane>
