@@ -4,24 +4,67 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="530.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
+<AnchorPane prefHeight="600.0" prefWidth="1162.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
    <children>
-      <MediaView fx:id="vidScreen" fitHeight="200.0" fitWidth="350.0" layoutX="39.0" layoutY="34.0" />
-      <Button fx:id="btnStart" layoutX="188.0" layoutY="272.0" mnemonicParsing="false" onAction="#playPauseVideo" text="Button" />
-      <Slider fx:id="vidSlider" layoutX="39.0" layoutY="244.0" onMousePressed="#moveProgressSlider" onMouseReleased="#setProgress" prefHeight="14.0" prefWidth="350.0" />
-      <TableView fx:id="tableMovie" layoutX="442.0" layoutY="34.0" prefHeight="200.0" prefWidth="299.0">
+      <Button fx:id="watchTRBtn" layoutX="513.0" layoutY="132.0" mnemonicParsing="false" onAction="#playPauseVideo" onMouseEntered="#watchTRE" onMouseExited="#watchTRX" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #464649;" text="Watch Trailer" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font></Button>
+      <TableView fx:id="tableMovie" layoutX="15.0" layoutY="64.0" prefHeight="499.0" prefWidth="368.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="64.0">
         <columns>
-          <TableColumn fx:id="title" prefWidth="60.79998779296875" text="Title" />
-          <TableColumn fx:id="rating" prefWidth="72.79998779296875" text="Rating" />
-            <TableColumn fx:id="imdbRating" prefWidth="64.0" text="Imdb" />
-            <TableColumn fx:id="lastViewed" text="Last Access" />
+          <TableColumn fx:id="title" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="131.99999713897705" text="Title" />
+          <TableColumn fx:id="rating" minWidth="12.79998779296875" prefWidth="44.79998779296875" resizable="false" text="Rating" />
+            <TableColumn fx:id="imdbRating" minWidth="18.399993896484375" prefWidth="44.800018310546875" resizable="false" text="Imdb" />
+            <TableColumn fx:id="lastViewed" minWidth="40.0" prefWidth="145.59999084472656" resizable="false" text="Last Access" />
         </columns>
       </TableView>
-      <Button layoutX="457.0" layoutY="271.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="26.0" prefWidth="77.0" text="Add Movie" />
-      <Button layoutX="640.0" layoutY="271.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="26.0" prefWidth="89.0" text="Delete Movie" />
-      <Button layoutX="549.0" layoutY="271.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="26.0" prefWidth="78.0" text="Edit Movie" />
+      <Button fx:id="addButton" layoutX="429.0" layoutY="64.0" mnemonicParsing="false" onAction="#addMovie" onMouseEntered="#addBtnE" onMouseExited="#addBtnX" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: ffffff;" AnchorPane.leftAnchor="429.0" />
+      <Button fx:id="deleteButton" layoutX="429.0" layoutY="131.0" mnemonicParsing="false" onAction="#deleteMovie" onMouseEntered="#delBtnE" onMouseExited="#delBtnX" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: ffffffff;" AnchorPane.leftAnchor="429.0" />
+      <Button fx:id="editButton" layoutX="429.0" layoutY="200.0" mnemonicParsing="false" onAction="#editMovie" onMouseEntered="#editBtnE" onMouseExited="#editBtnX" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: ffffffff;" />
+      <Text fill="WHITE" layoutX="166.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movies" wrappingWidth="64.79998779296875" AnchorPane.bottomAnchor="554.185546875" AnchorPane.leftAnchor="166.0" AnchorPane.topAnchor="25.705078125">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="849.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trailer preview" wrappingWidth="120.800048828125" AnchorPane.bottomAnchor="554.185546875" AnchorPane.rightAnchor="192.199951171875" AnchorPane.topAnchor="25.705078125">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Text>
+      <Line endX="-24.39996337890625" endY="373.5999755859375" layoutX="431.0" layoutY="190.0" startX="-24.39996337890625" startY="-126.39999389648438" stroke="WHITE" AnchorPane.bottomAnchor="35.9000244140625" AnchorPane.leftAnchor="406.10003662109375" AnchorPane.topAnchor="62.49997558593748">
+         <effect>
+            <Glow level="1.0" />
+         </effect>
+      </Line>
+      <Line endX="187.00006103515625" endY="88.20001220703125" layoutX="340.0" layoutY="486.0" startX="-180.20001220703125" startY="88.20001220703125" stroke="WHITE" AnchorPane.bottomAnchor="25.29998779296875" AnchorPane.rightAnchor="634.4999389648438" AnchorPane.topAnchor="573.7000122070312">
+         <effect>
+            <Glow level="1.0" />
+         </effect>
+      </Line>
+      <Line endX="-24.39996337890625" endY="88.20001220703125" layoutX="551.0" layoutY="444.0" startX="-24.39996337890625" startY="-126.39999389648438" stroke="WHITE">
+         <effect>
+            <Glow level="1.0" />
+         </effect>
+      </Line>
+      <VBox layoutX="733.0" layoutY="66.0" prefHeight="501.0" prefWidth="350.0">
+         <children>
+            <MediaView fx:id="vidScreen" fitHeight="200.0" fitWidth="350.0" />
+            <Slider fx:id="vidSlider" onMousePressed="#moveProgressSlider" onMouseReleased="#setProgress" prefHeight="53.0" prefWidth="352.0" snapToPixel="false">
+               <effect>
+                  <Glow level="0.52" />
+               </effect>
+            </Slider>
+            <TextArea prefHeight="250.0" prefWidth="350.0" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

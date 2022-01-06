@@ -11,10 +11,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -22,6 +29,9 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.imageio.ImageReader;
+import java.awt.*;
+import java.awt.font.ImageGraphicAttribute;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -35,9 +45,16 @@ public class MainController implements Initializable {
     private Label lblWelcomeText;
     @FXML
     private Button pushMeButton;
+    @FXML
     private ListModel listModel;
     @FXML
-    private Button btnStart;
+    private Button watchTRBtn;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
     @FXML
     private Slider vidSlider;
     @FXML
@@ -64,6 +81,7 @@ public class MainController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        initButtons();
     }
     @FXML
     private void moveProgressSlider(MouseEvent mouseEvent) {
@@ -159,5 +177,93 @@ public class MainController implements Initializable {
             movieModel.deleteMovie(tableMovie.getSelectionModel().getSelectedItem());
             tableMovie.getItems().remove(tableMovie.getSelectionModel().getSelectedIndex());
         }
+    }
+
+    public void initButtons(){
+        setDeleteImg();
+        setAddImg();
+        setEditImg();
+    }
+
+    public void setDeleteImg(){
+        File img = new File("data/thrashPMC.png");
+        Image thrashPNG = new Image(img.toURI().toString());
+        ImageView iv = new ImageView(thrashPNG);
+        deleteButton.setGraphic(iv);
+    }
+
+    public void setDeleteAnimation(){
+        File file = new File("data/thrash2PMC.png");
+        Image img = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(img);
+        deleteButton.setGraphic(iv);
+    }
+
+    @FXML
+    void delBtnE(MouseEvent event) {
+        setDeleteAnimation();
+    }
+
+    @FXML
+    void delBtnX(MouseEvent event) {
+        setDeleteImg();
+    }
+
+    public void setAddImg(){
+        File file = new File("data/addPMC.png");
+        Image img = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(img);
+        addButton.setGraphic(iv);
+    }
+
+    public void setAddAnimation(){
+        File file = new File("data/add2PMC.png");
+        Image img = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(img);
+        addButton.setGraphic(iv);
+    }
+
+    @FXML
+    void addBtnE(MouseEvent event) {
+        setAddAnimation();
+    }
+
+    @FXML
+    void addBtnX(MouseEvent event) {
+        setAddImg();
+    }
+
+    public void setEditImg(){
+        File file = new File("data/editPMC.png");
+        Image img = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(img);
+        editButton.setGraphic(iv);
+    }
+
+    public void setEditAnimation(){
+        File file = new File("data/edit2PMC.png");
+        Image img = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(img);
+        editButton.setGraphic(iv);
+    }
+
+    @FXML
+    void editBtnE(MouseEvent event) {
+        setEditAnimation();
+    }
+
+    @FXML
+    void editBtnX(MouseEvent event) {
+        setEditImg();
+    }
+
+    @FXML
+    void watchTRE(MouseEvent event) {
+        watchTRBtn.setEffect(new Glow(0.5));
+    }
+
+    @FXML
+    void watchTRX(MouseEvent event) {
+        watchTRBtn.setEffect(new Glow(0.0));
     }
 }
