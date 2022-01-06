@@ -42,6 +42,8 @@ public class MainController implements Initializable {
     @FXML
     private ListView<Movie> lstMyList;
     @FXML
+    private Button watchMovBtn;
+    @FXML
     private Label lblWelcomeText;
     @FXML
     private Button pushMeButton;
@@ -118,8 +120,6 @@ public class MainController implements Initializable {
         videoModel.playStopMovie();
         generateListener();
         vidScreen.setMediaPlayer(mediaPlayer);
-
-
     }
 
     public void updateTableMovie() throws SQLException {
@@ -178,6 +178,16 @@ public class MainController implements Initializable {
             tableMovie.getItems().remove(tableMovie.getSelectionModel().getSelectedIndex());
         }
     }
+
+    @FXML
+    void playMovie(ActionEvent event) {
+        if(tableMovie.getSelectionModel().getSelectedIndex()!=-1){
+            //This method will trigger the watch movie option
+            //TODO
+        }
+    }
+
+    //Down here are the settings for the buttons (code on top of this if possible :) )
 
     public void initButtons(){
         setDeleteImg();
@@ -265,5 +275,15 @@ public class MainController implements Initializable {
     @FXML
     void watchTRX(MouseEvent event) {
         watchTRBtn.setEffect(new Glow(0.0));
+    }
+
+    @FXML
+    void watchMOE(MouseEvent event) {
+        watchMovBtn.setEffect(new Glow(0.5));
+    }
+
+    @FXML
+    void watchMOX(MouseEvent event) {
+        watchMovBtn.setEffect(new Glow(0.0));
     }
 }
