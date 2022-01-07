@@ -20,7 +20,7 @@
          <font>
             <Font name="Arial" size="18.0" />
          </font></Button>
-      <TableView fx:id="tableMovie" layoutX="15.0" layoutY="64.0" prefHeight="499.0" prefWidth="368.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="64.0">
+      <TableView fx:id="tableMovie" layoutX="15.0" layoutY="64.0" onMouseClicked="#displaySummary" prefHeight="499.0" prefWidth="368.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="64.0">
         <columns>
           <TableColumn fx:id="title" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="131.99999713897705" text="Title" />
           <TableColumn fx:id="rating" minWidth="12.79998779296875" prefWidth="44.79998779296875" resizable="false" text="Rating" />
@@ -54,7 +54,7 @@
                   <Glow level="0.52" />
                </effect>
             </Slider>
-            <TextFlow prefHeight="255.0" prefWidth="350.0" />
+            <TextFlow fx:id="txtSummary" prefHeight="255.0" prefWidth="350.0" />
          </children>
       </VBox>
       <Button fx:id="watchMovBtn" layoutX="513.0" layoutY="201.0" mnemonicParsing="false" onAction="#playMovie" onMouseEntered="#watchMOE" onMouseExited="#watchMOX" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #464649;" text="Watch Movie" textAlignment="CENTER" textFill="WHITE">

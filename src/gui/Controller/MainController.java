@@ -26,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -40,6 +41,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    @FXML
+    private TextFlow txtSummary;
     @FXML
     private ListView<Movie> lstMyList;
     @FXML
@@ -293,5 +296,10 @@ public class MainController implements Initializable {
     @FXML
     void watchMOX(MouseEvent event) {
         watchMovBtn.setEffect(new Glow(0.0));
+    }
+
+    public void displaySummary(MouseEvent mouseEvent) {
+        System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
+        txtSummary.setAccessibleText(tableMovie.getSelectionModel().getSelectedItem().getSummary());
     }
 }
