@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -172,6 +173,9 @@ public class ManageMovieController implements Initializable {
         // manageMovieController.setTheme(topPane);
         Stage stage = new Stage();
         stage.setTitle("New/Edit Category");
+        File file = new File("data/playImagotype.png");
+        Image imagotype = new Image(file.toURI().toString());
+        stage.getIcons().add(imagotype);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -190,9 +194,11 @@ public class ManageMovieController implements Initializable {
             manageCategoryController.setMainController(this);
             manageCategoryController.setOperationType("modification");
             manageCategoryController.setFields(listCategory.getSelectionModel().getSelectedItem());
-            // manageMovieController.setTheme(topPane);
             Stage stage = new Stage();
             stage.setTitle("New/Edit Category");
+            File file = new File("data/playImagotype.png");
+            Image imagotype = new Image(file.toURI().toString());
+            stage.getIcons().add(imagotype);
             stage.setScene(new Scene(root));
             stage.show();
         }

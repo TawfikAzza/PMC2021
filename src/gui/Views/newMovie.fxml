@@ -3,28 +3,81 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.ManageMovieController">
+<AnchorPane prefHeight="400.0" prefWidth="771.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.ManageMovieController">
    <children>
-      <TextField fx:id="txtTitle" layoutX="73.0" layoutY="78.0" />
-      <TextField fx:id="fileTextField" layoutX="73.0" layoutY="229.0" />
-      <Button layoutX="237.0" layoutY="229.0" mnemonicParsing="false" onAction="#chooseFile" text="Choose" />
+      <TextField fx:id="txtTitle" layoutX="122.0" layoutY="65.0" />
+      <TextField fx:id="fileTextField" layoutX="122.0" layoutY="187.0" />
+      <Button layoutX="284.0" layoutY="187.0" mnemonicParsing="false" onAction="#chooseFile" text="Choose" />
       <ListView fx:id="movieCategory" layoutX="401.0" layoutY="42.0" prefHeight="200.0" prefWidth="133.0" />
       <ListView fx:id="listCategory" layoutX="630.0" layoutY="42.0" prefHeight="200.0" prefWidth="126.0" />
       <Button layoutX="556.0" layoutY="78.0" mnemonicParsing="false" onAction="#addCategory" text="&lt;&lt;add" />
       <Button layoutX="545.0" layoutY="174.0" mnemonicParsing="false" onAction="#removeCategory" text="Remove&gt;&gt;" />
-      <TextField fx:id="txtImdb" layoutX="74.0" layoutY="120.0" />
-      <TextField fx:id="txtRating" layoutX="73.0" layoutY="161.0" />
-      <Label layoutX="20.0" layoutY="82.0" text="Title" />
-      <Label layoutX="1.0" layoutY="124.0" text="Imdb Rating" />
-      <Label layoutX="20.0" layoutY="165.0" text="Rating" />
-      <Label layoutX="13.0" layoutY="233.0" text="File Path:" />
-      <Button fx:id="confirmBtn" layoutX="122.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveMovie" text="Confirm" />
-      <Button fx:id="cancelBtn" layoutX="211.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelEntry" text="Cancel" />
+      <TextField fx:id="txtImdb" layoutX="122.0" layoutY="107.0" />
+      <TextField fx:id="txtRating" layoutX="122.0" layoutY="148.0" />
+      <Label layoutX="20.0" layoutY="70.0" text="Title:" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect></Label>
+      <Label layoutX="20.0" layoutY="110.0" text="Imdb Rating:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect></Label>
+      <Label layoutX="20.0" layoutY="153.0" text="Rating:" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect></Label>
+      <Label layoutX="20.0" layoutY="192.0" text="Movie Path" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect></Label>
+      <Button fx:id="confirmBtn" layoutX="438.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveMovie" text="Confirm" />
+      <Button fx:id="cancelBtn" layoutX="519.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelEntry" text="Cancel" />
       <Button layoutX="655.0" layoutY="255.0" mnemonicParsing="false" onAction="#createCategory" prefHeight="26.0" prefWidth="95.0" text="Add Category" />
       <Button layoutX="655.0" layoutY="288.0" mnemonicParsing="false" onAction="#editCategory" prefHeight="26.0" prefWidth="95.0" text="Edit Category" />
       <Button layoutX="655.0" layoutY="322.0" mnemonicParsing="false" onAction="#deleteCategory" prefHeight="26.0" prefWidth="95.0" text="Delete Category" />
+      <Label layoutX="129.0" layoutY="14.0" text="About the movie:" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect>
+      </Label>
+      <Label layoutX="20.0" layoutY="273.0" text="Comments:" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect>
+      </Label>
+      <TextArea layoutX="122.0" layoutY="273.0" prefHeight="98.0" prefWidth="219.0" />
+      <Label layoutX="19.0" layoutY="234.0" text="Trailer Link:" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect>
+      </Label>
+      <TextField fx:id="fileTextField1" layoutX="122.0" layoutY="229.0" />
    </children>
 </AnchorPane>
