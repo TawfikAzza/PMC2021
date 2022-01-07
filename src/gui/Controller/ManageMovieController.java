@@ -94,7 +94,7 @@ public class ManageMovieController implements Initializable {
         }
     }
     private boolean checkInputs() {
-        if (txtImdb.getText().isEmpty() || txtTitle.getText().isEmpty() || txtRating.getText().isEmpty()) {
+        if (txtImdb.getText().isEmpty() || txtTitle.getText().isEmpty() || txtRating.getText().isEmpty() || txtTrailerLink.getText().isEmpty() || txtSummary.getText().isEmpty()) {
             return false;
         }if(movieCategory.getItems().size()==0) {
             return false;
