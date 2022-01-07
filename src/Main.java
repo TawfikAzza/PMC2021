@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -17,13 +18,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Views/MainWindow.fxml"));
         Parent root = loader.load();
+        /*
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         float width = gd.getDisplayMode().getWidth();
         float height = gd.getDisplayMode().getHeight();
         width = width/3;
         height = height/3;
         Scene scene = new Scene(root,(width*2),(height*2)); //Responsive design
+         */
+        Scene scene = new Scene(root,1110,600);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("PMC 2022");
+        File file = new File("data/playImagotype.png");
+        Image imagotype = new Image(file.toURI().toString());
+        primaryStage.getIcons().add(imagotype);
         primaryStage.setResizable(true);
         primaryStage.show();
 
