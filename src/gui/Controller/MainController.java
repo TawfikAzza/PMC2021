@@ -26,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -65,6 +66,8 @@ public class MainController implements Initializable {
     private TableColumn<Movie, String> title,imdbRating,lastViewed,rating;
     @FXML
     private TableView<Movie> tableMovie;
+    @FXML
+    private WebView trailerView;
 
     MediaPlayer mediaPlayer;
     private ChangeListener<Duration> progressListener;
@@ -114,12 +117,16 @@ public class MainController implements Initializable {
         mediaPlayer.currentTimeProperty().addListener(progressListener);
     }
     public void playPauseVideo(ActionEvent actionEvent) {
-        mediaPlayer = VideoPlayer.getInstance().getPlayer();
+        /*mediaPlayer = VideoPlayer.getInstance().getPlayer();
         videoModel.setCurrentMovie(tableMovie.getSelectionModel().getSelectedItem());
         System.out.println(tableMovie.getSelectionModel().getSelectedItem().getFileLink());
         videoModel.playStopMovie();
         generateListener();
-        vidScreen.setMediaPlayer(mediaPlayer);
+        vidScreen.setMediaPlayer(mediaPlayer);*/
+        if(tableMovie.getSelectionModel().getSelectedIndex()!=-1) {
+            trailerView.getEngine().load(tableMovie.getSelectionModel().getSelectedItem().getTrailerLink());
+        }
+
     }
 
     public void updateTableMovie() throws SQLException {
@@ -180,10 +187,11 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void playMovie(ActionEvent event) {
+    void playMovie(ActionEvent event) throws IOException {
         if(tableMovie.getSelectionModel().getSelectedIndex()!=-1){
-            //This method will trigger the watch movie option
-            //TODO
+            Movie movie = tableMovie.getSelectionModel().getSelectedItem();
+            movieModel.playMovie(movie);
+
         }
     }
 

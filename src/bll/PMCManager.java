@@ -6,6 +6,8 @@ import bll.utils.VideoPlayer;
 import dal.DALController;
 import gui.Model.CategoryModel;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -66,5 +68,11 @@ public class PMCManager implements PMCFacade{
     @Override
     public void deleteCategory(CategoryMovie category) throws SQLException {
         dalController.deleteCategory(category);
+    }
+
+    @Override
+    public void playMovie(Movie movie) throws IOException {
+        File file = new File(movie.getFileLink().toString());
+        Desktop.getDesktop().open(file);
     }
 }

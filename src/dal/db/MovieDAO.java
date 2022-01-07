@@ -33,7 +33,9 @@ public class MovieDAO implements IMovieDataAccess {
                         ,rs.getFloat("rating")
                         ,rs.getFloat("imdbRating")
                         ,new File(rs.getString("fileLink"))
-                        ,rs.getString("lastView"));
+                        ,rs.getString("lastView")
+                        ,rs.getString("trailerLink")
+                        ,rs.getString("summary"));
 
                 allMovies.add(movie);
             }
@@ -57,12 +59,15 @@ public class MovieDAO implements IMovieDataAccess {
     public Movie createMovie(Movie movie) throws SQLException {
         Movie movieCreated = null;
         try(Connection con = cm.getConnection()) {
-            String sqlCreate = "INSERT INTO MOVIE VALUES (?,?,?,?,getDate())";
+            String sqlCreate = "INSERT INTO MOVIE VALUES (?,?,?,?,getDate(),?,?)";
             PreparedStatement statementCreate = con.prepareStatement(sqlCreate, Statement.RETURN_GENERATED_KEYS);
             statementCreate.setString(1,movie.getName());
             statementCreate.setDouble(2,movie.getRating());
             statementCreate.setDouble(3,movie.getImdbRating());
             statementCreate.setString(4,movie.getFileLink().toString());
+            statementCreate.setString(5,movie.getTrailerLink());
+            statementCreate.setString(6,movie.getSummary());
+
             ResultSet rs = statementCreate.executeQuery();
             while(rs.next()) {
                 movieCreated = new Movie(rs.getInt(1)
@@ -70,20 +75,24 @@ public class MovieDAO implements IMovieDataAccess {
                         ,movie.getRating()
                         ,movie.getImdbRating()
                         ,movie.getFileLink()
-                        ,"test");
+                        ,"test"
+                        ,rs.getString("trailerLink")
+                        ,rs.getString("summary"));
             }
         }
         return movieCreated;
     }
     public void updateMovie(Movie movie) throws SQLException {
         try(Connection con = cm.getConnection()) {
-            String sqlUpdate = "UPDATE MOVIE SET name = ?, rating = ?, imdbRating = ? , fileLink = ? WHERE id = ?";
+            String sqlUpdate = "UPDATE MOVIE SET name = ?, rating = ?, imdbRating = ? , fileLink = ? , trailerLink = ? , summary = ? WHERE id = ?";
             PreparedStatement statementUpdate = con.prepareStatement(sqlUpdate);
             statementUpdate.setString(1,movie.getName());
             statementUpdate.setDouble(2,movie.getRating());
             statementUpdate.setDouble(3,movie.getImdbRating());
             statementUpdate.setString(4,movie.getFileLink().toString());
-            statementUpdate.setInt(5,movie.getId());
+            statementUpdate.setString(5,movie.getTrailerLink());
+            statementUpdate.setString(6,movie.getSummary());
+            statementUpdate.setInt(7,movie.getId());
 
             int i = statementUpdate.executeUpdate();
 

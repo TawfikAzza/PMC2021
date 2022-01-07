@@ -69,7 +69,7 @@
             <Glow level="0.5" />
          </effect>
       </Label>
-      <TextArea layoutX="122.0" layoutY="273.0" prefHeight="98.0" prefWidth="219.0" />
+      <TextArea fx:id="txtSummary" layoutX="122.0" layoutY="273.0" prefHeight="98.0" prefWidth="219.0" />
       <Label layoutX="19.0" layoutY="234.0" text="Trailer Link:" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
@@ -78,6 +78,6 @@
             <Glow level="0.5" />
          </effect>
       </Label>
-      <TextField fx:id="fileTextField1" layoutX="122.0" layoutY="229.0" />
+      <TextField fx:id="txtTrailerLink" layoutX="122.0" layoutY="229.0" />
    </children>
 </AnchorPane>

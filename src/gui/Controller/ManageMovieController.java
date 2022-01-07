@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -25,8 +26,11 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ManageMovieController implements Initializable {
+
     @FXML
-    private TextField fileTextField,txtImdb,txtRating,txtTitle;
+    private  TextArea txtSummary;
+    @FXML
+    private TextField fileTextField,txtImdb,txtRating,txtTitle,txtTrailerLink;
     @FXML
     private ListView<CategoryMovie> listCategory,movieCategory;
     @FXML
@@ -110,7 +114,9 @@ public class ManageMovieController implements Initializable {
                     , Double.parseDouble(txtRating.getText())
                     , Double.parseDouble(txtImdb.getText())
                     , new File(fileTextField.getText())
-                    , "date");
+                    , "date"
+                    ,txtTrailerLink.getText()
+                    ,txtSummary.getText());
 
             movie = movieModel.createMovie(movie);
             movie.setMovieGenres(categoryMovieHashMap);
@@ -122,7 +128,9 @@ public class ManageMovieController implements Initializable {
                     , Double.parseDouble(txtRating.getText())
                     , Double.parseDouble(txtImdb.getText())
                     , new File(fileTextField.getText())
-                    , "date");
+                    , "date"
+                    ,txtTrailerLink.getText()
+                    ,txtSummary.getText());
             movie.setMovieGenres(categoryMovieHashMap);
             movieModel.updateMovie(movie);
             categoryModel.addCategoryFromMovie(movie);
@@ -138,6 +146,10 @@ public class ManageMovieController implements Initializable {
         txtImdb.setText(String.valueOf(movie.getImdbRating()));
         txtRating.setText(String.valueOf(movie.getRating()));
         fileTextField.setText(movie.getFileLink().toString());
+        if(movie.getTrailerLink()!=null) {
+        txtTrailerLink.setText(movie.getTrailerLink());}
+        if(movie.getSummary()!=null) {
+        txtSummary.setText(movie.getSummary());}
         movieCategory.getItems().addAll(categoryModel.getCategoryFromMovie(movie));
         //Taking out the Categories already attributed to the movie currently being modified
         for (CategoryMovie cat: movieCategory.getItems()) {

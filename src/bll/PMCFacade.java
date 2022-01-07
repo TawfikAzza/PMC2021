@@ -3,6 +3,7 @@ package bll;
 import be.CategoryMovie;
 import be.Movie;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface PMCFacade {
     void updateCategory(CategoryMovie category) throws SQLException;
 
     void deleteCategory(CategoryMovie category) throws SQLException;
+
+    void playMovie(Movie movie) throws IOException;
 }
