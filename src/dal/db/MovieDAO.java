@@ -76,8 +76,8 @@ public class MovieDAO implements IMovieDataAccess {
                         ,movie.getImdbRating()
                         ,movie.getFileLink()
                         ,"test"
-                        ,rs.getString("trailerLink")
-                        ,rs.getString("summary"));
+                        ,movie.getTrailerLink()
+                        ,movie.getSummary());
             }
         }
         return movieCreated;
