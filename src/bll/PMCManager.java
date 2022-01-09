@@ -2,6 +2,7 @@ package bll;
 
 import be.CategoryMovie;
 import be.Movie;
+import bll.exceptions.MovieException;
 import bll.utils.VideoPlayer;
 import dal.DALController;
 import gui.Model.CategoryModel;
@@ -21,7 +22,7 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public List<Movie> getAllMovies() throws SQLException {
+    public List<Movie> getAllMovies() throws MovieException {
         return dalController.getAllMovies();
     }
 
@@ -31,7 +32,7 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public Movie createMovie(Movie movie) throws SQLException {
+    public Movie createMovie(Movie movie) throws  MovieException {
         return dalController.createMovie(movie);
     }
 
@@ -46,7 +47,7 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public void updateMovie(Movie movie) throws SQLException {
+    public void updateMovie(Movie movie) throws MovieException {
         dalController.updateMovie(movie);
     }
 
@@ -56,7 +57,7 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public void deleteMovie(Movie selectedItem) throws SQLException {
+    public void deleteMovie(Movie selectedItem) throws MovieException {
         dalController.deleteMovie(selectedItem);
     }
 

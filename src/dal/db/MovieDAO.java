@@ -3,6 +3,7 @@ package dal.db;
 import be.CategoryMovie;
 import be.Movie;
 
+import bll.exceptions.MovieException;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.ConnectionManager;
 import dal.interfaces.IMovieDataAccess;
@@ -56,7 +57,8 @@ public class MovieDAO implements IMovieDataAccess {
         return allMovies;
     }
 
-    public Movie createMovie(Movie movie) throws SQLException {
+    public Movie createMovie(Movie movie) throws SQLException, MovieException {
+        exceptionCreationUpdate(movie,true);
         Movie movieCreated = null;
         try(Connection con = cm.getConnection()) {
             String sqlCreate = "INSERT INTO MOVIE VALUES (?,?,?,?,getDate(),?,?)";
@@ -82,7 +84,8 @@ public class MovieDAO implements IMovieDataAccess {
         }
         return movieCreated;
     }
-    public void updateMovie(Movie movie) throws SQLException {
+    public void updateMovie(Movie movie) throws SQLException, MovieException {
+        exceptionCreationUpdate(movie,false);
         try(Connection con = cm.getConnection()) {
             String sqlUpdate = "UPDATE MOVIE SET name = ?, rating = ?, imdbRating = ? , fileLink = ? , trailerLink = ? , summary = ? WHERE id = ?";
             PreparedStatement statementUpdate = con.prepareStatement(sqlUpdate);
@@ -94,7 +97,7 @@ public class MovieDAO implements IMovieDataAccess {
             statementUpdate.setString(6,movie.getSummary());
             statementUpdate.setInt(7,movie.getId());
 
-            int i = statementUpdate.executeUpdate();
+            statementUpdate.executeUpdate();
 
         }
     }
@@ -118,5 +121,34 @@ public class MovieDAO implements IMovieDataAccess {
             mapCategories.put(cat.getId(),cat);
         }
         return mapCategories;
+    }
+    private boolean movieAlreadyExists(Movie movie)throws SQLException{
+        String sql="SELECT * FROM Movie WHERE fileLink=?";
+        try (Connection connection=cm.getConnection()){
+            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+            preparedStatement.setString(1, movie.getFileLink().toString());
+            preparedStatement.execute();
+            ResultSet resultSet= preparedStatement.getResultSet();
+            if (resultSet.next())
+                return true;
+        }
+        return false;
+    }
+
+    private void exceptionCreationUpdate(Movie movie,Boolean create) throws MovieException {
+        if (movie.getName().isEmpty())
+            throw new MovieException("Please find a name for your movie",new Exception());
+        if (movie.getRating()>10||movie.getRating()<0)
+            throw new MovieException("Ratings go from 0 to 10",new Exception());
+        if(movie.getImdbRating()>10||movie.getImdbRating()<0)
+            throw new MovieException("Imdb ratings go from 0 to 10",new Exception());
+        if (create)
+        if (!movie.getFileLink().isFile())
+            throw new MovieException("Please find a path for your movie",new Exception());
+
+        try {
+                if(movieAlreadyExists(movie))
+                    throw new MovieException("Movie already Exists. \nFind an other path.",new Exception());
+            }catch (SQLException e){throw new MovieException("Something went wrong in the database.",new Exception());}
     }
 }

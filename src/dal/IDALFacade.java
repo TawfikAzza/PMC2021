@@ -2,6 +2,7 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
+import bll.exceptions.MovieException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,10 +13,10 @@ public interface IDALFacade {
      *
      * */
 
-    public List<Movie> getAllMovies() throws SQLException;
-    public Movie createMovie(Movie movie) throws SQLException;
-    public void updateMovie(Movie movie) throws SQLException;
-    public void deleteMovie(Movie movie) throws SQLException;
+    public List<Movie> getAllMovies() throws MovieException;
+    public Movie createMovie(Movie movie) throws  MovieException;
+    public void updateMovie(Movie movie) throws  MovieException;
+    public void deleteMovie(Movie movie) throws MovieException;
 
     public List<CategoryMovie> getAllCategories() throws SQLException;
     public CategoryMovie getCategory(int idCategory) throws SQLException;

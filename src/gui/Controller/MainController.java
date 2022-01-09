@@ -1,6 +1,7 @@
 package gui.Controller;
 
 import be.Movie;
+import bll.exceptions.MovieException;
 import bll.utils.VideoPlayer;
 import gui.Model.ListModel;
 import gui.Model.MovieModel;
@@ -86,7 +87,7 @@ public class MainController implements Initializable {
         videoModel = new VideoModel();
         try {
             updateTableMovie();
-        } catch (SQLException e) {
+        } catch (MovieException e) {
             e.printStackTrace();
         }
         initButtons();
@@ -132,7 +133,7 @@ public class MainController implements Initializable {
 
     }
 
-    public void updateTableMovie() throws SQLException {
+    public void updateTableMovie() throws  MovieException {
         tableMovie.getItems().clear();
         title.setCellValueFactory(new PropertyValueFactory<>("name"));
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
@@ -152,7 +153,6 @@ public class MainController implements Initializable {
         }
         ManageMovieController manageMovieController = loader.getController();
         manageMovieController.setMainController(this);
-        manageMovieController.setOperationType("creation");
        // manageMovieController.setTheme(topPane);
         Stage stage = new Stage();
         stage.setTitle("New/Edit Movie");
@@ -172,8 +172,8 @@ public class MainController implements Initializable {
             }
             ManageMovieController manageMovieController = loader.getController();
             manageMovieController.setMainController(this);
-            manageMovieController.setOperationType("modification");
             manageMovieController.setupFields(tableMovie.getSelectionModel().getSelectedItem());
+            manageMovieController.editMovie();
             // manageMovieController.setTheme(topPane);
             Stage stage = new Stage();
             stage.setTitle("New/Edit Movie");
@@ -182,7 +182,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void deleteMovie(ActionEvent actionEvent) throws SQLException {
+    public void deleteMovie(ActionEvent actionEvent) throws MovieException {
         if(tableMovie.getSelectionModel().getSelectedIndex()!=-1) {
             movieModel.deleteMovie(tableMovie.getSelectionModel().getSelectedItem());
             tableMovie.getItems().remove(tableMovie.getSelectionModel().getSelectedIndex());

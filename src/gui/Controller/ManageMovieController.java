@@ -2,6 +2,7 @@ package gui.Controller;
 
 import be.CategoryMovie;
 import be.Movie;
+import bll.exceptions.MovieException;
 import gui.Model.CategoryModel;
 import gui.Model.MovieModel;
 import javafx.event.ActionEvent;
@@ -10,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,7 +24,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ManageMovieController implements Initializable {
-
+    @FXML
+    private Button chooseFileButton;
     @FXML
     private  TextArea txtSummary;
     @FXML
@@ -36,13 +35,17 @@ public class ManageMovieController implements Initializable {
     @FXML
     private Button cancelBtn,confirmBtn;
 
-    private String operationType="creation";
+    private Boolean newMovie=true;
     private MainController mainController;
     private Movie currentMovie;
     private MovieModel movieModel;
     private CategoryModel categoryModel;
-    public void setOperationType(String operationType){
-        this.operationType=operationType;
+    public void editMovie(){
+        newMovie=false;
+        fileTextField.setDisable(true);
+        chooseFileButton.disableProperty().set(true);
+        if (!txtTrailerLink.getText().isEmpty())
+            txtTrailerLink.setDisable(true);
     }
 
     public void chooseFile(ActionEvent actionEvent) {
@@ -93,37 +96,63 @@ public class ManageMovieController implements Initializable {
             movieCategory.getItems().remove(movieCategory.getSelectionModel().getSelectedItem());
         }
     }
-    private boolean checkInputs() {
+    /*private boolean checkInputs() {
         if (txtImdb.getText().isEmpty() || txtTitle.getText().isEmpty() || txtRating.getText().isEmpty() || txtTrailerLink.getText().isEmpty() || txtSummary.getText().isEmpty()) {
             return false;
         }if(movieCategory.getItems().size()==0) {
             return false;
         }
         return true;
-    }
+    }*/
     public void saveMovie(ActionEvent actionEvent) throws SQLException {
-        if(!checkInputs()){
+        double rating ,imdbRating;
+        /*if(!checkInputs()){
             return;
-        }
+        }*/
         HashMap<Integer,CategoryMovie> categoryMovieHashMap = new HashMap<>();
         for (CategoryMovie cat: movieCategory.getItems()) {
             categoryMovieHashMap.put(cat.getId(),cat);
         }
-        if(operationType.equals("creation")) {
+        try {
+             rating=Double.parseDouble(txtRating.getText());
+             imdbRating=Double.parseDouble(txtImdb.getText());
+        }catch (NumberFormatException numberFormatException){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Please find a number for ratings.");
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+            return;
+        }
+        if(newMovie) {
             Movie movie = new Movie(0, txtTitle.getText()
-                    , Double.parseDouble(txtRating.getText())
-                    , Double.parseDouble(txtImdb.getText())
+                    , rating
+                    , imdbRating
                     , new File(fileTextField.getText())
                     , "date"
                     ,txtTrailerLink.getText()
                     ,txtSummary.getText());
 
-            movie = movieModel.createMovie(movie);
-            movie.setMovieGenres(categoryMovieHashMap);
-            categoryModel.addCategoryFromMovie(movie);
+            try {
+                movie = movieModel.createMovie(movie);
+                mainController.updateTableMovie();
+                movie.setMovieGenres(categoryMovieHashMap);
+                categoryModel.addCategoryFromMovie(movie);
+
+            }catch (MovieException movieException){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(movieException.getExceptionMessage());
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+                return;
+            }
+
 
         }
-        if(operationType.equals("modification")) {
+        else  {
             Movie movie = new Movie(currentMovie.getId(), txtTitle.getText()
                     , Double.parseDouble(txtRating.getText())
                     , Double.parseDouble(txtImdb.getText())
@@ -132,10 +161,20 @@ public class ManageMovieController implements Initializable {
                     ,txtTrailerLink.getText()
                     ,txtSummary.getText());
             movie.setMovieGenres(categoryMovieHashMap);
-            movieModel.updateMovie(movie);
-            categoryModel.addCategoryFromMovie(movie);
+            try {
+                movieModel.updateMovie(movie);
+                categoryModel.addCategoryFromMovie(movie);
+                mainController.updateTableMovie();
+            }catch (MovieException movieException){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(movieException.getExceptionMessage());
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+                return;
+            }
         }
-        mainController.updateTableMovie();
         Stage stage = (Stage) confirmBtn.getScene().getWindow();
         stage.close();
 
@@ -167,7 +206,15 @@ public class ManageMovieController implements Initializable {
         }
     }
     public void cancelEntry(ActionEvent actionEvent) {
-      //  Stage stage = (Stage) cancelBtn.get
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Alert window");
+        alert.setHeaderText("Do you want to close this window?");
+
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            Stage stage = (Stage) cancelBtn.getScene().getWindow();
+            stage.close();
+        }
     }
 
     public void createCategory(ActionEvent actionEvent) {

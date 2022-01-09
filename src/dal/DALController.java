@@ -2,6 +2,7 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
+import bll.exceptions.MovieException;
 import dal.db.CategoryDAO;
 import dal.db.MovieDAO;
 import dal.interfaces.ICategoryDataAccess;
@@ -22,23 +23,39 @@ public class DALController implements IDALFacade {
 
 
     @Override
-    public List<Movie> getAllMovies() throws SQLException {
-        return iMovieDataAccess.getAllMovies();
+    public List<Movie> getAllMovies() throws MovieException {
+        try {
+            return iMovieDataAccess.getAllMovies();
+        }catch (SQLException e){
+            throw new MovieException("Something went wrong in the database.",new Exception());
+        }
     }
 
     @Override
-    public Movie createMovie(Movie movie) throws SQLException {
-        return iMovieDataAccess.createMovie(movie);
+    public Movie createMovie(Movie movie) throws MovieException {
+        try {
+            return iMovieDataAccess.createMovie(movie);
+        }catch (SQLException e){
+            throw new MovieException("Something went wrong in the database.",new Exception());
+        }
     }
 
     @Override
-    public void updateMovie(Movie movie) throws SQLException {
-        iMovieDataAccess.updateMovie(movie);
+    public void updateMovie(Movie movie) throws  MovieException {
+        try {
+            iMovieDataAccess.updateMovie(movie);
+        }catch (SQLException e){
+            throw new MovieException("Something went wrong in the database.",new Exception());
+        }
     }
 
     @Override
-    public void deleteMovie(Movie movie) throws SQLException {
-        iMovieDataAccess.deleteMovie(movie);
+    public void deleteMovie(Movie movie) throws MovieException {
+        try {
+            iMovieDataAccess.deleteMovie(movie);
+        }catch (SQLException e){
+            throw new MovieException("Something went wrong in the database.",new Exception());
+        }
     }
 
     @Override
