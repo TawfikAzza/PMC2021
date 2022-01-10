@@ -41,13 +41,7 @@ public class ManageMovieController implements Initializable {
     private Movie currentMovie;
     private MovieModel movieModel;
     private CategoryModel categoryModel;
-    public void editMovie(){
-        newMovie=false;
-        fileTextField.setDisable(true);
-        chooseFileButton.disableProperty().set(true);
-        if (!txtTrailerLink.getText().isEmpty())
-            txtTrailerLink.setDisable(true);
-    }
+
 
     public void chooseFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -79,7 +73,7 @@ public class ManageMovieController implements Initializable {
         try {
             listCategory.getItems().addAll(categoryModel.getAllCategories());
 
-        } catch (SQLException e) {
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
     }
@@ -149,6 +143,8 @@ public class ManageMovieController implements Initializable {
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
                 return;
+            } catch (CategoryException e) {
+                e.printStackTrace();
             }
 
 
@@ -174,13 +170,20 @@ public class ManageMovieController implements Initializable {
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
                 return;
+            } catch (CategoryException e) {
+                e.printStackTrace();
             }
         }
         Stage stage = (Stage) confirmBtn.getScene().getWindow();
         stage.close();
 
     }
-    public void setupFields(Movie movie) throws SQLException {
+    public void setupFields(Movie movie) throws  CategoryException {
+        newMovie=false;
+        fileTextField.setDisable(true);
+        chooseFileButton.disableProperty().set(true);
+
+
         currentMovie = movie;
         txtTitle.setText(movie.getName());
         txtImdb.setText(String.valueOf(movie.getImdbRating()));
@@ -195,11 +198,13 @@ public class ManageMovieController implements Initializable {
         for (CategoryMovie cat: movieCategory.getItems()) {
             listCategory.getItems().removeIf(catList -> cat.getId()==(catList.getId()));
         }
+        if (!txtTrailerLink.getText().isEmpty())
+            txtTrailerLink.setDisable(true);
     }
     public void addCategoryToList(CategoryMovie categoryMovie) {
         listCategory.getItems().add(categoryMovie);
     }
-    public void setupListCategory() throws SQLException {
+    public void setupListCategory() throws  CategoryException {
         listCategory.getItems().clear();
         listCategory.getItems().addAll(categoryModel.getAllCategories());
         for (CategoryMovie cat: movieCategory.getItems()) {
@@ -232,7 +237,7 @@ public class ManageMovieController implements Initializable {
         manageCategoryController.setOperationType("creation");
         // manageMovieController.setTheme(topPane);
         Stage stage = new Stage();
-        stage.setTitle("New/Edit Category");
+        stage.setTitle("New Category");
         File file = new File("data/playImagotype.png");
         Image imagotype = new Image(file.toURI().toString());
         stage.getIcons().add(imagotype);
@@ -255,7 +260,7 @@ public class ManageMovieController implements Initializable {
             manageCategoryController.setOperationType("modification");
             manageCategoryController.setFields(listCategory.getSelectionModel().getSelectedItem());
             Stage stage = new Stage();
-            stage.setTitle("New/Edit Category");
+            stage.setTitle("Edit Category");
             File file = new File("data/playImagotype.png");
             Image imagotype = new Image(file.toURI().toString());
             stage.getIcons().add(imagotype);
@@ -264,7 +269,7 @@ public class ManageMovieController implements Initializable {
         }
     }
 
-    public void deleteCategory(ActionEvent actionEvent) throws SQLException {
+    public void deleteCategory(ActionEvent actionEvent) throws  CategoryException {
         if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
             categoryModel.deleteCategory(listCategory.getSelectionModel().getSelectedItem());
             listCategory.getItems().remove(listCategory.getSelectionModel().getSelectedIndex());

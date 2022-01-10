@@ -1,6 +1,7 @@
 package gui.Controller;
 
 import be.Movie;
+import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import bll.utils.VideoPlayer;
 import gui.Model.ListModel;
@@ -157,12 +158,12 @@ public class MainController implements Initializable {
         manageMovieController.setMainController(this);
        // manageMovieController.setTheme(topPane);
         Stage stage = new Stage();
-        stage.setTitle("New/Edit Movie");
+        stage.setTitle("New Movie");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-    public void editMovie(ActionEvent actionEvent) throws SQLException {
+    public void editMovie(ActionEvent actionEvent) throws SQLException, CategoryException {
         if(tableMovie.getSelectionModel().getSelectedIndex()!=-1) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("gui/Views/newMovie.fxml"));
@@ -175,10 +176,9 @@ public class MainController implements Initializable {
             ManageMovieController manageMovieController = loader.getController();
             manageMovieController.setMainController(this);
             manageMovieController.setupFields(tableMovie.getSelectionModel().getSelectedItem());
-            manageMovieController.editMovie();
             // manageMovieController.setTheme(topPane);
             Stage stage = new Stage();
-            stage.setTitle("New/Edit Movie");
+            stage.setTitle("Edit Movie");
             stage.setScene(new Scene(root));
             stage.show();
         }

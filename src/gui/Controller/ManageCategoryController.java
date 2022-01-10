@@ -2,12 +2,12 @@ package gui.Controller;
 
 import be.CategoryMovie;
 import bll.PMCManager;
+import bll.exceptions.CategoryException;
 import gui.Model.CategoryModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,6 +21,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ManageCategoryController implements Initializable {
+    @FXML
+    private Label new_editLabel;
     @FXML
     private Button acceptBtn,closeBtn;
     @FXML
@@ -41,11 +43,21 @@ public class ManageCategoryController implements Initializable {
         initButtons();
     }
 
-    public void createCategory(ActionEvent actionEvent) throws SQLException {
+    public void createCategory(ActionEvent actionEvent)  {
         if(operationType.equals("creation")) {
             if(newCatName.getText()!=""){
-               CategoryMovie categoryCreated = categoryModel.addNewCategory(new CategoryMovie(0,newCatName.getText()));
-                manageMovieController.addCategoryToList(categoryCreated);
+               try {
+                   CategoryMovie categoryCreated = categoryModel.addNewCategory(new CategoryMovie(0,newCatName.getText()));
+                   manageMovieController.addCategoryToList(categoryCreated);
+               }catch (CategoryException e){
+                   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                   alert.setTitle("Error");
+                   alert.setHeaderText(e.getExceptionMessage());
+                   ButtonType okButton = new ButtonType("OK");
+                   alert.getButtonTypes().setAll(okButton);
+                   alert.showAndWait();
+                   return;
+               }
             }
 
             Stage stage = (Stage) closeBtn.getScene().getWindow();
@@ -54,8 +66,18 @@ public class ManageCategoryController implements Initializable {
         if(operationType.equals("modification")) {
             if(newCatName.getText()!=""){
                 currentCategory.setName(newCatName.getText());
-                categoryModel.updateCategory(currentCategory);
-                manageMovieController.setupListCategory();
+                try {
+                    categoryModel.updateCategory(currentCategory);
+                    manageMovieController.setupListCategory();
+                }catch (CategoryException e){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(e.getExceptionMessage());
+                    ButtonType okButton = new ButtonType("OK");
+                    alert.getButtonTypes().setAll(okButton);
+                    alert.showAndWait();
+                    return;
+                }
             }
 
             Stage stage = (Stage) closeBtn.getScene().getWindow();
@@ -125,7 +147,15 @@ public class ManageCategoryController implements Initializable {
     }
 
     public void closeWindow(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Alert window");
+        alert.setHeaderText("Do you want to close this window?");
 
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            Stage stage = (Stage) closeBtn.getScene().getWindow();
+            stage.close();
+        }
     }
 
     public void setMainController(ManageMovieController manageMovieController) {
@@ -138,6 +168,7 @@ public class ManageCategoryController implements Initializable {
     }
 
     public void setFields(CategoryMovie selectedItem) {
+        new_editLabel.setText("Edit existing category");
         currentCategory=selectedItem;
         newCatName.setText(selectedItem.getName());
 

@@ -2,6 +2,7 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
+import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import dal.db.CategoryDAO;
 import dal.db.MovieDAO;
@@ -59,42 +60,74 @@ public class DALController implements IDALFacade {
     }
 
     @Override
-    public List<CategoryMovie> getAllCategories() throws SQLException {
-        return iCategoryDataAccess.getAllCategories();
+    public List<CategoryMovie> getAllCategories() throws CategoryException {
+        try {
+            return iCategoryDataAccess.getAllCategories();
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nWe will fix it as soon as possible.",new Exception());
+        }
     }
 
     @Override
-    public CategoryMovie getCategory(int idCategory) throws SQLException {
-        return iCategoryDataAccess.getCategory(idCategory);
+    public CategoryMovie getCategory(int idCategory) throws CategoryException {
+        try {
+            return iCategoryDataAccess.getCategory(idCategory);
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
+        }
     }
 
     @Override
-    public List<CategoryMovie> getCategoryFromMovie(Movie movie) throws SQLException {
-        return iCategoryDataAccess.getCategoryFromMovie(movie);
+    public List<CategoryMovie> getCategoryFromMovie(Movie movie) throws CategoryException {
+        try {
+            return iCategoryDataAccess.getCategoryFromMovie(movie);
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
+        }
     }
 
     @Override
-    public void addCategoryFromMovie(Movie movie) throws SQLException {
-        iCategoryDataAccess.addCategoryFromMovie(movie);
+    public void addCategoryFromMovie(Movie movie) throws CategoryException {
+        try {
+            iCategoryDataAccess.addCategoryFromMovie(movie);
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
+        }
     }
 
     @Override
-    public CategoryMovie addCategory(CategoryMovie categoryMovie) throws SQLException {
-        return iCategoryDataAccess.addCategory(categoryMovie);
+    public CategoryMovie addCategory(CategoryMovie categoryMovie) throws CategoryException {
+        try {
+            return iCategoryDataAccess.addCategory(categoryMovie);
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
+        }
     }
 
     @Override
-    public void removeCategory(CategoryMovie categoryMovie) throws SQLException {
-        iCategoryDataAccess.removeCategory(categoryMovie);
+    public void removeCategory(CategoryMovie categoryMovie) throws CategoryException {
+        try {
+            iCategoryDataAccess.removeCategory(categoryMovie);
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
+        }
     }
 
     @Override
-    public void updateCategory(CategoryMovie categoryMovie) throws SQLException {
-        iCategoryDataAccess.updateCategory(categoryMovie);
+    public void updateCategory(CategoryMovie categoryMovie) throws CategoryException {
+        try {
+            iCategoryDataAccess.updateCategory(categoryMovie);
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
+        }
     }
 
     @Override
-    public void deleteCategory(CategoryMovie category) throws SQLException {
-        iCategoryDataAccess.removeCategory(category);
+    public void deleteCategory(CategoryMovie category) throws CategoryException {
+        try {
+            iCategoryDataAccess.removeCategory(category);
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
+        }
     }
 }

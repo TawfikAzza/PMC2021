@@ -3,6 +3,7 @@ package dal.db;
 import be.CategoryMovie;
 import be.Movie;
 import bll.exceptions.CategoryException;
+import bll.exceptions.MovieException;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.ConnectionManager;
 import dal.interfaces.ICategoryDataAccess;
@@ -78,7 +79,8 @@ public class CategoryDAO implements ICategoryDataAccess {
             statementInsertCatMovie.executeBatch();
         }
     }
-    public CategoryMovie addCategory(CategoryMovie categoryMovie) throws SQLException {
+    public CategoryMovie addCategory(CategoryMovie categoryMovie) throws SQLException, CategoryException {
+        categoryException(categoryMovie);
         CategoryMovie categoryCreated = null;
         try(Connection con = cm.getConnection()){
             String sqlInsert = "INSERT INTO CATEGORY VALUES (?)";
@@ -105,7 +107,8 @@ public class CategoryDAO implements ICategoryDataAccess {
             statementDeleteCat.execute();
         }
     }
-    public void updateCategory(CategoryMovie categoryMovie) throws SQLException {
+    public void updateCategory(CategoryMovie categoryMovie) throws SQLException, CategoryException {
+        categoryException(categoryMovie);
         try(Connection con = cm.getConnection()){
             String sqlUpdateCategory = "UPDATE CATEGORY SET name = ? WHERE id = ?";
             PreparedStatement statementUpdate = con.prepareStatement(sqlUpdateCategory);
@@ -114,8 +117,26 @@ public class CategoryDAO implements ICategoryDataAccess {
             statementUpdate.executeUpdate();
         }
     }
-    private void categoryException(CategoryMovie categoryMovie){
+    private void categoryException(CategoryMovie categoryMovie)throws CategoryException{
+        try {
+            if(categoryAlreadyExists(categoryMovie))
+                throw new CategoryException("Category already exists.\nPlease find another name.",new Exception());
+        }catch (SQLException e){
+            throw new CategoryException("Something wrong went in the database,\nPlease try again.",new Exception());
+        }
 
+    }
 
+    private boolean categoryAlreadyExists(CategoryMovie categoryMovie) throws SQLException {
+        String sql="SELECT * FROM Category WHERE name =?";
+        try (Connection connection= cm.getConnection()){
+            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+            preparedStatement.setString(1,categoryMovie.getName());
+            preparedStatement.execute();
+            ResultSet resultSet= preparedStatement.getResultSet();
+            if (resultSet.next())
+                return true;
+        }
+        return false;
     }
 }
