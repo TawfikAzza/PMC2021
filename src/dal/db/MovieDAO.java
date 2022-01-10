@@ -11,6 +11,7 @@ import dal.interfaces.IMovieDataAccess;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,5 +151,26 @@ public class MovieDAO implements IMovieDataAccess {
                 if(movieAlreadyExists(movie))
                     throw new MovieException("Movie already Exists. \nFind an other path.",new Exception());
             }catch (SQLException e){throw new MovieException("Something went wrong in the database.",new Exception());}}
+    }
+    public List<Movie>getAllOutdatedMovies() throws SQLException{
+        List<Movie>allOutdatedMovies=new ArrayList<>();
+        String sql= "SELECT *, DATEDIFF(year, lastView, GETDATE()) AS difference FROM Movie";
+        try (Connection connection= cm.getConnection()){
+            ResultSet resultSet= connection.createStatement().executeQuery(sql);
+            while (resultSet.next()){
+                if (resultSet.getInt("difference")>=2){
+                    Movie movie = new Movie(resultSet.getInt("id")
+                            ,resultSet.getString("name")
+                            ,resultSet.getFloat("rating")
+                            ,resultSet.getFloat("imdbRating")
+                            ,new File(resultSet.getString("fileLink"))
+                            ,resultSet.getString("lastView")
+                            ,resultSet.getString("trailerLink")
+                            ,resultSet.getString("summary"));
+                    allOutdatedMovies.add(movie);
+                }
+            }
+        }
+        return allOutdatedMovies;
     }
 }

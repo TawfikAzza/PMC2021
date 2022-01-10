@@ -77,4 +77,9 @@ public class PMCManager implements PMCFacade{
         File file = new File(movie.getFileLink().toString());
         Desktop.getDesktop().open(file);
     }
+
+    @Override
+    public List<Movie> getAllOutdatedMovies() throws SQLException{
+        return dalController.getAllOutdatedMovies();
+    }
 }

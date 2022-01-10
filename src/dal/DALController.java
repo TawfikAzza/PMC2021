@@ -130,4 +130,9 @@ public class DALController implements IDALFacade {
             throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
         }
     }
+
+    @Override
+    public List<Movie> getAllOutdatedMovies()throws SQLException {
+        return iMovieDataAccess.getAllOutdatedMovies();
+    }
 }

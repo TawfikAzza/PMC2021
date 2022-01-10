@@ -1,3 +1,4 @@
+import dal.db.MovieDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -12,12 +13,21 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class Main extends Application {
+    MovieDAO movieDAO;
+
+    public Main() throws IOException {
+        movieDAO=new MovieDAO();
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Views/MainWindow.fxml"));
+        FXMLLoader loader1=new FXMLLoader(getClass().getResource("/gui/Views/outdatedMovies.fxml"));
         Parent root = loader.load();
+        Parent root1=loader1.load();
         /*
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         float width = gd.getDisplayMode().getWidth();
@@ -26,8 +36,14 @@ public class Main extends Application {
         height = height/3;
         Scene scene = new Scene(root,(width*2),(height*2)); //Responsive design
          */
+        if (movieDAO.getAllOutdatedMovies().isEmpty()){
         Scene scene = new Scene(root,1110,600);
         primaryStage.setScene(scene);
+        }
+        else{
+            Scene scene = new Scene(root1);
+            primaryStage.setScene(scene);
+        }
         primaryStage.setTitle("PMC 2022");
         File file = new File("data/playImagotype.png");
         Image imagotype = new Image(file.toURI().toString());
