@@ -142,13 +142,13 @@ public class MovieDAO implements IMovieDataAccess {
             throw new MovieException("Ratings go from 0 to 10",new Exception());
         if(movie.getImdbRating()>10||movie.getImdbRating()<0)
             throw new MovieException("Imdb ratings go from 0 to 10",new Exception());
-        if (create)
+        if (create){
         if (!movie.getFileLink().isFile())
             throw new MovieException("Please find a path for your movie",new Exception());
 
         try {
                 if(movieAlreadyExists(movie))
                     throw new MovieException("Movie already Exists. \nFind an other path.",new Exception());
-            }catch (SQLException e){throw new MovieException("Something went wrong in the database.",new Exception());}
+            }catch (SQLException e){throw new MovieException("Something went wrong in the database.",new Exception());}}
     }
 }

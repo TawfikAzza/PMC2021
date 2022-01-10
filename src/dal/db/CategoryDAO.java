@@ -2,6 +2,7 @@ package dal.db;
 
 import be.CategoryMovie;
 import be.Movie;
+import bll.exceptions.CategoryException;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.ConnectionManager;
 import dal.interfaces.ICategoryDataAccess;
@@ -112,5 +113,9 @@ public class CategoryDAO implements ICategoryDataAccess {
             statementUpdate.setInt(2,categoryMovie.getId());
             statementUpdate.executeUpdate();
         }
+    }
+    private void categoryException(CategoryMovie categoryMovie){
+
+
     }
 }

@@ -2,7 +2,8 @@ package gui.Controller;
 
 import be.CategoryMovie;
 import be.Movie;
-import bll.exceptions.MovieException;
+import bll.*;
+import bll.exceptions.*;
 import gui.Model.CategoryModel;
 import gui.Model.MovieModel;
 import javafx.event.ActionEvent;
@@ -24,8 +25,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ManageMovieController implements Initializable {
-    @FXML
-    private Button chooseFileButton;
+
+    public Button chooseFileButton;
     @FXML
     private  TextArea txtSummary;
     @FXML
