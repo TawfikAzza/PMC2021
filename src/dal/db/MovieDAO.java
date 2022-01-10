@@ -158,7 +158,7 @@ public class MovieDAO implements IMovieDataAccess {
         try (Connection connection= cm.getConnection()){
             ResultSet resultSet= connection.createStatement().executeQuery(sql);
             while (resultSet.next()){
-                if (resultSet.getInt("difference")>=2){
+                if (resultSet.getInt("difference")>=1){
                     Movie movie = new Movie(resultSet.getInt("id")
                             ,resultSet.getString("name")
                             ,resultSet.getFloat("rating")
