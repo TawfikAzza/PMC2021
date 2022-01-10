@@ -47,6 +47,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     @FXML
+    private Button search;
+    @FXML
     private TextField keywordTextField;
     @FXML
     private TextFlow txtSummary;
@@ -97,6 +99,7 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
         initButtons();
+
         // Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<Movie> filteredData = null;
         try {
@@ -110,7 +113,7 @@ public class MainController implements Initializable {
         FilteredList<Movie> finalFilteredData = filteredData;
         keywordTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             finalFilteredData.setPredicate(movie -> {
-                // If filter text is empty, display all persons.
+                    search.setText("Clear");                // If filter text is empty, display all persons.
 
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
@@ -344,5 +347,10 @@ public class MainController implements Initializable {
     public void displaySummary(MouseEvent mouseEvent) {
         System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
         txtSummary.setAccessibleText(tableMovie.getSelectionModel().getSelectedItem().getSummary());
+    }
+    @FXML
+    private void clear(ActionEvent actionEvent) {
+        keywordTextField.setText("");
+        search.setText("Search");
     }
 }
