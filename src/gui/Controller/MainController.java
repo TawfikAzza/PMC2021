@@ -9,6 +9,8 @@ import gui.Model.MovieModel;
 import gui.Model.VideoModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -43,6 +46,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    @FXML
+    private TextField keywordTextField;
     @FXML
     private TextFlow txtSummary;
     @FXML
@@ -92,6 +97,42 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
         initButtons();
+        // Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Movie> filteredData = null;
+        try {
+            filteredData = new FilteredList<>(movieModel.getAllMovies(), b -> true);
+        } catch (MovieException e) {
+            e.printStackTrace();
+        }
+
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        FilteredList<Movie> finalFilteredData = filteredData;
+        keywordTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            finalFilteredData.setPredicate(movie -> {
+                // If filter text is empty, display all persons.
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                return movie.getName().toLowerCase().contains(lowerCaseFilter); // Filter matches first name.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Movie> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        //       Otherwise, sorting the TableView would have no effect.
+        sortedData.comparatorProperty().bind(tableMovie.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tableMovie.setItems(sortedData);
+
     }
     @FXML
     private void moveProgressSlider(MouseEvent mouseEvent) {

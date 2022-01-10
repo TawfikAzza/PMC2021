@@ -65,9 +65,10 @@ public class OutdatedMoviesController implements Initializable {
         alert.setHeaderText("Are you sure you do not want to delete outdated movies ?");
 
 
-        if (alert.showAndWait().get() == ButtonType.YES) {
+        if (alert.showAndWait().get() == ButtonType.OK) {
             {Stage stage = (Stage) cancelButton.getScene().getWindow();
-            stage.close();}
+            stage.close();
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Views/MainWindow.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
