@@ -2,6 +2,7 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.User;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import dal.db.CategoryDAO;
@@ -24,9 +25,9 @@ public class DALController implements IDALFacade {
 
 
     @Override
-    public List<Movie> getAllMovies() throws MovieException {
+    public List<Movie> getAllMovies(User user) throws MovieException {
         try {
-            return iMovieDataAccess.getAllMovies();
+            return iMovieDataAccess.getAllMovies(user);
         }catch (SQLException e){
             throw new MovieException("Something went wrong in the database.",new Exception());
         }
@@ -34,12 +35,17 @@ public class DALController implements IDALFacade {
 
     @Override
     public Movie createMovie(Movie movie) throws MovieException {
+        return null;
+    }
+
+    /*@Override
+    public Movie createMovie(Movie movie) throws MovieException {
         try {
-            return iMovieDataAccess.createMovie(movie);
+            //return iMovieDataAccess.createMovie(movie);
         }catch (SQLException e){
             throw new MovieException("Something went wrong in the database.",new Exception());
         }
-    }
+    }*/
 
     @Override
     public void updateMovie(Movie movie) throws  MovieException {

@@ -2,6 +2,7 @@ package bll;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.User;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import bll.utils.VideoPlayer;
@@ -23,8 +24,8 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public List<Movie> getAllMovies() throws MovieException {
-        return dalController.getAllMovies();
+    public List<Movie> getAllMovies(User user) throws MovieException {
+        return dalController.getAllMovies(user);
     }
 
     @Override

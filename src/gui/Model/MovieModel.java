@@ -1,6 +1,7 @@
 package gui.Model;
 
 import be.Movie;
+import be.User;
 import bll.PMCFacade;
 import bll.PMCManager;
 import bll.exceptions.MovieException;
@@ -18,7 +19,7 @@ public class MovieModel {
 
     public ObservableList<Movie> getAllMovies() throws MovieException {
         ObservableList<Movie> allObsMovies = FXCollections.observableArrayList();
-        allObsMovies.addAll(pmcFacade.getAllMovies());
+        allObsMovies.addAll(pmcFacade.getAllMovies(new User(1,"silamin","xnxx")));
         return allObsMovies;
     }
 

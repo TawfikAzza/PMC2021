@@ -2,6 +2,7 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.User;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 
@@ -14,7 +15,7 @@ public interface IDALFacade {
      *
      * */
 
-     List<Movie> getAllMovies() throws MovieException;
+     List<Movie> getAllMovies(User user) throws MovieException;
      Movie createMovie(Movie movie) throws  MovieException;
      void updateMovie(Movie movie) throws  MovieException;
      void deleteMovie(Movie movie) throws MovieException;

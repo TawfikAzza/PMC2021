@@ -2,6 +2,7 @@ package bll;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.User;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface PMCFacade {
-    List<Movie> getAllMovies() throws MovieException;
+    List<Movie> getAllMovies(User user) throws MovieException;
     List<CategoryMovie> getAllCategories() throws CategoryException;
 
     Movie createMovie(Movie movie) throws  MovieException;

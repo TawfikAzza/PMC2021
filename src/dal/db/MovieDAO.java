@@ -3,6 +3,7 @@ package dal.db;
 import be.CategoryMovie;
 import be.Movie;
 
+import be.User;
 import bll.exceptions.MovieException;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.ConnectionManager;
@@ -23,55 +24,67 @@ public class MovieDAO implements IMovieDataAccess {
         cm = new ConnectionManager();
         categoryDAO = new CategoryDAO();
     }
-    public List<Movie> getAllMovies() throws SQLException {
+    public List<Movie> getAllMovies(User user) throws SQLException {
         List<Movie> allMovies = new ArrayList<>();
-        try(Connection con = cm.getConnection()) {
-            String sqlSelectAllMovies = "SELECT * FROM MOVIE";
-            PreparedStatement statementSelect = con.prepareStatement(sqlSelectAllMovies);
-            ResultSet rs = statementSelect.executeQuery();
-            while(rs.next()){
-                Movie movie = new Movie(rs.getInt("id")
-                        ,rs.getString("name")
-                        ,rs.getFloat("rating")
-                        ,rs.getFloat("imdbRating")
-                        ,new File(rs.getString("fileLink"))
-                        ,rs.getString("lastView")
-                        ,rs.getString("trailerLink")
-                        ,rs.getString("summary"));
+        String sql = "SELECT * FROM UserMovie WHERE userId=?";
+        try (Connection connection = cm.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                String sql1 = "SELECT * FROM MOVIE WHERE id=?";
+                PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
+                preparedStatement1.setInt(1, resultSet.getInt(2));
+                preparedStatement1.execute();
+                ResultSet resultSet1 = preparedStatement1.getResultSet();
+                while (resultSet1.next()) {
+                    Movie movie = new Movie(resultSet1.getInt("id")
+                            , resultSet1.getString("name")
+                            , resultSet1.getFloat("rating")
+                            , resultSet1.getFloat("imdbRating")
+                            , new File(resultSet1.getString("fileLink"))
+                            , resultSet1.getString("lastView")
+                            , resultSet1.getString("trailerLink")
+                            , resultSet1.getString("summary"));
 
-                allMovies.add(movie);
-            }
-            String sqlSelectCatMovie="SELECT CategoryID FROM CatMovie WHERE MovieId = ?;";
-            PreparedStatement statementSelectCatMovie = con.prepareStatement(sqlSelectCatMovie);
-            HashMap<Integer,CategoryMovie> mapCatMovie = new HashMap<>();
-            mapCatMovie= getAllCategories();
-            for (Movie movie : allMovies) {
-                statementSelectCatMovie.setInt(1,movie.getId());
-                ResultSet rsSelectCatMovie = statementSelectCatMovie.executeQuery();
+                    allMovies.add(movie);
+                }}
+                String sqlSelectCatMovie = "SELECT CategoryID FROM CatMovie WHERE MovieId = ?;";
+                PreparedStatement statementSelectCatMovie = connection.prepareStatement(sqlSelectCatMovie);
+                HashMap<Integer, CategoryMovie> mapCatMovie = new HashMap<>();
+                mapCatMovie = getAllCategories();
+                for (Movie movie : allMovies) {
+                    statementSelectCatMovie.setInt(1, movie.getId());
+                    ResultSet rsSelectCatMovie = statementSelectCatMovie.executeQuery();
 
-                while (rsSelectCatMovie.next()) {
-                    movie.getMovieGenres().put(rsSelectCatMovie.getInt("CategoryID")
-                                            ,mapCatMovie.get(rsSelectCatMovie.getInt("CategoryID")));
+                    while (rsSelectCatMovie.next()) {
+                        movie.getMovieGenres().put(rsSelectCatMovie.getInt("CategoryID")
+                                , mapCatMovie.get(rsSelectCatMovie.getInt("CategoryID")));
+                    }
                 }
             }
-        }
         return allMovies;
     }
 
-    public Movie createMovie(Movie movie) throws SQLException, MovieException {
+    public Movie createMovie(Movie movie,User user) throws SQLException, MovieException {
         exceptionCreationUpdate(movie,true);
         Movie movieCreated = null;
         try(Connection con = cm.getConnection()) {
-            String sqlCreate = "INSERT INTO MOVIE VALUES (?,?,?,?,getDate(),?,?)";
-            PreparedStatement statementCreate = con.prepareStatement(sqlCreate, Statement.RETURN_GENERATED_KEYS);
-            statementCreate.setString(1,movie.getName());
-            statementCreate.setDouble(2,movie.getRating());
-            statementCreate.setDouble(3,movie.getImdbRating());
-            statementCreate.setString(4,movie.getFileLink().toString());
-            statementCreate.setString(5,movie.getTrailerLink());
-            statementCreate.setString(6,movie.getSummary());
-
-            ResultSet rs = statementCreate.executeQuery();
+            String sql0 = "INSERT INTO MOVIE VALUES (?,?,?,?,getDate(),?,?)";
+            String sql1= "INSERT INTO UserMovie VALUES(?,?,?)";
+            PreparedStatement statement0 = con.prepareStatement(sql0, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement1=con.prepareStatement(sql1);
+            statement1.setInt(1,movie.getId());
+            statement1.setInt(2,user.getId());
+            statement1.setDouble(3,movie.getRating());
+            statement0.setString(1,movie.getName());
+            statement0.setDouble(3,movie.getImdbRating());
+            statement0.setString(4,movie.getFileLink().toString());
+            statement0.setString(5,movie.getTrailerLink());
+            statement0.setString(6,movie.getSummary());
+            statement1.executeUpdate();
+            ResultSet rs = statement0.executeQuery();
             while(rs.next()) {
                 movieCreated = new Movie(rs.getInt(1)
                         ,movie.getName()
@@ -104,14 +117,14 @@ public class MovieDAO implements IMovieDataAccess {
     }
     public void deleteMovie(Movie movie) throws SQLException {
         try(Connection con = cm.getConnection()) {
-            String sqlDeleteFromMovie = "DELETE FROM MOVIE WHERE ID=?";
-            PreparedStatement statementDeleteFromMovie = con.prepareStatement(sqlDeleteFromMovie);
+            String sqlDeleteFromUserMovie = "DELETE FROM UserMovie WHERE movieId=?";
+            PreparedStatement statementDeleteFromMovie = con.prepareStatement(sqlDeleteFromUserMovie);
             statementDeleteFromMovie.setInt(1,movie.getId());
             String sqlDeleteFromCatMovie = "DELETE FROM CATMOVIE WHERE MovieID=?";
             PreparedStatement statementDeleteFromCatMovie = con.prepareStatement(sqlDeleteFromCatMovie);
             statementDeleteFromCatMovie.setInt(1,movie.getId());
-            statementDeleteFromMovie.execute();
             statementDeleteFromCatMovie.execute();
+            statementDeleteFromMovie.executeUpdate();
 
         }
     }

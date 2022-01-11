@@ -71,5 +71,6 @@
       <WebView fx:id="trailerView" layoutX="454.0" layoutY="368.0" prefHeight="200.0" prefWidth="200.0" />
       <TextField fx:id="keywordTextField" layoutX="143.0" layoutY="23.0" />
       <Button fx:id="search" layoutX="328.0" layoutY="24.0" mnemonicParsing="false" onAction="#clear" text="Search" />
+      <Button layoutX="437.0" layoutY="23.0" mnemonicParsing="false" onAction="#openStatsWindow" text="About me" />
    </children>
 </AnchorPane>

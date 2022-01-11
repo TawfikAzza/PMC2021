@@ -126,16 +126,6 @@ public class MainController implements Initializable {
             });
         });
 
-        // 3. Wrap the FilteredList in a SortedList.
-        assert filteredData != null;
-        SortedList<Movie> sortedData = new SortedList<>(filteredData);
-
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        //       Otherwise, sorting the TableView would have no effect.
-        sortedData.comparatorProperty().bind(tableMovie.comparatorProperty());
-
-        // 5. Add sorted (and filtered) data to the table.
-        tableMovie.setItems(sortedData);
 
     }
     @FXML
