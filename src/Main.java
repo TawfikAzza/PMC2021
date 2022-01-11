@@ -28,8 +28,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Views/MainWindow.fxml"));
         FXMLLoader loader1=new FXMLLoader(getClass().getResource("/gui/Views/outdatedMovies.fxml"));
+        FXMLLoader loader2=new FXMLLoader(getClass().getResource("/gui/Views/LogIn.fxml"));
         Parent root = loader.load();
         Parent root1=loader1.load();
+        Parent root2=loader2.load();
         /*
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         float width = gd.getDisplayMode().getWidth();
@@ -38,7 +40,12 @@ public class Main extends Application {
         height = height/3;
         Scene scene = new Scene(root,(width*2),(height*2)); //Responsive design
          */
-        if (movieDAO.getAllOutdatedMovies().isEmpty()){
+        Scene scene= new Scene(root2);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("LogIn");
+        primaryStage.show();
+
+        /**if (movieDAO.getAllOutdatedMovies().isEmpty()){
         Scene scene = new Scene(root,1110,600);
         primaryStage.setScene(scene);
         }
@@ -51,7 +58,7 @@ public class Main extends Application {
         Image imagotype = new Image(file.toURI().toString());
         primaryStage.getIcons().add(imagotype);
         primaryStage.setResizable(true);
-        primaryStage.show();
+        primaryStage.show();*/
 
         /*primaryStage.setTitle("Media");
         Group root = new Group();

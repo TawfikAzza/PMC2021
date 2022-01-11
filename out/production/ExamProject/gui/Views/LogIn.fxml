@@ -5,13 +5,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="200.0" prefWidth="269.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.LogInController">
    <children>
-      <TextField alignment="TOP_CENTER" layoutX="54.0" layoutY="58.0" promptText="UserName" />
-      <TextField alignment="TOP_CENTER" layoutX="54.0" layoutY="98.0" promptText="Password" />
-      <Button layoutX="63.0" layoutY="137.0" mnemonicParsing="false" text="LogIn" />
-      <Button layoutX="153.0" layoutY="138.0" mnemonicParsing="false" text="SignUp" />
+      <TextField fx:id="userName" alignment="TOP_CENTER" layoutX="54.0" layoutY="58.0" promptText="UserName" />
+      <TextField fx:id="passWord" alignment="TOP_CENTER" layoutX="54.0" layoutY="98.0" promptText="Password" />
+      <Button fx:id="logInButton" layoutX="63.0" layoutY="137.0" mnemonicParsing="false" onAction="#logIn" text="LogIn" />
+      <Button layoutX="153.0" layoutY="138.0" mnemonicParsing="false" onAction="#signUp" text="SignUp" />
       <Label layoutX="42.0" layoutY="28.0" text="Welcome to your movie collection" />
    </children>
 </AnchorPane>
