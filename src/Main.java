@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 
 public class Main extends Application {
     MovieDAO movieDAO;
@@ -75,6 +77,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        Instant start = Instant.now();
         Application.launch();
+        Instant end = Instant.now();
+        System.out.println( Duration.between(start, end).getSeconds());
     }
 }

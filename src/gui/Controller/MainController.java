@@ -127,6 +127,7 @@ public class MainController implements Initializable {
         });
 
         // 3. Wrap the FilteredList in a SortedList.
+        assert filteredData != null;
         SortedList<Movie> sortedData = new SortedList<>(filteredData);
 
         // 4. Bind the SortedList comparator to the TableView comparator.
@@ -352,5 +353,16 @@ public class MainController implements Initializable {
     private void clear(ActionEvent actionEvent) {
         keywordTextField.setText("");
         search.setText("Search");
+    }
+
+    public void openStatsWindow(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("gui/Views/Stats.fxml"));
+        Parent root;
+            root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("About me");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
