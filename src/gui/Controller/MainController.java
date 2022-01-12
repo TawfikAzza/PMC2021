@@ -1,5 +1,6 @@
 package gui.Controller;
 
+import be.CategoryMovie;
 import be.Movie;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
@@ -9,13 +10,14 @@ import gui.Model.MovieModel;
 import gui.Model.VideoModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,9 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.TextFlow;
@@ -44,7 +44,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    public CheckComboBox categoriesCheckComboBox;
+    public CheckComboBox<Object> categoriesCheckComboBox;
+    public Button searchButton;
     @FXML
     private Button search;
     @FXML
@@ -93,7 +94,7 @@ public class MainController implements Initializable {
         }
         videoModel = new VideoModel();
         try {
-            updateTableMovie();
+            updateTableMovie(movieModel.getAllMovies());
         } catch (MovieException e) {
             e.printStackTrace();
         }
@@ -183,15 +184,13 @@ public class MainController implements Initializable {
 
     }
 
-    public void updateTableMovie() throws  MovieException {
-        tableMovie.getItems().clear();
+    public void updateTableMovie(ObservableList<Movie>moviesList) throws  MovieException {
+        //tableMovie.getItems().clear();
         title.setCellValueFactory(new PropertyValueFactory<>("name"));
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
-        try {
-            tableMovie.getItems().setAll(movieModel.getAllMovies());
-        }catch (MovieException ignored){}
+        tableMovie.getItems().setAll(moviesList);
     }
 
     public void addMovie(ActionEvent actionEvent) {
@@ -359,7 +358,7 @@ public class MainController implements Initializable {
         search.setText("Search");
     }
 
-    public void openStatsWindow(ActionEvent actionEvent) throws IOException {
+    public void openStatsWindow(ActionEvent actionEvent) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("gui/Views/Stats.fxml"));
         Parent root;
@@ -368,8 +367,56 @@ public class MainController implements Initializable {
         stage.setTitle("About me");
         stage.setScene(new Scene(root));
         stage.show();
+        //System.out.println(movieModel.allMoviesCategory(new CategoryMovie(1,"Science Fiction")));
     }
     private void setUpCheckComboBox() throws CategoryException {
-        categoriesCheckComboBox.getItems().addAll(movieModel.getAllCategories());
+        categoriesCheckComboBox.getItems().setAll(movieModel.getAllCategories());
+        /*for(CategoryMovie categoryMovie: movieModel.getAllCategories()){
+            JFrame f = new JFrame("Listeners");
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JCheckBox b = new JCheckBox(categoryMovie.getName());
+            b.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    System.out.println(b.getText());
+                }});
+
+
+            /*checkBox.setOnAction(event -> {
+                if(checkBox.isSelected()) {
+                    try {
+                        updateTableMovie(movieModel.allMoviesCategory(categoryMovie));
+                    } catch (MovieException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    try {
+                        tableMovie.getItems().removeAll(movieModel.allMoviesCategory(categoryMovie));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            });*/
+
+        }
+
+    public void searchCategories(ActionEvent actionEvent) throws SQLException, MovieException {
+        if (searchButton.getText().equals("Search")){
+            ObservableList<Movie>allMovies= FXCollections.observableArrayList();
+        for(Object category:categoriesCheckComboBox.getCheckModel().getCheckedItems())
+            allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
+            tableMovie.setItems(allMovies);
+            searchButton.setText("Clear");
+        }else {
+            updateTableMovie(movieModel.getAllMovies());
+            for(Object category:categoriesCheckComboBox.getItems()) {
+                if (categoriesCheckComboBox.getCheckModel().isChecked(category))
+                categoriesCheckComboBox.getCheckModel().clearCheck(category);
+            }
+            searchButton.setText("Search");
+        }
+
     }
 }
+

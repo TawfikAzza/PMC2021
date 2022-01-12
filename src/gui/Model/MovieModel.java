@@ -45,4 +45,10 @@ public class MovieModel {
         allCategories.addAll(pmcFacade.getAllCategories());
         return allCategories;
     }
+
+    public ObservableList<Movie> allMoviesCategory(CategoryMovie science_fiction) throws SQLException {
+        ObservableList<Movie> allMoviesCategory = FXCollections.observableArrayList();
+        allMoviesCategory.addAll( pmcFacade.allMoviesCategory(science_fiction));
+        return allMoviesCategory;
+    }
 }

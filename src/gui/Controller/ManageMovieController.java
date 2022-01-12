@@ -131,7 +131,7 @@ public class ManageMovieController implements Initializable {
 
             try {
                 movie = movieModel.createMovie(movie);
-                mainController.updateTableMovie();
+                mainController.updateTableMovie(movieModel.getAllMovies());
                 movie.setMovieGenres(categoryMovieHashMap);
                 categoryModel.addCategoryFromMovie(movie);
 
@@ -161,7 +161,7 @@ public class ManageMovieController implements Initializable {
             try {
                 movieModel.updateMovie(movie);
                 categoryModel.addCategoryFromMovie(movie);
-                mainController.updateTableMovie();
+                mainController.updateTableMovie(movieModel.getAllMovies());
             }catch (MovieException movieException){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Error");
