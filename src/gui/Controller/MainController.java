@@ -41,6 +41,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -106,33 +108,28 @@ public class MainController implements Initializable {
         initButtons();
 
         // Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Movie> filteredData = null;
-        try {
-            filteredData = new FilteredList<>(movieModel.getAllMovies(), b -> true);
-        } catch (MovieException e) {
-            e.printStackTrace();
-        }
-
+        FilteredList<Movie> filteredData;
+            filteredData = new FilteredList<>(tableMovie.getItems(), b -> true);
 
         // 2. Set the filter Predicate whenever the filter changes.
         FilteredList<Movie> finalFilteredData = filteredData;
         keywordTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             finalFilteredData.setPredicate(movie -> {
-                    search.setText("Clear");                // If filter text is empty, display all persons.
+                // If filter text is empty, display all persons.
 
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-
-                // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                return movie.getName().toLowerCase().contains(lowerCaseFilter); // Filter matches first name.
+                if(movie.getName().toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                else return false;
             });
         });
 
         // 3. Wrap the FilteredList in a SortedList.
-        assert filteredData != null;
         SortedList<Movie> sortedData = new SortedList<>(filteredData);
 
         // 4. Bind the SortedList comparator to the TableView comparator.
@@ -141,7 +138,6 @@ public class MainController implements Initializable {
 
         // 5. Add sorted (and filtered) data to the table.
         tableMovie.setItems(sortedData);
-
     }
     @FXML
     private void moveProgressSlider(MouseEvent mouseEvent) {
@@ -190,7 +186,9 @@ public class MainController implements Initializable {
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
-        tableMovie.getItems().setAll(moviesList);
+        try {
+            tableMovie.getItems().setAll(moviesList);
+        }catch (UnsupportedOperationException ignored){}
     }
 
     public void addMovie(ActionEvent actionEvent) {
@@ -352,11 +350,7 @@ public class MainController implements Initializable {
         System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
         txtSummary.setAccessibleText(tableMovie.getSelectionModel().getSelectedItem().getSummary());
     }
-    @FXML
-    private void clear(ActionEvent actionEvent) {
-        keywordTextField.setText("");
-        search.setText("Search");
-    }
+
 
     public void openStatsWindow(ActionEvent actionEvent) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader();
@@ -403,11 +397,12 @@ public class MainController implements Initializable {
 
     public void searchCategories(ActionEvent actionEvent) throws SQLException, MovieException {
         if (searchButton.getText().equals("Search")){
+            if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()){
             ObservableList<Movie>allMovies= FXCollections.observableArrayList();
         for(Object category:categoriesCheckComboBox.getCheckModel().getCheckedItems())
             allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
             tableMovie.setItems(allMovies);
-            searchButton.setText("Clear");
+            searchButton.setText("Clear");}
         }else {
             updateTableMovie(movieModel.getAllMovies());
             for(Object category:categoriesCheckComboBox.getItems()) {
@@ -416,7 +411,24 @@ public class MainController implements Initializable {
             }
             searchButton.setText("Search");
         }
+    }
 
+    public void search(ActionEvent actionEvent) throws MovieException {
+        if (search.getText().equals("Search")){
+            ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
+        for (Movie movie:tableMovie.getItems()){
+            if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
+                moviesFiltered.add(movie);
+            if (!keywordTextField.getText().isEmpty())
+            search.setText("Clear");
+        }
+        tableMovie.setItems(moviesFiltered);
+    }else if (search.getText().equals("Clear")){
+            keywordTextField.setText("");
+            updateTableMovie(movieModel.getAllMovies());
+            search.setText("Search");
+
+        }
     }
 }
 
