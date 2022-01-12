@@ -1,6 +1,7 @@
 package gui.Controller;
 
 import be.Movie;
+import be.User;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import bll.utils.VideoPlayer;
@@ -80,6 +81,8 @@ public class MainController implements Initializable {
     private TableView<Movie> tableMovie;
     @FXML
     private WebView trailerView;
+    private User user = new User(0,"","");
+    LogInController logInController;
 
     MediaPlayer mediaPlayer;
     private ChangeListener<Duration> progressListener;
@@ -95,15 +98,15 @@ public class MainController implements Initializable {
         videoModel = new VideoModel();
         try {
             updateTableMovie();
-        } catch (MovieException e) {
-            e.printStackTrace();
-        }
+        }catch (MovieException ignored){}
+
         initButtons();
 
         // Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<Movie> filteredData = null;
+        assert  user!=null;
         try {
-            filteredData = new FilteredList<>(movieModel.getAllMovies(), b -> true);
+            filteredData = new FilteredList<>(movieModel.getAllMovies(user), b -> true);
         } catch (MovieException e) {
             e.printStackTrace();
         }
@@ -176,7 +179,7 @@ public class MainController implements Initializable {
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
         try {
-            tableMovie.getItems().setAll(movieModel.getAllMovies());
+            tableMovie.getItems().setAll(movieModel.getAllMovies(user));
         }catch (MovieException ignored){}
     }
 
@@ -354,5 +357,12 @@ public class MainController implements Initializable {
         stage.setTitle("About me");
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    public void setUser(User user) throws MovieException {
+        this.user=user;
+        updateTableMovie();
+    }
+    public void setMainController(LogInController logInController) {
+        this.logInController = logInController;
     }
 }

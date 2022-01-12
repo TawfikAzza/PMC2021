@@ -1,6 +1,7 @@
 package gui.Controller;
 
 import be.User;
+import bll.exceptions.MovieException;
 import bll.exceptions.UserException;
 import dal.db.MovieDAO;
 import gui.Model.LogInModel;
@@ -46,8 +47,8 @@ public class LogInController {
     }
     public TextField passWord;
 
-    public void logIn(ActionEvent actionEvent) throws SQLException, IOException {
-   User user=null;
+    public void logIn(ActionEvent actionEvent) throws SQLException, IOException, MovieException {
+   User user;
     try {
          user = logInModel.logIn(userName.getText(),passWord.getText());
     }catch (UserException ue){
@@ -71,18 +72,24 @@ public class LogInController {
         { Stage stage = (Stage) logInButton.getScene().getWindow();
         stage.close();}
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Views/MainWindow.fxml"));
-        FXMLLoader loader1=new FXMLLoader(getClass().getResource("/gui/Views/outdatedMovies.fxml"));
+        //FXMLLoader loader1=new FXMLLoader(getClass().getResource("/gui/Views/outdatedMovies.fxml"));
         Parent root = loader.load();
-        Parent root1=loader1.load();
+        MainController mainController=loader.getController();
+        mainController.setMainController(this);
+        mainController.setUser(user);
+
+        //Parent root1=loader1.load();
         Stage stage= new Stage();
-        if (movieDAO.getAllOutdatedMovies().isEmpty()){
+        /**if (movieDAO.getAllOutdatedMovies().isEmpty()){
             Scene scene = new Scene(root,1110,600);
             stage.setScene(scene);
         }
-        else{
-            Scene scene = new Scene(root1);
+        else{*/
+        //Scene scene = new Scene(root1);
+
+        Scene scene = new Scene(root);
             stage.setScene(scene);
-        }
+        //}
         stage.setTitle("PMC 2022");
         File file = new File("data/playImagotype.png");
         Image image = new Image(file.toURI().toString());
@@ -91,6 +98,7 @@ public class LogInController {
         stage.show();
 
     }
+
 
 
 

@@ -17,9 +17,9 @@ public class MovieModel {
         pmcFacade = new PMCManager();
     }
 
-    public ObservableList<Movie> getAllMovies() throws MovieException {
+    public ObservableList<Movie> getAllMovies(User user) throws MovieException {
         ObservableList<Movie> allObsMovies = FXCollections.observableArrayList();
-        allObsMovies.addAll(pmcFacade.getAllMovies(new User(1,"silamin","xnxx")));
+        allObsMovies.addAll(pmcFacade.getAllMovies(user));
         return allObsMovies;
     }
 
