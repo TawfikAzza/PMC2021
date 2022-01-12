@@ -14,6 +14,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.web.WebView?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <AnchorPane prefHeight="597.0" prefWidth="1078.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
    <children>
@@ -72,5 +73,6 @@
       <TextField fx:id="keywordTextField" layoutX="143.0" layoutY="23.0" />
       <Button fx:id="search" layoutX="328.0" layoutY="24.0" mnemonicParsing="false" onAction="#clear" text="Search" />
       <Button layoutX="437.0" layoutY="23.0" mnemonicParsing="false" onAction="#openStatsWindow" text="About me" />
+      <CheckComboBox fx:id="categoriesCheckComboBox" layoutX="417.0" layoutY="89.0" prefHeight="26.0" prefWidth="110.0" />
    </children>
 </AnchorPane>

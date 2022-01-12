@@ -35,10 +35,8 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.controlsfx.control.CheckComboBox;
 
-import javax.imageio.ImageReader;
-import java.awt.*;
-import java.awt.font.ImageGraphicAttribute;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -46,6 +44,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    public CheckComboBox categoriesCheckComboBox;
     @FXML
     private Button search;
     @FXML
@@ -96,6 +95,11 @@ public class MainController implements Initializable {
         try {
             updateTableMovie();
         } catch (MovieException e) {
+            e.printStackTrace();
+        }
+        try {
+            setUpCheckComboBox();
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
         initButtons();
@@ -364,5 +368,8 @@ public class MainController implements Initializable {
         stage.setTitle("About me");
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    private void setUpCheckComboBox() throws CategoryException {
+        categoriesCheckComboBox.getItems().addAll(movieModel.getAllCategories());
     }
 }
