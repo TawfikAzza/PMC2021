@@ -24,7 +24,7 @@ public class IMDBScraper {
     }
 
     public String extractTitle(){
-        List<DomText> items = page.getByXPath("//*[@id=\"__next\"]/main/div/section[1]/section/div[3]/section/section/div[1]/div[1]/h1");
+        List<DomText> items = page.getByXPath("//*[@id=\"__next\"]/main/div/section[1]/section/div[3]/section/section/div[1]/div[1]/h1/text()");
         String title = items.get(0).toString();
         return title;
     }
@@ -33,5 +33,11 @@ public class IMDBScraper {
         List<DomText> items = page.getByXPath("//*[@id=\"__next\"]/main/div/section[1]/section/div[3]/section/section/div[1]/div[2]/div/div[1]/a/div/div/div[2]/div[1]/span[1]/text()");
         String rating = items.get(0).toString();
         return rating;
+    }
+
+    public String extractPlot(){
+        List<DomText> items = page.getByXPath("//*[@id=\"__next\"]/main/div/section[1]/section/div[3]/section/section/div[3]/div[2]/div[1]/div[1]/p/span[1]/text()");
+        String plot = items.get(0).toString();
+        return plot;
     }
 }
