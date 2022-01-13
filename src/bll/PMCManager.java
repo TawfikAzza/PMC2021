@@ -82,4 +82,9 @@ public class PMCManager implements PMCFacade{
     public List<Movie> getAllOutdatedMovies() throws SQLException{
         return dalController.getAllOutdatedMovies();
     }
+
+    @Override
+    public List<Movie> allMoviesCategory(CategoryMovie categoryMovie) throws SQLException {
+        return dalController.getAllMoviesCategory(categoryMovie);
+    }
 }

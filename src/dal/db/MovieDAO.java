@@ -115,6 +115,21 @@ public class MovieDAO implements IMovieDataAccess {
 
         }
     }
+
+    @Override
+    public List<Movie> getAllMoviesCategory(CategoryMovie categoryMovie) throws SQLException {
+        List<Movie>allMoviesCategory=new ArrayList<>();
+        for(Movie movie:getAllMovies()){
+            for(CategoryMovie categoryMovie1:categoryDAO.getCategoryFromMovie(movie)){
+                if (categoryMovie1.getName().equals(categoryMovie.getName())){
+                    allMoviesCategory.add(movie);
+                    break;
+                }
+            }
+        }
+        return allMoviesCategory;
+    }
+
     private HashMap<Integer, CategoryMovie> getAllCategories() throws SQLException {
         List<CategoryMovie> allCats =categoryDAO.getAllCategories();
         HashMap<Integer,CategoryMovie> mapCategories= new HashMap<>();
@@ -173,4 +188,5 @@ public class MovieDAO implements IMovieDataAccess {
         }
         return allOutdatedMovies;
     }
+
 }

@@ -1,8 +1,10 @@
 package gui.Model;
 
+import be.CategoryMovie;
 import be.Movie;
 import bll.PMCFacade;
 import bll.PMCManager;
+import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,5 +38,17 @@ public class MovieModel {
     }
     public void playMovie(Movie movie) throws IOException {
         pmcFacade.playMovie(movie);
+    }
+
+    public ObservableList<CategoryMovie> getAllCategories() throws CategoryException {
+        ObservableList<CategoryMovie> allCategories = FXCollections.observableArrayList();
+        allCategories.addAll(pmcFacade.getAllCategories());
+        return allCategories;
+    }
+
+    public ObservableList<Movie> allMoviesCategory(CategoryMovie science_fiction) throws SQLException {
+        ObservableList<Movie> allMoviesCategory = FXCollections.observableArrayList();
+        allMoviesCategory.addAll( pmcFacade.allMoviesCategory(science_fiction));
+        return allMoviesCategory;
     }
 }

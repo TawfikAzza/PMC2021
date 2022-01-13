@@ -135,4 +135,9 @@ public class DALController implements IDALFacade {
     public List<Movie> getAllOutdatedMovies()throws SQLException {
         return iMovieDataAccess.getAllOutdatedMovies();
     }
+
+    @Override
+    public List<Movie> getAllMoviesCategory(CategoryMovie categoryMovie) throws SQLException {
+        return iMovieDataAccess.getAllMoviesCategory(categoryMovie);
+    }
 }

@@ -28,4 +28,5 @@ public interface IDALFacade {
      void updateCategory(CategoryMovie categoryMovie) throws CategoryException;
      void deleteCategory(CategoryMovie category) throws CategoryException;
      List<Movie>getAllOutdatedMovies() throws SQLException;
+     List<Movie>getAllMoviesCategory(CategoryMovie categoryMovie)throws SQLException;
 }
