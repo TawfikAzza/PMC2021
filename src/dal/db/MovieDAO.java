@@ -188,5 +188,15 @@ public class MovieDAO implements IMovieDataAccess {
         }
         return allOutdatedMovies;
     }
+    @Override
+    public void updateLastView(Movie movie)throws SQLException{
+        String sql="UPDATE Movie SET lastView=getDate() WHERE id=?";
+        try (Connection connection= cm.getConnection()){
+            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+            preparedStatement.setInt(1,movie.getId());
+            preparedStatement.executeUpdate();
+        }
+
+    }
 
 }

@@ -34,4 +34,5 @@ public interface PMCFacade {
     List <Movie> getAllOutdatedMovies()throws SQLException;
 
     List<Movie>allMoviesCategory(CategoryMovie categoryMovie)throws SQLException;
+    void updateLastView(Movie movie)throws SQLException;
 }

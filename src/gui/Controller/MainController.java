@@ -236,10 +236,19 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void playMovie(ActionEvent event) throws IOException {
+    void playMovie(ActionEvent event) throws IOException, SQLException, MovieException {
         if(tableMovie.getSelectionModel().getSelectedIndex()!=-1){
             Movie movie = tableMovie.getSelectionModel().getSelectedItem();
-            movieModel.playMovie(movie);
+             movieModel.updateLastView(tableMovie.getSelectionModel().getSelectedItem());
+            updateTableMovie(movieModel.getAllMovies());
+            try {
+                movieModel.playMovie(movie);
+            }catch (IllegalArgumentException iae){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error window");
+                alert.setHeaderText("Sorry, the file does not exist");
+                alert.show();
+            }
 
         }
     }
