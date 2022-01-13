@@ -14,12 +14,14 @@ import java.sql.SQLException;
 
 public class MovieModel {
     PMCFacade pmcFacade;
+    ObservableList<Movie> allObsMovies ;
+
     public MovieModel() throws IOException {
         pmcFacade = new PMCManager();
     }
 
     public ObservableList<Movie> getAllMovies() throws MovieException {
-        ObservableList<Movie> allObsMovies = FXCollections.observableArrayList();
+        allObsMovies=FXCollections.observableArrayList();
         allObsMovies.addAll(pmcFacade.getAllMovies());
         return allObsMovies;
     }

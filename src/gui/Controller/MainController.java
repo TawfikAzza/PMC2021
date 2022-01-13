@@ -184,9 +184,7 @@ public class MainController implements Initializable {
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
-        try {
-            tableMovie.getItems().setAll(moviesList);
-        }catch (UnsupportedOperationException ignored){}
+        tableMovie.setItems(movieModel.getAllMovies());
     }
 
     public void addMovie(ActionEvent actionEvent) {
