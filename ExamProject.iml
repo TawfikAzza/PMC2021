@@ -12,5 +12,6 @@
     <orderEntry type="library" name="openjfx.javafx.fxml" level="project" />
     <orderEntry type="library" name="openjfx.javafx.media" level="project" />
     <orderEntry type="library" exported="" name="controlsfx-11.1.0" level="project" />
+    <orderEntry type="library" name="controlsfx" level="project" />
   </component>
 </module>
