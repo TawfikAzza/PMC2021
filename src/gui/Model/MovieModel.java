@@ -51,4 +51,8 @@ public class MovieModel {
         allMoviesCategory.addAll( pmcFacade.allMoviesCategory(science_fiction));
         return allMoviesCategory;
     }
+
+    public void updateLastView(Movie selectedItem) throws SQLException {
+        pmcFacade.updateLastView(selectedItem);
+    }
 }
