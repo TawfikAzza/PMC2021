@@ -120,6 +120,11 @@ public class Movie {
     public String getLastWatched() {
         return lastWatched;
     }
+
+    public void setLastWatched(String lastWatched) {
+        this.lastWatched = lastWatched;
+    }
+
     @Override
     public String toString() {
         return String.format("%s",getName());

@@ -14,6 +14,7 @@ public interface IMovieDataAccess {
     public void updateMovie(Movie movie) throws SQLException, MovieException;
     public void deleteMovie(Movie movie) throws SQLException;
     List<Movie>getAllMoviesCategory(CategoryMovie categoryMovie)throws SQLException;
+    void updateLastView(Movie movie)throws SQLException;
 
     List<Movie> getAllOutdatedMovies() throws SQLException;
 }
