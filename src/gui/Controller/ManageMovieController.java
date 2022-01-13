@@ -4,6 +4,7 @@ import be.CategoryMovie;
 import be.Movie;
 import bll.*;
 import bll.exceptions.*;
+import bll.utils.IMDBScraper;
 import gui.Model.CategoryModel;
 import gui.Model.MovieModel;
 import javafx.event.ActionEvent;
@@ -27,6 +28,7 @@ import java.util.ResourceBundle;
 public class ManageMovieController implements Initializable {
 
     public Button chooseFileButton;
+
     @FXML
     private  TextArea txtSummary;
     @FXML
@@ -277,4 +279,28 @@ public class ManageMovieController implements Initializable {
     }
 
 
+    public void handleSearchMovie(ActionEvent actionEvent) throws IOException {
+        String movieTitle = txtTitle.getText();
+        if (movieTitle==null||movieTitle.isEmpty())
+            return;
+
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("../Views/MovieWebView.fxml")));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        MovieWebController controller = loader.getController();
+        controller.loadPage("https://www.imdb.com/find?q="+txtTitle.getText()+"&ref_=nv_sr_sm");
+        controller.provideController(this);
+        stage.show();
+
+
+
+    }
+
+    public void fillFields(IMDBScraper scraper) {
+        txtTitle.setText(scraper.extractTitle());
+        txtRating.setText(scraper.extractRating());
+    }
 }

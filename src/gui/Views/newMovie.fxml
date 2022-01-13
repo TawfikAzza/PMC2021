@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="771.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.ManageMovieController">
+<AnchorPane prefHeight="400.0" prefWidth="771.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.ManageMovieController">
    <children>
       <TextField fx:id="txtTitle" layoutX="122.0" layoutY="65.0" />
       <TextField fx:id="fileTextField" layoutX="122.0" layoutY="187.0" />
@@ -79,5 +79,6 @@
          </effect>
       </Label>
       <TextField fx:id="txtTrailerLink" layoutX="122.0" layoutY="229.0" />
+      <Button layoutX="286.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleSearchMovie" text="Search" />
    </children>
 </AnchorPane>
