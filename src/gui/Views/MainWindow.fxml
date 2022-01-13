@@ -51,12 +51,6 @@
       <VBox layoutX="775.0" layoutY="66.0" prefHeight="501.0" prefWidth="350.0" AnchorPane.bottomAnchor="32.39999999999998" AnchorPane.rightAnchor="36.60000000000002" AnchorPane.topAnchor="66.0">
          <children>
             <MediaView fx:id="vidScreen" fitHeight="200.0" fitWidth="350.0" />
-            <Slider fx:id="vidSlider" onMousePressed="#moveProgressSlider" onMouseReleased="#setProgress" prefHeight="53.0" prefWidth="352.0" snapToPixel="false">
-               <effect>
-                  <Glow level="0.52" />
-               </effect>
-            </Slider>
-            <TextFlow fx:id="txtSummary" prefHeight="255.0" prefWidth="350.0" />
          </children>
       </VBox>
       <Button fx:id="watchMovBtn" layoutX="513.0" layoutY="201.0" mnemonicParsing="false" onAction="#playMovie" onMouseEntered="#watchMOE" onMouseExited="#watchMOX" prefHeight="48.0" prefWidth="136.0" style="-fx-background-color: #464649;" text="Watch Movie" textAlignment="CENTER" textFill="WHITE">
@@ -69,11 +63,17 @@
             <Glow level="1.0" />
          </effect>
       </Line>
-      <WebView fx:id="trailerView" layoutX="454.0" layoutY="368.0" prefHeight="200.0" prefWidth="200.0" />
+      <WebView fx:id="trailerView" layoutX="413.0" layoutY="313.0" prefHeight="200.0" prefWidth="200.0" />
       <TextField fx:id="keywordTextField" layoutX="143.0" layoutY="23.0" />
       <Button fx:id="search" layoutX="328.0" layoutY="24.0" mnemonicParsing="false" onAction="#search" text="Search" />
       <Button layoutX="437.0" layoutY="23.0" mnemonicParsing="false" onAction="#openStatsWindow" text="About me" />
-      <CheckComboBox fx:id="categoriesCheckComboBox" layoutX="417.0" layoutY="89.0" prefHeight="26.0" prefWidth="110.0" />
-      <Button fx:id="searchButton" layoutX="539.0" layoutY="90.0" mnemonicParsing="false" onAction="#searchCategories" text="Search" />
+      <CheckComboBox fx:id="categoriesCheckComboBox" layoutX="526.0" layoutY="23.0" prefHeight="26.0" prefWidth="110.0" />
+      <Button fx:id="searchButton" layoutX="642.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchCategories" text="Search" />
+      <Slider fx:id="vidSlider" layoutX="314.0" layoutY="268.0" onMousePressed="#moveProgressSlider" onMouseReleased="#setProgress" prefHeight="53.0" prefWidth="352.0" snapToPixel="false">
+         <effect>
+            <Glow level="0.52" />
+         </effect>
+      </Slider>
+      <TextFlow fx:id="txtSummary" layoutX="378.0" layoutY="287.0" prefHeight="255.0" prefWidth="350.0" />
    </children>
 </AnchorPane>
