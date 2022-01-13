@@ -80,7 +80,7 @@ public class DALController implements IDALFacade {
     @Override
     public List<CategoryMovie> getCategoryFromMovie(Movie movie) throws CategoryException {
         try {
-            return iCategoryDataAccess.getCategoryFromMovie(movie);
+            return iCategoryDataAccess. getCategoryFromMovie(movie);
         }catch (SQLException e){
             throw new CategoryException("Something wrong went in the database.\nPlease try again.",new Exception());
         }
