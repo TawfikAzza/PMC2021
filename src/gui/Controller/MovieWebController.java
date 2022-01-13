@@ -3,6 +3,7 @@ package gui.Controller;
 import bll.utils.IMDBScraper;
 import javafx.event.ActionEvent;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -16,6 +17,8 @@ public class MovieWebController {
         if (url.contains("https://www.imdb.com/title/tt")){
             IMDBScraper scraper = new IMDBScraper(url);
             manageMovieController.fillFields(scraper);
+            Stage stage = ((Stage) movieView.getParent().getScene().getWindow());
+            stage.close();
         }
     }
 
