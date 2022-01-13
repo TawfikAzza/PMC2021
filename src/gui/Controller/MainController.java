@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -35,6 +36,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     public CheckComboBox<Object> categoriesCheckComboBox;
+    @FXML
     public Button searchButton;
     @FXML
     private Button search;
@@ -61,13 +63,13 @@ public class MainController implements Initializable {
     @FXML
     private Button editButton;
     @FXML
-    private Slider vidSlider;
-    @FXML
     private TableColumn<Movie, String> title, imdbRating, lastViewed, rating;
     @FXML
     private TableView<Movie> tableMovie;
     @FXML
     private WebView trailerView;
+    @FXML
+    private Text txtAllMovies,txtTrailerPreview;
 
     MediaPlayer mediaPlayer;
     private ChangeListener<Duration> progressListener;
@@ -128,17 +130,6 @@ public class MainController implements Initializable {
 
         // 5. Add sorted (and filtered) data to the table.
         tableMovie.setItems(sortedData);
-    }
-
-    @FXML
-    private void moveProgressSlider(MouseEvent mouseEvent) {
-        mediaPlayer.currentTimeProperty().removeListener(progressListener);
-    }
-
-    @FXML
-    private void setProgress(MouseEvent mouseEvent) {
-        mediaPlayer.seek(Duration.seconds(vidSlider.getValue()));
-        mediaPlayer.currentTimeProperty().addListener(progressListener);
     }
 
     @FXML
