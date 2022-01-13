@@ -12,8 +12,11 @@ public class MovieWebController {
     ManageMovieController manageMovieController;
 
     public void handleFoundMovie(ActionEvent actionEvent) throws IOException {
-        IMDBScraper scraper = new IMDBScraper(movieView.getEngine().getLocation());
-        manageMovieController.fillFields(scraper);
+        String url = movieView.getEngine().getLocation();
+        if (url.contains("https://www.imdb.com/title/tt")){
+            IMDBScraper scraper = new IMDBScraper(url);
+            manageMovieController.fillFields(scraper);
+        }
     }
 
     public void handleCancel(ActionEvent actionEvent) {

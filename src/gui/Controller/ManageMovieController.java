@@ -301,6 +301,7 @@ public class ManageMovieController implements Initializable {
 
     public void fillFields(IMDBScraper scraper) {
         txtTitle.setText(scraper.extractTitle());
-        txtRating.setText(scraper.extractRating());
+        txtImdb.setText(scraper.extractRating());
+        txtSummary.setText(scraper.extractPlot());
     }
 }
