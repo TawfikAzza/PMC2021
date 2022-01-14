@@ -12,10 +12,13 @@
     -fx-font-size: 18;
     -fx-fill: white;
 }
+#txtComments{
+    -fx-font-size: 18;
+    -fx-fill: white;
+}
 .text-field{
-
     -fx-font-size: 14;
-    -fx-text-fill: white;
+    -fx-text-fill: #282828;
 }
 #search{
     -fx-background-color: #282828;
@@ -26,4 +29,80 @@
     -fx-background-color: #282828;
     -fx-background-image: url("data/searchBtn2.png");
     -fx-background-size: cover;
+}
+
+.combo-box>.list-cell {
+    -fx-alignment: center;
+    -fx-font-size: 13;
+}
+#searchButton{
+    -fx-background-color: #282828;
+    -fx-background-image: url("data/searchBtn1.png");
+    -fx-background-size: cover;
+}
+#searchButton:hover{
+    -fx-background-color: #282828;
+    -fx-background-image: url("data/searchBtn2.png");
+    -fx-background-size: cover;
+}
+#watchMovBtn{
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+
+}
+#watchMovBtn:hover{
+    -fx-font-size: 14.5;
+    -fx-background-color: #9E9E9E;
+}
+#watchTRBtn{
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#watchTRBtn:hover{
+    -fx-font-size: 14.5;
+    -fx-background-color: #9E9E9E;
+}
+#addButton{
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#addButton:hover{
+    -fx-font-size: 14.5;
+    -fx-background-color: #9E9E9E;
+}
+#editButton{
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#editButton:hover{
+    -fx-font-size: 14.5;
+    -fx-background-color: #9E9E9E;
+}
+#deleteButton{
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#deleteButton:hover{
+    -fx-font-size: 14.5;
+    -fx-background-color: #9E9E9E;
+}
+ #aboutMeBtn{
+     -fx-font-size: 15;
+     -fx-font-weight: bold;
+     -fx-background-color: grey;
+     -fx-text-fill: white;
+ }
+#aboutMeBtn:hover{
+    -fx-font-size: 14.5;
+    -fx-background-color: #9E9E9E;
 }

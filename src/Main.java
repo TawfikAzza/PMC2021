@@ -26,14 +26,14 @@ public class Main extends Application {
         Parent root1 = loader1.load();
         Scene scene;
         if (movieDAO.getAllOutdatedMovies().isEmpty()) {
-            scene = new Scene(root, 1110, 600);
+            scene = new Scene(root, 1085, 600);
         } else {
             scene = new Scene(root1);
         }
         root.getStylesheets().add("css/main.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("PMC 2022");
-        File file = new File("data/playImagotype.png");
+        File file = new File("src/css/data/playImagotype.png");
         Image imagotype = new Image(file.toURI().toString());
         primaryStage.getIcons().add(imagotype);
         primaryStage.setResizable(true);

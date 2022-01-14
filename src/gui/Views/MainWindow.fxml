@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="597.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
    <children>
-      <Button fx:id="watchTRBtn" layoutX="471.0" layoutY="172.0" onAction="#playPauseVideo" prefHeight="48.0" prefWidth="136.0" text="Watch Trailer" AnchorPane.leftAnchor="471.0" />
+      <Button fx:id="watchTRBtn" layoutX="471.0" layoutY="149.0" onAction="#playPauseVideo" prefHeight="48.0" prefWidth="136.0" text="Watch Trailer" AnchorPane.bottomAnchor="404.0390625" AnchorPane.leftAnchor="471.0" AnchorPane.topAnchor="149.0" />
       <TableView fx:id="tableMovie" layoutX="15.0" layoutY="64.0" onMouseClicked="#displaySummary" prefHeight="499.0" prefWidth="368.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="64.0">
         <columns>
           <TableColumn fx:id="title" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="131.99999713897705" text="Title" />
@@ -23,15 +23,15 @@
             <TableColumn fx:id="lastViewed" minWidth="40.0" prefWidth="145.59999084472656" resizable="false" text="Last Access" />
         </columns>
       </TableView>
-      <Button fx:id="addButton" layoutX="471.0" layoutY="243.0" onAction="#addMovie" prefHeight="50.0" prefWidth="136.0" text="Add movie" AnchorPane.leftAnchor="471.0" />
-      <Button fx:id="deleteButton" layoutX="471.0" layoutY="400.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="50.0" prefWidth="136.0" text="Delete Movie" AnchorPane.leftAnchor="471.0" />
-      <Button fx:id="editButton" layoutX="471.0" layoutY="324.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="50.0" prefWidth="136.0" text="Edit movie" AnchorPane.leftAnchor="471.0" />
-      <Text fx:id="txtAllMovies" layoutX="15.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All movies" AnchorPane.bottomAnchor="555.98828125" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="28.05078125">
+      <Button fx:id="addButton" layoutX="471.0" layoutY="250.0" onAction="#addMovie" prefHeight="50.0" prefWidth="136.0" text="Add movie" AnchorPane.bottomAnchor="300.6390625" AnchorPane.leftAnchor="471.0" AnchorPane.topAnchor="249.99999999999997" />
+      <Button fx:id="deleteButton" layoutX="471.0" layoutY="379.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="50.0" prefWidth="136.0" text="Delete Movie" AnchorPane.bottomAnchor="171.6390625" AnchorPane.leftAnchor="471.0" AnchorPane.topAnchor="379.0" />
+      <Button fx:id="editButton" layoutX="471.0" layoutY="314.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="50.0" prefWidth="136.0" text="Edit movie" AnchorPane.bottomAnchor="236.6390625" AnchorPane.leftAnchor="471.0" AnchorPane.topAnchor="314.0" />
+      <Text fx:id="txtAllMovies" layoutX="23.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All movies" AnchorPane.bottomAnchor="559.98828125" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="24.05078125">
          <effect>
             <Glow level="0.5" />
          </effect>
       </Text>
-      <Text fx:id="txtTrailerPreview" layoutX="835.0" layoutY="40.0" text="Trailer preview" AnchorPane.bottomAnchor="556.0" AnchorPane.rightAnchor="165.78515625" AnchorPane.topAnchor="27.0">
+      <Text fx:id="txtTrailerPreview" layoutX="845.0" layoutY="37.0" text="Trailer preview" AnchorPane.bottomAnchor="560.0390625" AnchorPane.rightAnchor="155.78515625" AnchorPane.topAnchor="24.0">
          <effect>
             <Glow level="0.5" />
          </effect>
@@ -41,18 +41,23 @@
             <Glow level="1.0" />
          </effect>
       </Line>
-      <Button fx:id="watchMovBtn" layoutX="471.0" layoutY="103.0" mnemonicParsing="false" onAction="#playMovie" prefHeight="48.0" prefWidth="136.0" text="Watch Movie" textAlignment="CENTER" AnchorPane.leftAnchor="471.0" />
+      <Button fx:id="watchMovBtn" layoutX="471.0" layoutY="81.0" mnemonicParsing="false" onAction="#playMovie" prefHeight="48.0" prefWidth="136.0" text="Watch Movie" textAlignment="CENTER" AnchorPane.bottomAnchor="472.0390625" AnchorPane.leftAnchor="471.0" AnchorPane.topAnchor="81.0" />
       <Line endX="-24.39996337890625" endY="373.5999755859375" layoutX="777.0" layoutY="189.0" startX="-24.39996337890625" startY="-126.39999389648438" stroke="WHITE" AnchorPane.bottomAnchor="36.9000244140625" AnchorPane.rightAnchor="408.89996337890625" AnchorPane.topAnchor="62.100006103515625">
          <effect>
             <Glow level="1.0" />
          </effect>
       </Line>
-      <WebView fx:id="trailerView" layoutX="689.0" layoutY="81.0" prefHeight="230.0" prefWidth="368.0" AnchorPane.bottomAnchor="288.6000061035156" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="81.0" />
-      <TextField fx:id="keywordTextField" layoutX="140.0" layoutY="24.0" pickOnBounds="false" prefHeight="27.0" prefWidth="208.0" AnchorPane.bottomAnchor="550.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="24.0" />
+      <WebView fx:id="trailerView" layoutX="689.0" layoutY="64.0" prefHeight="230.0" prefWidth="368.0" AnchorPane.bottomAnchor="305.6000061035156" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="64.0" />
+      <TextField fx:id="keywordTextField" layoutX="113.0" layoutY="24.0" pickOnBounds="false" prefHeight="26.0" prefWidth="235.0" AnchorPane.bottomAnchor="550.0" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="24.0" />
       <Button fx:id="search" layoutX="355.0" layoutY="24.0" onAction="#search" prefHeight="27.0" prefWidth="27.0" AnchorPane.bottomAnchor="550.0" AnchorPane.leftAnchor="355.0" AnchorPane.topAnchor="24.0" />
-      <Button layoutX="437.0" layoutY="23.0" mnemonicParsing="false" onAction="#openStatsWindow" text="About me" />
-      <CheckComboBox fx:id="categoriesCheckComboBox" layoutX="526.0" layoutY="23.0" prefHeight="26.0" prefWidth="110.0" />
-      <Button fx:id="searchButton" layoutX="642.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchCategories" text="Search" />
-      <TextFlow fx:id="txtSummary" layoutX="690.0" layoutY="324.0" prefHeight="254.0" prefWidth="368.0" AnchorPane.bottomAnchor="21.599999999999994" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="324.0" />
+      <CheckComboBox fx:id="categoriesCheckComboBox" layoutX="425.0" layoutY="24.0" prefHeight="26.0" prefWidth="194.0" title="Sort by categories" AnchorPane.bottomAnchor="550.6390625" AnchorPane.leftAnchor="425.0" AnchorPane.topAnchor="22.96093749999998" />
+      <Button fx:id="searchButton" layoutX="627.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchCategories" prefHeight="26.0" prefWidth="27.0" AnchorPane.bottomAnchor="550.6390625" AnchorPane.leftAnchor="627.0" AnchorPane.topAnchor="24.0" />
+      <Button fx:id="aboutMeBtn" layoutX="471.0" layoutY="515.0" mnemonicParsing="false" onAction="#openStatsWindow" prefHeight="48.0" prefWidth="136.0" text="About me" AnchorPane.bottomAnchor="38.0390625" AnchorPane.leftAnchor="471.0" AnchorPane.topAnchor="515.0" />
+      <TextFlow fx:id="txtSummary" layoutX="690.0" layoutY="348.0" prefHeight="231.0" prefWidth="368.0" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="348.0" />
+      <Text fx:id="txtComments" layoutX="845.0" layoutY="327.0" text="Comments" AnchorPane.bottomAnchor="271.02734375" AnchorPane.rightAnchor="175.642578125" AnchorPane.topAnchor="312.41171875">
+         <effect>
+            <Glow level="0.5" />
+         </effect>
+      </Text>
    </children>
 </AnchorPane>

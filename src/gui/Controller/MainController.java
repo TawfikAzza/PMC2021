@@ -49,6 +49,8 @@ public class MainController implements Initializable {
     @FXML
     private Button watchMovBtn;
     @FXML
+    private Button aboutMeBtn;
+    @FXML
     private Label lblWelcomeText;
     @FXML
     private Button pushMeButton;
@@ -69,7 +71,7 @@ public class MainController implements Initializable {
     @FXML
     private WebView trailerView;
     @FXML
-    private Text txtAllMovies,txtTrailerPreview;
+    private Text txtAllMovies,txtTrailerPreview,txtComments;
 
     MediaPlayer mediaPlayer;
     private ChangeListener<Duration> progressListener;

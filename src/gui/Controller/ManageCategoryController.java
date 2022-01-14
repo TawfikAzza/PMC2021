@@ -1,7 +1,6 @@
 package gui.Controller;
 
 import be.CategoryMovie;
-import bll.PMCManager;
 import bll.exceptions.CategoryException;
 import gui.Model.CategoryModel;
 import javafx.event.ActionEvent;
@@ -13,11 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ManageCategoryController implements Initializable {
@@ -79,10 +76,8 @@ public class ManageCategoryController implements Initializable {
                     return;
                 }
             }
-
             Stage stage = (Stage) closeBtn.getScene().getWindow();
             stage.close();
-
         }
     }
 
@@ -150,8 +145,6 @@ public class ManageCategoryController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Alert window");
         alert.setHeaderText("Do you want to close this window?");
-
-
         if (alert.showAndWait().get() == ButtonType.OK) {
             Stage stage = (Stage) closeBtn.getScene().getWindow();
             stage.close();
@@ -164,7 +157,6 @@ public class ManageCategoryController implements Initializable {
 
     public void setOperationType(String operationType) {
         this.operationType = operationType;
-
     }
 
     public void setFields(CategoryMovie selectedItem) {
