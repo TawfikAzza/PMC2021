@@ -209,9 +209,12 @@ public class MainController implements Initializable {
         }
     }
 
+    private Text summary;
     public void displaySummary(MouseEvent mouseEvent) {
+        txtSummary.getChildren().clear();
         System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
-        txtSummary.setAccessibleText(tableMovie.getSelectionModel().getSelectedItem().getSummary());
+        summary = new Text(tableMovie.getSelectionModel().getSelectedItem().getSummary());
+        txtSummary.getChildren().add(summary);
     }
 
 

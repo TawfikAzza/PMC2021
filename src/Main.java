@@ -30,13 +30,15 @@ public class Main extends Application {
         } else {
             scene = new Scene(root1);
         }
+
         root.getStylesheets().add("css/main.css");
+        root1.getStylesheets().add("css/main.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("PMC 2022");
         File file = new File("src/css/data/playImagotype.png");
         Image imagotype = new Image(file.toURI().toString());
         primaryStage.getIcons().add(imagotype);
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
