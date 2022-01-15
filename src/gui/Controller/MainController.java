@@ -13,13 +13,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
@@ -27,6 +30,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apache.bcel.generic.NEW;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
@@ -39,43 +43,17 @@ public class MainController implements Initializable {
     @FXML
     public Button searchButton;
     @FXML
-    private Button search;
-    @FXML
     private TextField keywordTextField;
     @FXML
     private TextFlow txtSummary;
-    @FXML
-    private ListView<Movie> lstMyList;
-    @FXML
-    private Button watchMovBtn;
-    @FXML
-    private Button aboutMeBtn;
-    @FXML
-    private Label lblWelcomeText;
-    @FXML
-    private Button pushMeButton;
-    @FXML
-    private ListModel listModel;
-    @FXML
-    private Button watchTRBtn;
-    @FXML
-    private Button deleteButton;
-    @FXML
-    private Button addButton;
-    @FXML
-    private Button editButton;
     @FXML
     private TableColumn<Movie, String> title, imdbRating, lastViewed, rating;
     @FXML
     private TableView<Movie> tableMovie;
     @FXML
     private WebView trailerView;
-    @FXML
-    private Text txtAllMovies, txtTrailerPreview, txtComments;
 
-    MediaPlayer mediaPlayer;
     private ChangeListener<Duration> progressListener;
-    private VideoModel videoModel;
     private MovieModel movieModel;
 
     @Override
@@ -87,10 +65,10 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
-        videoModel = new VideoModel();
+        VideoModel videoModel = new VideoModel();
 
         try {
-            updateTableMovie(movieModel.getAllMovies());
+            updateTableMovie();
         } catch (MovieException e) {
             e.printStackTrace();
         }
@@ -101,7 +79,25 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
-        // Wrap the ObservableList in a FilteredList (initially display all data).
+        ObservableList<Movie>allMovies=FXCollections.observableArrayList();
+        try {
+            allMovies.setAll(movieModel.getAllMovies());
+        } catch (MovieException e) {
+            e.printStackTrace();
+        }
+        keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
+                for (Movie movie:allMovies){
+                        if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
+                            moviesFiltered.add(movie);
+                }
+                tableMovie.setItems(moviesFiltered);
+            }
+        });
+
+        /*** Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<Movie> filteredData;
         filteredData = new FilteredList<>(tableMovie.getItems(), b -> true);
 
@@ -131,7 +127,7 @@ public class MainController implements Initializable {
         sortedData.comparatorProperty().bind(tableMovie.comparatorProperty());
 
         // 5. Add sorted (and filtered) data to the table.
-        tableMovie.setItems(sortedData);
+        tableMovie.setItems(sortedData);*/
     }
 
     @FXML
@@ -141,7 +137,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void updateTableMovie(ObservableList<Movie> moviesList) throws MovieException {
+    public void updateTableMovie() throws MovieException {
         title.setCellValueFactory(new PropertyValueFactory<>("name"));
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
@@ -197,7 +193,7 @@ public class MainController implements Initializable {
         if (tableMovie.getSelectionModel().getSelectedIndex() != -1) {
             Movie movie = tableMovie.getSelectionModel().getSelectedItem();
             movieModel.updateLastView(tableMovie.getSelectionModel().getSelectedItem());
-            updateTableMovie(movieModel.getAllMovies());
+            updateTableMovie();
             try {
                 movieModel.playMovie(movie);
             } catch (IllegalArgumentException iae) {
@@ -209,12 +205,10 @@ public class MainController implements Initializable {
         }
     }
 
-    private Text summary;
-
     public void displaySummary(MouseEvent mouseEvent) {
         txtSummary.getChildren().clear();
         System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
-        summary = new Text(tableMovie.getSelectionModel().getSelectedItem().getSummary());
+        Text summary = new Text(tableMovie.getSelectionModel().getSelectedItem().getSummary());
         txtSummary.getChildren().add(summary);
     }
 
@@ -234,22 +228,48 @@ public class MainController implements Initializable {
         categoriesCheckComboBox.getItems().setAll(movieModel.getAllCategories());
     }
 
-    public void searchCategories(ActionEvent actionEvent) throws SQLException, MovieException {
+    public void searchCategories(ActionEvent actionEvent) throws SQLException, MovieException, IOException {
+        ObservableList<Movie> allMovies = FXCollections.observableArrayList();
         if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()) {
-            ObservableList<Movie> allMovies = FXCollections.observableArrayList();
             for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
                 allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
             tableMovie.setItems(allMovies);
+            keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
+                    for (Movie movie:allMovies){
+                        if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
+                            moviesFiltered.add(movie);
+                    }
+                    tableMovie.setItems(moviesFiltered);
+                }
+            });
+
         } else {
-            updateTableMovie(movieModel.getAllMovies());
+            updateTableMovie();
             for (Object category : categoriesCheckComboBox.getItems()) {
                 if (categoriesCheckComboBox.getCheckModel().isChecked(category))
                     categoriesCheckComboBox.getCheckModel().clearCheck(category);
+                allMovies.setAll(movieModel.getAllMovies());
+                keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
+                        for (Movie movie:allMovies){
+                            if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
+                                moviesFiltered.add(movie);
+                        }
+                        tableMovie.setItems(moviesFiltered);
+                    }
+                });
             }
         }
+
+
     }
 
-    public void search(ActionEvent actionEvent) throws MovieException, SQLException {
+    /***public void search(ActionEvent actionEvent) throws MovieException, SQLException {
         ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
         ObservableList<Movie> moviesBeforeFilter = FXCollections.observableArrayList();
         moviesBeforeFilter.setAll(tableMovie.getItems());
@@ -263,9 +283,7 @@ public class MainController implements Initializable {
             for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
                 moviesFiltered.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
             tableMovie.setItems(moviesFiltered);
-        }
+        }*/
     }
-
-}
 
 
