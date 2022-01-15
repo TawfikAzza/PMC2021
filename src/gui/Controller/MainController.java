@@ -71,7 +71,7 @@ public class MainController implements Initializable {
     @FXML
     private WebView trailerView;
     @FXML
-    private Text txtAllMovies,txtTrailerPreview,txtComments;
+    private Text txtAllMovies, txtTrailerPreview, txtComments;
 
     MediaPlayer mediaPlayer;
     private ChangeListener<Duration> progressListener;
@@ -210,6 +210,7 @@ public class MainController implements Initializable {
     }
 
     private Text summary;
+
     public void displaySummary(MouseEvent mouseEvent) {
         txtSummary.getChildren().clear();
         System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
@@ -234,39 +235,37 @@ public class MainController implements Initializable {
     }
 
     public void searchCategories(ActionEvent actionEvent) throws SQLException, MovieException {
-        if (searchButton.getText().equals("Search")) {
-            if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()) {
-                ObservableList<Movie> allMovies = FXCollections.observableArrayList();
-                for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
-                    allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
-                tableMovie.setItems(allMovies);
-                searchButton.setText("Clear");
-            }
+        if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()) {
+            ObservableList<Movie> allMovies = FXCollections.observableArrayList();
+            for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
+                allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
+            tableMovie.setItems(allMovies);
         } else {
             updateTableMovie(movieModel.getAllMovies());
             for (Object category : categoriesCheckComboBox.getItems()) {
                 if (categoriesCheckComboBox.getCheckModel().isChecked(category))
                     categoriesCheckComboBox.getCheckModel().clearCheck(category);
             }
-            searchButton.setText("Search");
         }
     }
 
-    public void search(ActionEvent actionEvent) throws MovieException {
-        if (search.getText().equals("Search")) {
-            ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
+    public void search(ActionEvent actionEvent) throws MovieException, SQLException {
+        ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
+        ObservableList<Movie> moviesBeforeFilter = FXCollections.observableArrayList();
+        moviesBeforeFilter.setAll(tableMovie.getItems());
+        if (!keywordTextField.getText().isEmpty()) {
             for (Movie movie : tableMovie.getItems()) {
                 if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
                     moviesFiltered.add(movie);
-                if (!keywordTextField.getText().isEmpty())
-                    search.setText("Clear");
             }
             tableMovie.setItems(moviesFiltered);
-        } else if (search.getText().equals("Clear")) {
-            keywordTextField.setText("");
-            updateTableMovie(movieModel.getAllMovies());
-            search.setText("Search");
+        } else {
+            for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
+                moviesFiltered.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
+            tableMovie.setItems(moviesFiltered);
         }
     }
+
 }
+
 
