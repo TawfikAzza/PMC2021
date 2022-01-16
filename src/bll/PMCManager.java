@@ -120,4 +120,9 @@ public class PMCManager implements PMCFacade{
     public Date getFirstDate() throws SQLException {
         return dalController.getFirstDate();
     }
+
+    @Override
+    public void removeCategory(CategoryMovie categoryMovie) throws CategoryException {
+        dalController.removeCategory(categoryMovie);
+    }
 }

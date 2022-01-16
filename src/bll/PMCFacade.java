@@ -14,15 +14,16 @@ import java.util.List;
 
 public interface PMCFacade {
     List<Movie> getAllMovies() throws MovieException;
+
     List<CategoryMovie> getAllCategories() throws CategoryException;
 
-    Movie createMovie(Movie movie) throws  MovieException;
+    Movie createMovie(Movie movie) throws MovieException;
 
     void addCategoryFromMovie(Movie movie) throws CategoryException;
 
     public List<CategoryMovie> getCategoryFromMovie(Movie movie) throws CategoryException;
 
-    void updateMovie(Movie movie) throws  MovieException;
+    void updateMovie(Movie movie) throws MovieException;
 
     CategoryMovie addNewCategory(CategoryMovie categoryMovie) throws CategoryException;
 
@@ -34,13 +35,22 @@ public interface PMCFacade {
 
     void playMovie(Movie movie) throws IOException;
 
-    List <Movie> getAllOutdatedMovies()throws SQLException;
+    List<Movie> getAllOutdatedMovies() throws SQLException;
 
-    List<Movie>allMoviesCategory(CategoryMovie categoryMovie)throws SQLException;
-    void updateLastView(Movie movie)throws SQLException;
-    void newTime(int movies,long seconds) throws SQLException;
-    Time elipsedtime(LocalDate firstDate, LocalDate secondDate)throws SQLException;
+    List<Movie> allMoviesCategory(CategoryMovie categoryMovie) throws SQLException;
+
+    void updateLastView(Movie movie) throws SQLException;
+
+    void newTime(int movies, long seconds) throws SQLException;
+
+    Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException;
+
     void updateTime(long seconds) throws SQLException;
-    void updateMovies()throws SQLException;
-    Date getFirstDate()throws SQLException;
+
+    void updateMovies() throws SQLException;
+
+    Date getFirstDate() throws SQLException;
+
+    void removeCategory(CategoryMovie categoryMovie) throws CategoryException;
+
 }
