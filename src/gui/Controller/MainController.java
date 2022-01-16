@@ -35,6 +35,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -166,6 +169,9 @@ public class MainController implements Initializable {
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
+        List<Movie> testMovie = movieModel.getAllMovies();
+
+
         tableMovie.setItems(movieModel.getAllMovies());
     }
 
@@ -257,10 +263,37 @@ public class MainController implements Initializable {
 
     public void searchCategories(ActionEvent actionEvent) throws SQLException, MovieException, IOException {
         ObservableList<Movie> allMovies = FXCollections.observableArrayList();
+        tableMovie.getItems().clear();
+        tableMovie.setItems(movieModel.getAllMovies());
         if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()) {
-            for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
+           /* for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
                 allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
-            tableMovie.setItems(allMovies);
+            */
+            List<Movie> tmpMovies = new ArrayList<>();
+            for(Movie mov: tableMovie.getItems()) {
+                boolean fullCheck= true;
+                 for(Object cat: categoriesCheckComboBox.getCheckModel().getCheckedItems()){
+                        cat = (CategoryMovie) cat;
+                        if(mov.getMovieGenres().size()!=categoriesCheckComboBox.getCheckModel().getCheckedItems().size()) {
+                            fullCheck=false;
+                        }
+                        if(mov.getMovieGenres().get(((CategoryMovie) cat).getId())==null) {
+                            fullCheck= false;
+                        }
+                 }
+                 if(!fullCheck) {
+                     System.out.println("Movie: "+mov.getName()+" Size: "+mov.getMovieGenres().size());
+                     for(Map.Entry entry:mov.getMovieGenres().entrySet())
+                         System.out.println("Key:"+entry.getKey()+" Value: "+entry.getValue());
+                     tmpMovies.add(mov);
+                 }
+                 fullCheck=true;
+            }
+            for(Movie mov:tmpMovies) {
+                tableMovie.getItems().remove(mov);
+            }
+            allMovies.addAll(tableMovie.getItems());
+           // tableMovie.setItems(allMovies);
             keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
