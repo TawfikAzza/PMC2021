@@ -6,14 +6,17 @@ import gui.Model.TimeManagerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.MonthDay;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +26,7 @@ public class TimeManagerController implements Initializable {
     public DatePicker firstDatePicker;
     public Label totalTime;
     public Label totalMovies;
+    public Button closeWindowButton;
 
 
     TimeManagerModel timeManagerModel;
@@ -56,6 +60,39 @@ public class TimeManagerController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        LocalDate firstDate = null;
+        try {
+            firstDate = timeManagerModel.getFirstDate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        LocalDate finalFirstDate = firstDate;
+        firstDatePicker.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell(){
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(empty || item.compareTo(finalFirstDate) < 0||item.compareTo(LocalDate.now()) > 0);
+                    }
+                };
+            }
+        });
+        LocalDate finalFirstDate1 = firstDate;
+        secondDatePicker.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell(){
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(empty || item.compareTo(finalFirstDate) < 0||item.compareTo(LocalDate.now()) > 0);
+                    }
+                };
+            }
+        });
     }
     public static String calculateTime(long seconds) {
         int day = (int)TimeUnit.SECONDS.toDays(seconds);
@@ -68,5 +105,10 @@ public class TimeManagerController implements Initializable {
 
     public void setInstant(Instant start) {
         this.start=start;
+    }
+
+    public void closeWindow(ActionEvent actionEvent) {
+        Stage stage = (Stage) closeWindowButton.getScene().getWindow();
+        stage.close();
     }
 }

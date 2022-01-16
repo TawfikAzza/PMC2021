@@ -2,6 +2,7 @@ package bll;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.Time;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import bll.utils.VideoPlayer;
@@ -12,6 +13,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class PMCManager implements PMCFacade{
@@ -91,5 +94,30 @@ public class PMCManager implements PMCFacade{
     @Override
     public void updateLastView(Movie movie) throws SQLException {
         dalController.updateLastView(movie);
+    }
+
+    @Override
+    public void newTime(int movies, long seconds) throws SQLException {
+        dalController.newTime(movies,seconds);
+    }
+
+    @Override
+    public Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
+        return dalController.elipsedtime(firstDate,secondDate);
+    }
+
+    @Override
+    public void updateTime(long seconds) throws SQLException {
+    dalController.updateTime(seconds);
+    }
+
+    @Override
+    public void updateMovies() throws SQLException {
+    dalController.updateMovies();
+    }
+
+    @Override
+    public Date getFirstDate() throws SQLException {
+        return dalController.getFirstDate();
     }
 }

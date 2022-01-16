@@ -1,4 +1,3 @@
-import be.Time;
 import dal.db.MovieDAO;
 import dal.db.TimeDAO;
 import gui.Controller.MainController;

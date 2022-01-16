@@ -2,11 +2,14 @@ package bll;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.Time;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface PMCFacade {
@@ -35,4 +38,9 @@ public interface PMCFacade {
 
     List<Movie>allMoviesCategory(CategoryMovie categoryMovie)throws SQLException;
     void updateLastView(Movie movie)throws SQLException;
+    void newTime(int movies,long seconds) throws SQLException;
+    Time elipsedtime(LocalDate firstDate, LocalDate secondDate)throws SQLException;
+    void updateTime(long seconds) throws SQLException;
+    void updateMovies()throws SQLException;
+    Date getFirstDate()throws SQLException;
 }

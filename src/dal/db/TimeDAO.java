@@ -67,4 +67,18 @@ public class TimeDAO implements ITimeDAO {
         }
     }
 
+    @Override
+    public java.util.Date getFirstDate() throws SQLException {
+        Date firstDate=null;
+        String sql= "SELECT TOP 1 * FROM ElipsedTime";
+        try (Connection connection= connectionManager.getConnection()){
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
+            ResultSet resultSet= statement.getResultSet();
+            while (resultSet.next())
+                firstDate=resultSet.getDate("lastConnection");
+        }
+        return firstDate;
+    }
+
 }

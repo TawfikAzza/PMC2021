@@ -2,24 +2,31 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.Time;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import dal.db.CategoryDAO;
 import dal.db.MovieDAO;
+import dal.db.TimeDAO;
 import dal.interfaces.ICategoryDataAccess;
 import dal.interfaces.IMovieDataAccess;
+import dal.interfaces.ITimeDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class DALController implements IDALFacade {
     IMovieDataAccess iMovieDataAccess;
     ICategoryDataAccess iCategoryDataAccess;
+    ITimeDAO iTimeDAO;
 
     public DALController() throws IOException {
         iMovieDataAccess = new MovieDAO();
         iCategoryDataAccess = new CategoryDAO();
+        iTimeDAO= new TimeDAO();
     }
 
 
@@ -144,5 +151,30 @@ public class DALController implements IDALFacade {
     @Override
     public void updateLastView(Movie movie) throws SQLException {
         iMovieDataAccess.updateLastView(movie);
+    }
+
+    @Override
+    public void newTime(int movies, long seconds) throws SQLException {
+        iTimeDAO.newTime(movies,seconds);
+    }
+
+    @Override
+    public Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
+        return iTimeDAO.elipsedtime(firstDate,secondDate);
+    }
+
+    @Override
+    public void updateTime(long seconds) throws SQLException {
+        iTimeDAO.updateTime(seconds);
+    }
+
+    @Override
+    public void updateMovies() throws SQLException {
+        iTimeDAO.updateMovies();
+    }
+
+    @Override
+    public Date getFirstDate() throws SQLException {
+        return iTimeDAO.getFirstDate();
     }
 }
