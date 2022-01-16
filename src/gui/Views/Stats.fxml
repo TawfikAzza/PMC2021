@@ -19,7 +19,7 @@
       </Label>
       <Label layoutX="14.0" layoutY="167.0" text="Time you spent using your movie collection:" />
       <Label layoutX="14.0" layoutY="196.0" text="Movies you watched:" />
-      <Label fx:id="totalTimeElipsed" layoutX="252.0" layoutY="167.0" text="Time" />
+      <Label fx:id="totalTime" layoutX="252.0" layoutY="167.0" text="Time" />
       <Label layoutX="105.0" layoutY="125.0" text="During this period:">
          <font>
             <Font size="18.0" />

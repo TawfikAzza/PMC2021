@@ -34,6 +34,7 @@ import org.controlsfx.control.CheckComboBox;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -53,6 +54,7 @@ public class MainController implements Initializable {
 
     private ChangeListener<Duration> progressListener;
     private MovieModel movieModel;
+    Instant start;
     TimeDAO timeDAO= new TimeDAO();
 
     public MainController() throws IOException {
@@ -132,7 +134,6 @@ public class MainController implements Initializable {
 
     private void setUpTable() {
         tableMovie.setEditable(true);
-
         title.setCellFactory(TextFieldTableCell.forTableColumn());
         title.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movie,String>>() {
             @Override
@@ -242,6 +243,8 @@ public class MainController implements Initializable {
         loader.setLocation(getClass().getClassLoader().getResource("gui/Views/Stats.fxml"));
         Parent root;
         root = loader.load();
+        TimeManagerController timeManagerController= loader.getController();
+        timeManagerController.setInstant(start);
         Stage stage = new Stage();
         stage.setTitle("About me");
         stage.setScene(new Scene(root));
@@ -291,6 +294,10 @@ public class MainController implements Initializable {
         }
 
 
+    }
+
+    public void setInstant(Instant start) {
+        this.start=start;
     }
 
     /***public void search(ActionEvent actionEvent) throws MovieException, SQLException {

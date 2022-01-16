@@ -4,6 +4,7 @@ import be.Time;
 import dal.db.TimeDAO;
 import gui.Model.TimeManagerModel;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -11,6 +12,8 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -18,20 +21,22 @@ import java.util.concurrent.TimeUnit;
 public class TimeManagerController implements Initializable {
     public DatePicker secondDatePicker;
     public DatePicker firstDatePicker;
-    public Label totalTimeElipsed;
+    public Label totalTime;
     public Label totalMovies;
+
+
     TimeManagerModel timeManagerModel;
+    Instant start;
 
 
     public void getFirstDate(ActionEvent actionEvent) {
     }
 
     public void getSecondDate(ActionEvent actionEvent) throws SQLException {
+        timeManagerModel.updateTime(start);
         Time timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
-        try {
+            totalTime.setText(calculateTime(timeElipsed.getSeconds()));
             totalMovies.setText(String.valueOf(timeElipsed.getMovies()));
-            totalTimeElipsed.setText(calculateTime(timeElipsed.getSeconds()));
-        }catch (NullPointerException ignored){}
     }
 
     @Override
@@ -50,5 +55,9 @@ public class TimeManagerController implements Initializable {
 
         return (day+" days "+hours+ " hours " + minute+" minutes " + second + " seconds.");
 
+    }
+
+    public void setInstant(Instant start) {
+        this.start=start;
     }
 }

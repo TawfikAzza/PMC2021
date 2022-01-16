@@ -1,6 +1,7 @@
 import be.Time;
 import dal.db.MovieDAO;
 import dal.db.TimeDAO;
+import gui.Controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import java.time.Instant;
 public class Main extends Application {
     MovieDAO movieDAO;
     TimeDAO timeDAO;
+    static Instant start;
 
     public Main() throws IOException {
         movieDAO = new MovieDAO();
@@ -35,6 +37,8 @@ public class Main extends Application {
         } else {
             scene = new Scene(root1);
         }
+        MainController mainController= loader.getController();
+        mainController.setInstant(start);
 
         root.getStylesheets().add("css/main.css");
         root1.getStylesheets().add("css/main.css");
@@ -50,7 +54,7 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException, SQLException {
         TimeDAO timeDAO = new TimeDAO();
         timeDAO.newTime(0,0);
-        Instant start = Instant.now();
+         start = Instant.now();
         Application.launch();
         Instant end = Instant.now();
         timeDAO.updateTime(Duration.between(start, end).getSeconds());
