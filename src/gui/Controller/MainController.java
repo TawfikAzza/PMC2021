@@ -4,33 +4,27 @@ import be.CategoryMovie;
 import be.Movie;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
-import gui.Model.ListModel;
 import gui.Model.MovieModel;
 import gui.Model.VideoModel;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.apache.bcel.generic.NEW;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
@@ -85,16 +79,13 @@ public class MainController implements Initializable {
         } catch (MovieException e) {
             e.printStackTrace();
         }
-        keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
-                for (Movie movie:allMovies){
-                        if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
-                            moviesFiltered.add(movie);
-                }
-                tableMovie.setItems(moviesFiltered);
+        keywordTextField.setOnKeyPressed(event -> {
+            ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
+            for (Movie movie:allMovies){
+                    if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
+                        moviesFiltered.add(movie);
             }
+            tableMovie.setItems(moviesFiltered);
         });
 
         /*** Wrap the ObservableList in a FilteredList (initially display all data).
