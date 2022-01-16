@@ -1,0 +1,42 @@
+.root {
+    -fx-background-color: #282828;
+    -fx-background-size: 100% 100%;
+    -fx-font-size: 12;
+    -fx-font-family: Arial;
+}
+#commentsTxt{
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+#trailerTxt{
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+#movieTxt{
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+#ratingTxt{
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+#imdbTxt{
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+#titleTxt{
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+#topTxt{
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+}
+#topTxt1{
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+}
+#topTxt2{
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+}

@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -27,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -146,10 +148,17 @@ public class MainController implements Initializable {
         } catch (IOException e) {
         }
         ManageMovieController manageMovieController = loader.getController();
+        assert root != null;
+        root.getStylesheets().add("css/manageMovie.css");
         manageMovieController.setMainController(this);
         Stage stage = new Stage();
+        stage.setTitle("PMC 2022");
+        File file = new File("src/css/data/playImagotype.png");
+        Image imagotype = new Image(file.toURI().toString());
+        stage.getIcons().add(imagotype);
         stage.setTitle("New Movie");
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -163,11 +172,18 @@ public class MainController implements Initializable {
             } catch (IOException ignored) {
             }
             ManageMovieController manageMovieController = loader.getController();
+            assert root != null;
+            root.getStylesheets().add("css/manageMovie.css");
             manageMovieController.setMainController(this);
             manageMovieController.setupFields(tableMovie.getSelectionModel().getSelectedItem());
             Stage stage = new Stage();
+            stage.setTitle("PMC 2022");
+            File file = new File("src/css/data/playImagotype.png");
+            Image imagotype = new Image(file.toURI().toString());
+            stage.getIcons().add(imagotype);
             stage.setTitle("Edit Movie");
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.show();
         }
     }

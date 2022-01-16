@@ -2,8 +2,8 @@ package gui.Controller;
 
 import be.CategoryMovie;
 import be.Movie;
-import bll.*;
-import bll.exceptions.*;
+import bll.exceptions.CategoryException;
+import bll.exceptions.MovieException;
 import bll.utils.IMDBScraper;
 import gui.Model.CategoryModel;
 import gui.Model.MovieModel;
@@ -27,18 +27,20 @@ import java.util.ResourceBundle;
 
 public class ManageMovieController implements Initializable {
 
+    @FXML
     public Button chooseFileButton;
+    @FXML
+    private TextArea txtSummary;
+    @FXML
+    private TextField fileTextField, txtImdb, txtRating, txtTitle, txtTrailerLink;
+    @FXML
+    private ListView<CategoryMovie> listCategory, movieCategory;
+    @FXML
+    private Button cancelBtn, confirmBtn;
+    @FXML
+    private Label commentsTxt,trailerTxt,movieTxt,ratingTxt,imdbTxt,titleTxt,topTxt,topTxt1,topTxt2;
 
-    @FXML
-    private  TextArea txtSummary;
-    @FXML
-    private TextField fileTextField,txtImdb,txtRating,txtTitle,txtTrailerLink;
-    @FXML
-    private ListView<CategoryMovie> listCategory,movieCategory;
-    @FXML
-    private Button cancelBtn,confirmBtn;
-
-    private Boolean newMovie=true;
+    private Boolean newMovie = true;
     private MainController mainController;
     private Movie currentMovie;
     private MovieModel movieModel;
@@ -53,14 +55,14 @@ public class ManageMovieController implements Initializable {
 
         fileChooser.getExtensionFilters().add(fileExtensions);
         File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null){
+        if (selectedFile != null) {
             fileTextField.setText(selectedFile.toString());
 
         }
     }
 
     public void setMainController(MainController mainController) {
-        this.mainController=mainController;
+        this.mainController = mainController;
     }
 
 
@@ -81,39 +83,29 @@ public class ManageMovieController implements Initializable {
     }
 
     public void addCategory(ActionEvent actionEvent) {
-        if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
+        if (listCategory.getSelectionModel().getSelectedIndex() != -1) {
             movieCategory.getItems().add(listCategory.getSelectionModel().getSelectedItem());
             listCategory.getItems().remove(listCategory.getSelectionModel().getSelectedItem());
         }
     }
 
     public void removeCategory(ActionEvent actionEvent) {
-        if(movieCategory.getSelectionModel().getSelectedIndex()!=-1){
+        if (movieCategory.getSelectionModel().getSelectedIndex() != -1) {
             listCategory.getItems().add(movieCategory.getSelectionModel().getSelectedItem());
             movieCategory.getItems().remove(movieCategory.getSelectionModel().getSelectedItem());
         }
     }
-    /*private boolean checkInputs() {
-        if (txtImdb.getText().isEmpty() || txtTitle.getText().isEmpty() || txtRating.getText().isEmpty() || txtTrailerLink.getText().isEmpty() || txtSummary.getText().isEmpty()) {
-            return false;
-        }if(movieCategory.getItems().size()==0) {
-            return false;
-        }
-        return true;
-    }*/
+
     public void saveMovie(ActionEvent actionEvent) throws SQLException {
-        double rating ,imdbRating;
-        /*if(!checkInputs()){
-            return;
-        }*/
-        HashMap<Integer,CategoryMovie> categoryMovieHashMap = new HashMap<>();
-        for (CategoryMovie cat: movieCategory.getItems()) {
-            categoryMovieHashMap.put(cat.getId(),cat);
+        double rating, imdbRating;
+        HashMap<Integer, CategoryMovie> categoryMovieHashMap = new HashMap<>();
+        for (CategoryMovie cat : movieCategory.getItems()) {
+            categoryMovieHashMap.put(cat.getId(), cat);
         }
         try {
-             rating=Double.parseDouble(txtRating.getText());
-             imdbRating=Double.parseDouble(txtImdb.getText());
-        }catch (NumberFormatException numberFormatException){
+            rating = Double.parseDouble(txtRating.getText());
+            imdbRating = Double.parseDouble(txtImdb.getText());
+        } catch (NumberFormatException numberFormatException) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Please find a number for ratings.");
@@ -122,14 +114,14 @@ public class ManageMovieController implements Initializable {
             alert.showAndWait();
             return;
         }
-        if(newMovie) {
+        if (newMovie) {
             Movie movie = new Movie(0, txtTitle.getText()
                     , rating
                     , imdbRating
                     , new File(fileTextField.getText())
                     , "date"
-                    ,txtTrailerLink.getText()
-                    ,txtSummary.getText());
+                    , txtTrailerLink.getText()
+                    , txtSummary.getText());
 
             try {
                 movie = movieModel.createMovie(movie);
@@ -137,7 +129,7 @@ public class ManageMovieController implements Initializable {
                 movie.setMovieGenres(categoryMovieHashMap);
                 categoryModel.addCategoryFromMovie(movie);
 
-            }catch (MovieException movieException){
+            } catch (MovieException movieException) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Error");
                 alert.setHeaderText(movieException.getExceptionMessage());
@@ -150,21 +142,20 @@ public class ManageMovieController implements Initializable {
             }
 
 
-        }
-        else  {
+        } else {
             Movie movie = new Movie(currentMovie.getId(), txtTitle.getText()
                     , Double.parseDouble(txtRating.getText())
                     , Double.parseDouble(txtImdb.getText())
                     , new File(fileTextField.getText())
                     , "date"
-                    ,txtTrailerLink.getText()
-                    ,txtSummary.getText());
+                    , txtTrailerLink.getText()
+                    , txtSummary.getText());
             movie.setMovieGenres(categoryMovieHashMap);
             try {
                 movieModel.updateMovie(movie);
                 categoryModel.addCategoryFromMovie(movie);
                 mainController.updateTableMovie();
-            }catch (MovieException movieException){
+            } catch (MovieException movieException) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Error");
                 alert.setHeaderText(movieException.getExceptionMessage());
@@ -180,39 +171,43 @@ public class ManageMovieController implements Initializable {
         stage.close();
 
     }
-    public void setupFields(Movie movie) throws  CategoryException {
-        newMovie=false;
+
+    public void setupFields(Movie movie) throws CategoryException {
+        newMovie = false;
         fileTextField.setDisable(true);
         chooseFileButton.disableProperty().set(true);
-
-
         currentMovie = movie;
         txtTitle.setText(movie.getName());
         txtImdb.setText(String.valueOf(movie.getImdbRating()));
         txtRating.setText(String.valueOf(movie.getRating()));
         fileTextField.setText(movie.getFileLink().toString());
-        if(movie.getTrailerLink()!=null) {
-        txtTrailerLink.setText(movie.getTrailerLink());}
-        if(movie.getSummary()!=null) {
-        txtSummary.setText(movie.getSummary());}
+        if (movie.getTrailerLink() != null) {
+            txtTrailerLink.setText(movie.getTrailerLink());
+        }
+        if (movie.getSummary() != null) {
+            txtSummary.setText(movie.getSummary());
+        }
         movieCategory.getItems().addAll(categoryModel.getCategoryFromMovie(movie));
         //Taking out the Categories already attributed to the movie currently being modified
-        for (CategoryMovie cat: movieCategory.getItems()) {
-            listCategory.getItems().removeIf(catList -> cat.getId()==(catList.getId()));
+        for (CategoryMovie cat : movieCategory.getItems()) {
+            listCategory.getItems().removeIf(catList -> cat.getId() == (catList.getId()));
         }
         if (!txtTrailerLink.getText().isEmpty())
             txtTrailerLink.setDisable(true);
     }
+
     public void addCategoryToList(CategoryMovie categoryMovie) {
         listCategory.getItems().add(categoryMovie);
     }
-    public void setupListCategory() throws  CategoryException {
+
+    public void setupListCategory() throws CategoryException {
         listCategory.getItems().clear();
         listCategory.getItems().addAll(categoryModel.getAllCategories());
-        for (CategoryMovie cat: movieCategory.getItems()) {
-            listCategory.getItems().removeIf(catList -> cat.getId()==(catList.getId()));
+        for (CategoryMovie cat : movieCategory.getItems()) {
+            listCategory.getItems().removeIf(catList -> cat.getId() == (catList.getId()));
         }
     }
+
     public void cancelEntry(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Alert window");
@@ -248,7 +243,7 @@ public class ManageMovieController implements Initializable {
     }
 
     public void editCategory(ActionEvent actionEvent) {
-        if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
+        if (listCategory.getSelectionModel().getSelectedIndex() != -1) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("gui/Views/ManageCategoryView.fxml"));
             Parent root = null;
@@ -271,8 +266,8 @@ public class ManageMovieController implements Initializable {
         }
     }
 
-    public void deleteCategory(ActionEvent actionEvent) throws  CategoryException {
-        if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
+    public void deleteCategory(ActionEvent actionEvent) throws CategoryException {
+        if (listCategory.getSelectionModel().getSelectedIndex() != -1) {
             categoryModel.deleteCategory(listCategory.getSelectionModel().getSelectedItem());
             listCategory.getItems().remove(listCategory.getSelectionModel().getSelectedIndex());
         }
@@ -281,7 +276,7 @@ public class ManageMovieController implements Initializable {
 
     public void handleSearchMovie(ActionEvent actionEvent) throws IOException {
         String movieTitle = txtTitle.getText();
-        if (movieTitle==null||movieTitle.isEmpty())
+        if (movieTitle == null || movieTitle.isEmpty())
             return;
 
         FXMLLoader loader = new FXMLLoader((getClass().getResource("../Views/MovieWebView.fxml")));
@@ -291,10 +286,9 @@ public class ManageMovieController implements Initializable {
         stage.setScene(scene);
 
         MovieWebController controller = loader.getController();
-        controller.loadPage("https://www.imdb.com/find?q="+txtTitle.getText()+"&ref_=nv_sr_sm");
+        controller.loadPage("https://www.imdb.com/find?q=" + txtTitle.getText() + "&ref_=nv_sr_sm");
         controller.provideController(this);
         stage.show();
-
 
 
     }
