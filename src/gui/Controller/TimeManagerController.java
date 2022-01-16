@@ -29,14 +29,24 @@ public class TimeManagerController implements Initializable {
     Instant start;
 
 
-    public void getFirstDate(ActionEvent actionEvent) {
+    public void getFirstDate(ActionEvent actionEvent) throws SQLException {
+        timeManagerModel.updateTime(start);
+        try {
+            Time timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
+            totalTime.setText(calculateTime(timeElipsed.getSeconds()));
+            totalMovies.setText(String.valueOf(timeElipsed.getMovies()));
+        }catch (NullPointerException ignored){}
+
     }
 
     public void getSecondDate(ActionEvent actionEvent) throws SQLException {
         timeManagerModel.updateTime(start);
-        Time timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
+        try {
+            Time timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
             totalTime.setText(calculateTime(timeElipsed.getSeconds()));
             totalMovies.setText(String.valueOf(timeElipsed.getMovies()));
+        }catch (NullPointerException ignored){}
+
     }
 
     @Override
@@ -52,8 +62,7 @@ public class TimeManagerController implements Initializable {
         long hours = TimeUnit.SECONDS.toHours(seconds) - (day *24);
         long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds)* 60);
         long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) *60);
-
-        return (day+" days "+hours+ " hours " + minute+" minutes " + second + " seconds.");
+        return (day+"d"+hours+ "h" + minute+"m" + second + "s.");
 
     }
 
