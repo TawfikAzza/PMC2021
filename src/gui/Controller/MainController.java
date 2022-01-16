@@ -282,9 +282,6 @@ public class MainController implements Initializable {
                         }
                  }
                  if(!fullCheck) {
-                     System.out.println("Movie: "+mov.getName()+" Size: "+mov.getMovieGenres().size());
-                     for(Map.Entry entry:mov.getMovieGenres().entrySet())
-                         System.out.println("Key:"+entry.getKey()+" Value: "+entry.getValue());
                      tmpMovies.add(mov);
                  }
                  fullCheck=true;
