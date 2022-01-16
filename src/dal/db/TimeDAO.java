@@ -6,7 +6,7 @@ import dal.interfaces.ITimeDAO;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class TimeDAO implements ITimeDAO {
     ConnectionManager connectionManager;
@@ -26,15 +26,15 @@ public class TimeDAO implements ITimeDAO {
     }
 
     @Override
-    public Time elipsedtime(Date firstDate, Date secondDate) throws SQLException{
+    public Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException{
         Time time = null;
         long totalSeconds=0;
         int totalMovies=0;
-        String sql="SELECT * FROM ElipsedTime WHERE [date] BETWEEN ? AND ?";
+        String sql="SELECT * FROM ElipsedTime WHERE lastConnection BETWEEN ? AND ?";
         try (Connection connection= connectionManager.getConnection()){
             PreparedStatement preparedStatement= connection.prepareStatement(sql);
-            preparedStatement.setDate(1, (java.sql.Date) firstDate);
-            preparedStatement.setDate(2, (java.sql.Date) secondDate);
+            preparedStatement.setDate(1, Date.valueOf(firstDate));
+            preparedStatement.setDate(2, Date.valueOf(secondDate));
             preparedStatement.execute();
             ResultSet resultSet= preparedStatement.getResultSet();
             while (resultSet.next()){
