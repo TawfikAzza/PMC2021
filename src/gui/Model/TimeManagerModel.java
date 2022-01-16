@@ -1,5 +1,6 @@
 package gui.Model;
 
+import be.Time;
 import dal.db.TimeDAO;
 import javafx.scene.control.DatePicker;
 
@@ -12,8 +13,9 @@ public class TimeManagerModel {
         timeDAO= new TimeDAO();
     }
 
-    public void calculateTimeElipsed(DatePicker firstDatePicker, DatePicker secondDatePicker) throws SQLException {
-        System.out.println(timeDAO.elipsedtime(firstDatePicker.getValue(),secondDatePicker.getValue()).getSeconds());
+    public Time calculateTimeElipsed(DatePicker firstDatePicker, DatePicker secondDatePicker) throws SQLException {
+
+        return timeDAO.elipsedtime(firstDatePicker.getValue().minusDays(1),secondDatePicker.getValue().plusDays(1));
 
     }
 }
