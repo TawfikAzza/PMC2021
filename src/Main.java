@@ -1,4 +1,6 @@
+import be.Time;
 import dal.db.MovieDAO;
+import dal.db.TimeDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,14 +10,17 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
 
 public class Main extends Application {
     MovieDAO movieDAO;
+    TimeDAO timeDAO;
 
     public Main() throws IOException {
         movieDAO = new MovieDAO();
+        timeDAO= new TimeDAO();
     }
 
     @Override
@@ -42,10 +47,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, SQLException {
+        TimeDAO timeDAO = new TimeDAO();
+        timeDAO.newTime(0,0);
         Instant start = Instant.now();
         Application.launch();
         Instant end = Instant.now();
-        System.out.println(Duration.between(start, end).getSeconds());
+        timeDAO.updateTime(Duration.between(start, end).getSeconds());
     }
 }

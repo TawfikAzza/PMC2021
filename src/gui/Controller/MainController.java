@@ -2,8 +2,10 @@ package gui.Controller;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.Time;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
+import dal.db.TimeDAO;
 import gui.Model.MovieModel;
 import gui.Model.VideoModel;
 import javafx.beans.value.ChangeListener;
@@ -18,7 +20,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.scene.image.Image;
+
+import javafx.scene.control.cell.TextFieldTableCell;
+
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -26,6 +32,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.converter.DoubleStringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
@@ -51,6 +58,10 @@ public class MainController implements Initializable {
 
     private ChangeListener<Duration> progressListener;
     private MovieModel movieModel;
+    TimeDAO timeDAO= new TimeDAO();
+
+    public MainController() throws IOException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +73,7 @@ public class MainController implements Initializable {
         }
 
         VideoModel videoModel = new VideoModel();
+        setUpTable();
 
         try {
             updateTableMovie();
@@ -121,6 +133,29 @@ public class MainController implements Initializable {
 
         // 5. Add sorted (and filtered) data to the table.
         tableMovie.setItems(sortedData);*/
+    }
+
+    private void setUpTable() {
+        tableMovie.setEditable(true);
+
+        title.setCellFactory(TextFieldTableCell.forTableColumn());
+        title.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movie,String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Movie,String> event) {
+                Movie movie = event.getRowValue();
+                movie.setName(event.getNewValue());
+                try {
+                    movieModel.updateMovie(movie);
+                } catch (MovieException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error window");
+                    alert.setHeaderText(e.getExceptionMessage());
+                    alert.show();
+                }
+            }
+        });
+
+
     }
 
     @FXML
@@ -203,6 +238,7 @@ public class MainController implements Initializable {
             updateTableMovie();
             try {
                 movieModel.playMovie(movie);
+                timeDAO.updateMovies();
             } catch (IllegalArgumentException iae) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error window");
