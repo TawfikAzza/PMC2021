@@ -235,6 +235,7 @@ public class ManageMovieController implements Initializable {
             // displayError(e);
         }
         ManageCategoryController manageCategoryController = loader.getController();
+        manageCategoryController.setMainController0(mainController);
         manageCategoryController.setMainController(this);
         manageCategoryController.setOperationType("creation");
         // manageMovieController.setTheme(topPane);

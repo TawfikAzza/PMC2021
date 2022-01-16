@@ -251,7 +251,7 @@ public class MainController implements Initializable {
         stage.show();
     }
 
-    private void setUpCheckComboBox() throws CategoryException {
+    public void setUpCheckComboBox() throws CategoryException {
         categoriesCheckComboBox.getItems().setAll(movieModel.getAllCategories());
     }
 
