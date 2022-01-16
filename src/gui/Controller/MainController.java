@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -27,6 +28,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.converter.DoubleStringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
@@ -66,6 +68,7 @@ public class MainController implements Initializable {
         }
 
         VideoModel videoModel = new VideoModel();
+        setUpTable();
 
         try {
             updateTableMovie();
@@ -125,6 +128,29 @@ public class MainController implements Initializable {
 
         // 5. Add sorted (and filtered) data to the table.
         tableMovie.setItems(sortedData);*/
+    }
+
+    private void setUpTable() {
+        tableMovie.setEditable(true);
+
+        title.setCellFactory(TextFieldTableCell.forTableColumn());
+        title.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movie,String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Movie,String> event) {
+                Movie movie = event.getRowValue();
+                movie.setName(event.getNewValue());
+                try {
+                    movieModel.updateMovie(movie);
+                } catch (MovieException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error window");
+                    alert.setHeaderText(e.getExceptionMessage());
+                    alert.show();
+                }
+            }
+        });
+
+
     }
 
     @FXML
