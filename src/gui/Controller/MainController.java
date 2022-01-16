@@ -2,8 +2,10 @@ package gui.Controller;
 
 import be.CategoryMovie;
 import be.Movie;
+import be.Time;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
+import dal.db.TimeDAO;
 import gui.Model.MovieModel;
 import gui.Model.VideoModel;
 import javafx.beans.value.ChangeListener;
@@ -49,6 +51,10 @@ public class MainController implements Initializable {
 
     private ChangeListener<Duration> progressListener;
     private MovieModel movieModel;
+    TimeDAO timeDAO= new TimeDAO();
+
+    public MainController() throws IOException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -187,6 +193,7 @@ public class MainController implements Initializable {
             updateTableMovie();
             try {
                 movieModel.playMovie(movie);
+                timeDAO.updateMovies();
             } catch (IllegalArgumentException iae) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error window");
