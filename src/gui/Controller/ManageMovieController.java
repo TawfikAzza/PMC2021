@@ -307,8 +307,16 @@ public class ManageMovieController implements Initializable {
     }
 
     public void fillFields(IMDBScraper scraper) {
-        txtTitle.setText(scraper.extractTitle());
-        txtImdb.setText(scraper.extractRating());
-        txtSummary.setText(scraper.extractPlot());
+        try{
+            txtTitle.setText(scraper.extractTitle());
+            txtSummary.setText(scraper.extractPlot());
+            txtImdb.setText(scraper.extractRating());
+        }
+        catch (IndexOutOfBoundsException i){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error window");
+            alert.setHeaderText("Some information about this movie could not be accessed");
+            alert.show();
+        }
     }
 }
