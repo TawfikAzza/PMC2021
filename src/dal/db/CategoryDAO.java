@@ -104,7 +104,7 @@ public class CategoryDAO implements ICategoryDataAccess {
             statementDeleteRelation.setInt(1,categoryMovie.getId());
 
             statementDeleteCat.execute();
-            statementDeleteCat.execute();
+            statementDeleteRelation.execute();
         }
     }
     public void updateCategory(CategoryMovie categoryMovie) throws SQLException, CategoryException {

@@ -89,8 +89,9 @@ public class ManageMovieController implements Initializable {
         }
     }
 
-    public void removeCategory(ActionEvent actionEvent) {
-        if (movieCategory.getSelectionModel().getSelectedIndex() != -1) {
+
+    public void removeCategory(ActionEvent actionEvent) throws CategoryException {
+        if(movieCategory.getSelectionModel().getSelectedIndex()!=-1){
             listCategory.getItems().add(movieCategory.getSelectionModel().getSelectedItem());
             movieCategory.getItems().remove(movieCategory.getSelectionModel().getSelectedItem());
         }
@@ -230,6 +231,7 @@ public class ManageMovieController implements Initializable {
             // displayError(e);
         }
         ManageCategoryController manageCategoryController = loader.getController();
+        manageCategoryController.setMainController0(mainController);
         manageCategoryController.setMainController(this);
         manageCategoryController.setOperationType("creation");
         // manageMovieController.setTheme(topPane);
@@ -253,6 +255,7 @@ public class ManageMovieController implements Initializable {
                 // displayError(e);
             }
             ManageCategoryController manageCategoryController = loader.getController();
+            manageCategoryController.setMainController0(mainController);
             manageCategoryController.setMainController(this);
             manageCategoryController.setOperationType("modification");
             manageCategoryController.setFields(listCategory.getSelectionModel().getSelectedItem());
@@ -266,10 +269,13 @@ public class ManageMovieController implements Initializable {
         }
     }
 
-    public void deleteCategory(ActionEvent actionEvent) throws CategoryException {
-        if (listCategory.getSelectionModel().getSelectedIndex() != -1) {
+
+    public void deleteCategory(ActionEvent actionEvent) throws  CategoryException {
+        if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
+            categoryModel.removeCategory(listCategory.getSelectionModel().getSelectedItem());
             categoryModel.deleteCategory(listCategory.getSelectionModel().getSelectedItem());
             listCategory.getItems().remove(listCategory.getSelectionModel().getSelectedIndex());
+            mainController.setUpCheckComboBox();
         }
     }
 

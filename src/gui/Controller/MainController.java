@@ -39,6 +39,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -58,6 +62,7 @@ public class MainController implements Initializable {
 
     private ChangeListener<Duration> progressListener;
     private MovieModel movieModel;
+    Instant start;
     TimeDAO timeDAO= new TimeDAO();
 
     public MainController() throws IOException {
@@ -137,7 +142,6 @@ public class MainController implements Initializable {
 
     private void setUpTable() {
         tableMovie.setEditable(true);
-
         title.setCellFactory(TextFieldTableCell.forTableColumn());
         title.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movie,String>>() {
             @Override
@@ -170,6 +174,9 @@ public class MainController implements Initializable {
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
+        List<Movie> testMovie = movieModel.getAllMovies();
+
+
         tableMovie.setItems(movieModel.getAllMovies());
     }
 
@@ -261,22 +268,48 @@ public class MainController implements Initializable {
         loader.setLocation(getClass().getClassLoader().getResource("gui/Views/Stats.fxml"));
         Parent root;
         root = loader.load();
+        TimeManagerController timeManagerController= loader.getController();
+        timeManagerController.setInstant(start);
         Stage stage = new Stage();
         stage.setTitle("About me");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-    private void setUpCheckComboBox() throws CategoryException {
+    public void setUpCheckComboBox() throws CategoryException {
         categoriesCheckComboBox.getItems().setAll(movieModel.getAllCategories());
     }
 
     public void searchCategories(ActionEvent actionEvent) throws SQLException, MovieException, IOException {
         ObservableList<Movie> allMovies = FXCollections.observableArrayList();
+        tableMovie.getItems().clear();
+        tableMovie.setItems(movieModel.getAllMovies());
         if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()) {
-            for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
+           /* for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
                 allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
-            tableMovie.setItems(allMovies);
+            */
+            List<Movie> tmpMovies = new ArrayList<>();
+            for(Movie mov: tableMovie.getItems()) {
+                boolean fullCheck= true;
+                 for(Object cat: categoriesCheckComboBox.getCheckModel().getCheckedItems()){
+                        cat = (CategoryMovie) cat;
+                        if(mov.getMovieGenres().size()!=categoriesCheckComboBox.getCheckModel().getCheckedItems().size()) {
+                            fullCheck=false;
+                        }
+                        if(mov.getMovieGenres().get(((CategoryMovie) cat).getId())==null) {
+                            fullCheck= false;
+                        }
+                 }
+                 if(!fullCheck) {
+                     tmpMovies.add(mov);
+                 }
+                 fullCheck=true;
+            }
+            for(Movie mov:tmpMovies) {
+                tableMovie.getItems().remove(mov);
+            }
+            allMovies.addAll(tableMovie.getItems());
+           // tableMovie.setItems(allMovies);
             keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
@@ -310,6 +343,10 @@ public class MainController implements Initializable {
         }
 
 
+    }
+
+    public void setInstant(Instant start) {
+        this.start=start;
     }
 
     /***public void search(ActionEvent actionEvent) throws MovieException, SQLException {

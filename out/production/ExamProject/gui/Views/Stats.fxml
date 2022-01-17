@@ -17,15 +17,17 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="167.0" text="Time you spent using your movie collection:" />
-      <Label layoutX="14.0" layoutY="196.0" text="Movies you watched:" />
-      <Label layoutX="252.0" layoutY="167.0" text="Time" />
+      <Label layoutX="14.0" layoutY="167.0" text="You have spent " />
+      <Label layoutX="14.0" layoutY="196.0" text="watching a total of" />
+      <Label fx:id="totalTime" layoutX="105.0" layoutY="167.0" text="0d0h0m0s" />
       <Label layoutX="105.0" layoutY="125.0" text="During this period:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="132.0" layoutY="196.0" text="Total" />
-      <Button layoutX="222.0" layoutY="213.0" mnemonicParsing="false" text="Close window" />
+      <Label fx:id="totalMovies" layoutX="116.0" layoutY="196.0" text="00" />
+      <Button fx:id="closeWindowButton" layoutX="222.0" layoutY="213.0" mnemonicParsing="false" onAction="#closeWindow" text="Close window" />
+      <Label layoutX="189.0" layoutY="167.0" text="on this program" />
+      <Label layoutX="135.0" layoutY="196.0" text="movie(s)." />
    </children>
 </AnchorPane>

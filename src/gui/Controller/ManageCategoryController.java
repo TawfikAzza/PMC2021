@@ -28,6 +28,7 @@ public class ManageCategoryController implements Initializable {
     private String operationType;
     private CategoryModel categoryModel;
     ManageMovieController manageMovieController;
+    MainController mainController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,6 +46,7 @@ public class ManageCategoryController implements Initializable {
             if(newCatName.getText()!=""){
                try {
                    CategoryMovie categoryCreated = categoryModel.addNewCategory(new CategoryMovie(0,newCatName.getText()));
+                   mainController.setUpCheckComboBox();
                    manageMovieController.addCategoryToList(categoryCreated);
                }catch (CategoryException e){
                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -65,6 +67,7 @@ public class ManageCategoryController implements Initializable {
                 currentCategory.setName(newCatName.getText());
                 try {
                     categoryModel.updateCategory(currentCategory);
+                    mainController.setUpCheckComboBox();
                     manageMovieController.setupListCategory();
                 }catch (CategoryException e){
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -153,6 +156,9 @@ public class ManageCategoryController implements Initializable {
 
     public void setMainController(ManageMovieController manageMovieController) {
         this.manageMovieController = manageMovieController;
+    }
+    public void setMainController0(MainController mainController) {
+        this.mainController = mainController;
     }
 
     public void setOperationType(String operationType) {

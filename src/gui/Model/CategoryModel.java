@@ -45,4 +45,8 @@ public class CategoryModel {
     public void deleteCategory(CategoryMovie category) throws CategoryException {
         pmcFacade.deleteCategory(category);
     }
+
+    public void removeCategory(CategoryMovie selectedItem) throws CategoryException {
+        pmcFacade.removeCategory(selectedItem);
+    }
 }
