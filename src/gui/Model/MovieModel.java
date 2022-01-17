@@ -38,7 +38,7 @@ public class MovieModel {
     public void deleteMovie(Movie selectedItem) throws MovieException {
         pmcFacade.deleteMovie(selectedItem);
     }
-    public void playMovie(Movie movie) throws IOException {
+    public void playMovie(Movie movie) throws IOException, SQLException {
         pmcFacade.playMovie(movie);
     }
 

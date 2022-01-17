@@ -76,9 +76,10 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public void playMovie(Movie movie) throws IOException {
+    public void playMovie(Movie movie) throws IOException, SQLException {
         File file = new File(movie.getFileLink().toString());
         Desktop.getDesktop().open(file);
+
     }
 
     @Override

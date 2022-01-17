@@ -12,7 +12,7 @@
 <?import javafx.scene.web.WebView?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
+<AnchorPane fx:id="topPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MainController">
    <children>
       <Button fx:id="watchTRBtn" layoutX="471.0" layoutY="149.0" onAction="#playPauseVideo" prefHeight="48.0" prefWidth="136.0" text="Watch Trailer" AnchorPane.leftAnchor="471.0" />
       <TableView fx:id="tableMovie" layoutX="15.0" layoutY="64.0" onMouseClicked="#displaySummary" prefHeight="499.0" prefWidth="368.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="64.0">

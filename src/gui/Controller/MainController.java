@@ -27,6 +27,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
@@ -50,6 +51,8 @@ public class MainController implements Initializable {
     @FXML
     public Button searchButton;
     @FXML
+    private AnchorPane topPane;
+    @FXML
     private TextField keywordTextField;
     @FXML
     private TextFlow txtSummary;
@@ -71,6 +74,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        topPane.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
         try {
             movieModel = new MovieModel();
         } catch (IOException e) {
@@ -257,7 +261,7 @@ public class MainController implements Initializable {
 
     public void displaySummary(MouseEvent mouseEvent) {
         txtSummary.getChildren().clear();
-        System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
+        //System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
         Text summary = new Text(tableMovie.getSelectionModel().getSelectedItem().getSummary());
         txtSummary.getChildren().add(summary);
     }
