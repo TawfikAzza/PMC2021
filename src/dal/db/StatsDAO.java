@@ -7,6 +7,8 @@ import dal.interfaces.IStatsDAO;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StatsDAO implements IStatsDAO {
     ConnectionManager connectionManager;
@@ -26,10 +28,9 @@ public class StatsDAO implements IStatsDAO {
     }
 
     @Override
-    public Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException{
-        Stats time = null;
-        long totalSeconds=0;
-        int totalMovies=0;
+    public List<Stats> getAllStats(LocalDate firstDate, LocalDate secondDate) throws SQLException{
+        List<Stats>allStats= new ArrayList<>();
+
         String sql="SELECT * FROM ElipsedTime WHERE lastConnection BETWEEN ? AND ?";
         try (Connection connection= connectionManager.getConnection()){
             PreparedStatement preparedStatement= connection.prepareStatement(sql);
@@ -38,14 +39,10 @@ public class StatsDAO implements IStatsDAO {
             preparedStatement.execute();
             ResultSet resultSet= preparedStatement.getResultSet();
             while (resultSet.next()){
-                totalMovies+= resultSet.getInt("movies");
-                totalSeconds+=resultSet.getLong("elipsedTime");
-                time= new Stats(totalMovies,totalSeconds);
+                allStats.add(new Stats(resultSet.getInt("movies"),resultSet.getLong("elipsedTime"),resultSet.getDate("lastConnection")));
             }
         }
-
-
-        return time;
+        return allStats;
     }
 
     @Override

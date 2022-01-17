@@ -159,8 +159,8 @@ public class DALController implements IDALFacade {
     }
 
     @Override
-    public Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
-        return iTimeDAO.elipsedtime(firstDate,secondDate);
+    public List<Stats> getAllStats(LocalDate firstDate, LocalDate secondDate) throws SQLException {
+        return iTimeDAO.getAllStats(firstDate,secondDate);
     }
 
     @Override

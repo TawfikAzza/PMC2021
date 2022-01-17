@@ -43,7 +43,7 @@ public interface PMCFacade {
 
     void newTime(int movies, long seconds) throws SQLException;
 
-    Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException;
+    List<Stats> getAllStats(LocalDate firstDate, LocalDate secondDate) throws SQLException;
 
     void updateTime(long seconds) throws SQLException;
 

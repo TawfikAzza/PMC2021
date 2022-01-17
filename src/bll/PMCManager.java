@@ -102,8 +102,8 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
-        return dalController.elipsedtime(firstDate,secondDate);
+    public List<Stats> getAllStats(LocalDate firstDate, LocalDate secondDate) throws SQLException {
+        return dalController.getAllStats(firstDate,secondDate);
     }
 
     @Override

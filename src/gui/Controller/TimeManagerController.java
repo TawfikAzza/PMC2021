@@ -4,15 +4,19 @@ import be.Stats;
 import gui.Model.TimeManagerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +26,7 @@ public class TimeManagerController implements Initializable {
     public Label totalTime;
     public Label totalMovies;
     public Button closeWindowButton;
+    public AreaChart areaChart;
 
 
     TimeManagerModel timeManagerModel;
@@ -31,7 +36,8 @@ public class TimeManagerController implements Initializable {
     public void getFirstDate(ActionEvent actionEvent) throws SQLException {
         timeManagerModel.updateTime(start);
         try {
-            Stats timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
+            drawAreaChart();
+            Stats timeElipsed =timeManagerModel.calculateTime(firstDatePicker,secondDatePicker);
             totalTime.setText(calculateTime(timeElipsed.getSeconds()));
             totalMovies.setText(String.valueOf(timeElipsed.getMovies()));
         }catch (NullPointerException ignored){}
@@ -41,7 +47,8 @@ public class TimeManagerController implements Initializable {
     public void getSecondDate(ActionEvent actionEvent) throws SQLException {
         timeManagerModel.updateTime(start);
         try {
-            Stats timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
+            drawAreaChart();
+            Stats timeElipsed =timeManagerModel.calculateTime(firstDatePicker,secondDatePicker);
             totalTime.setText(calculateTime(timeElipsed.getSeconds()));
             totalMovies.setText(String.valueOf(timeElipsed.getMovies()));
         }catch (NullPointerException ignored){}
@@ -50,6 +57,9 @@ public class TimeManagerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        firstDatePicker.getEditor().setDisable(true);
+        secondDatePicker.getEditor().setDisable(true);
+
         try {
             timeManagerModel= new TimeManagerModel();
         } catch (IOException e) {
@@ -106,4 +116,24 @@ public class TimeManagerController implements Initializable {
         Stage stage = (Stage) closeWindowButton.getScene().getWindow();
         stage.close();
     }
+    private void drawAreaChart() throws SQLException {
+        XYChart.Series series= new XYChart.Series();
+        List<Stats>allStats=timeManagerModel.getAllStats(firstDatePicker,secondDatePicker);
+        Date firstDate=allStats.get(0).getDate();
+        XYChart.Data data = new XYChart.Data<>(firstDate.toLocalDate().toString(),allStats.get(0).getSeconds());
+        allStats.remove(allStats.get(0));
+        for (Stats stats:allStats){
+            if(stats.getDate().equals(firstDate))
+                data.YValueProperty().setValue((Long)data.YValueProperty().get()+stats.getSeconds());
+            else {
+                series.getData().add(data);
+                firstDate=stats.getDate();
+                data=new XYChart.Data<>(firstDate.toLocalDate().toString(),stats.getSeconds());
+            }
+        }
+        series.getData().add(data);
+        areaChart.getData().add(series);
+
+    }
+
 }
