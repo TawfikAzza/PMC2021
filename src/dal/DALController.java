@@ -2,15 +2,15 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
-import be.Time;
+import be.Stats;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import dal.db.CategoryDAO;
 import dal.db.MovieDAO;
-import dal.db.TimeDAO;
+import dal.db.StatsDAO;
 import dal.interfaces.ICategoryDataAccess;
 import dal.interfaces.IMovieDataAccess;
-import dal.interfaces.ITimeDAO;
+import dal.interfaces.IStatsDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,12 +21,12 @@ import java.util.List;
 public class DALController implements IDALFacade {
     IMovieDataAccess iMovieDataAccess;
     ICategoryDataAccess iCategoryDataAccess;
-    ITimeDAO iTimeDAO;
+    IStatsDAO iTimeDAO;
 
     public DALController() throws IOException {
         iMovieDataAccess = new MovieDAO();
         iCategoryDataAccess = new CategoryDAO();
-        iTimeDAO= new TimeDAO();
+        iTimeDAO= new StatsDAO();
     }
 
 
@@ -159,7 +159,7 @@ public class DALController implements IDALFacade {
     }
 
     @Override
-    public Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
+    public Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
         return iTimeDAO.elipsedtime(firstDate,secondDate);
     }
 

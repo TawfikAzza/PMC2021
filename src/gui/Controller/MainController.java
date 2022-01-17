@@ -2,10 +2,9 @@ package gui.Controller;
 
 import be.CategoryMovie;
 import be.Movie;
-import be.Time;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
-import dal.db.TimeDAO;
+import dal.db.StatsDAO;
 import gui.Model.MovieModel;
 import gui.Model.VideoModel;
 import javafx.beans.value.ChangeListener;
@@ -33,7 +32,6 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.converter.DoubleStringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
@@ -43,7 +41,6 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -66,7 +63,7 @@ public class MainController implements Initializable {
     private ChangeListener<Duration> progressListener;
     private MovieModel movieModel;
     Instant start;
-    TimeDAO timeDAO= new TimeDAO();
+    StatsDAO timeDAO= new StatsDAO();
 
     public MainController() throws IOException {
     }

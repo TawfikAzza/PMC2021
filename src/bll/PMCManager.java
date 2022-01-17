@@ -2,12 +2,11 @@ package bll;
 
 import be.CategoryMovie;
 import be.Movie;
-import be.Time;
+import be.Stats;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import bll.utils.VideoPlayer;
 import dal.DALController;
-import gui.Model.CategoryModel;
 
 import java.awt.*;
 import java.io.File;
@@ -103,7 +102,7 @@ public class PMCManager implements PMCFacade{
     }
 
     @Override
-    public Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
+    public Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException {
         return dalController.elipsedtime(firstDate,secondDate);
     }
 

@@ -2,7 +2,7 @@ package dal;
 
 import be.CategoryMovie;
 import be.Movie;
-import be.Time;
+import be.Stats;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 
@@ -49,7 +49,7 @@ public interface IDALFacade {
 
  void newTime(int movies, long seconds) throws SQLException;
 
- Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException;
+ Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException;
 
  void updateTime(long seconds) throws SQLException;
 

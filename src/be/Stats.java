@@ -1,9 +1,9 @@
 package be;
 
-public class Time {
+public class Stats {
     int movies;
     long seconds;
-    public Time(int movies,long seconds){
+    public Stats(int movies, long seconds){
         this.movies=movies;
         this.seconds=seconds;
     }

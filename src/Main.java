@@ -1,5 +1,5 @@
 import dal.db.MovieDAO;
-import dal.db.TimeDAO;
+import dal.db.StatsDAO;
 import gui.Controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +16,12 @@ import java.time.Instant;
 
 public class Main extends Application {
     MovieDAO movieDAO;
-    TimeDAO timeDAO;
+    StatsDAO timeDAO;
     static Instant start;
 
     public Main() throws IOException {
         movieDAO = new MovieDAO();
-        timeDAO= new TimeDAO();
+        timeDAO= new StatsDAO();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException, SQLException {
-        TimeDAO timeDAO = new TimeDAO();
+        StatsDAO timeDAO = new StatsDAO();
         timeDAO.newTime(0,0);
          start = Instant.now();
         Application.launch();

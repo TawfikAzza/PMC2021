@@ -1,9 +1,8 @@
 package gui.Model;
 
-import be.Time;
+import be.Stats;
 import bll.PMCFacade;
 import bll.PMCManager;
-import dal.db.TimeDAO;
 import javafx.scene.control.DatePicker;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class TimeManagerModel {
         pmcFacade= new PMCManager();
     }
 
-    public Time calculateTimeElipsed(DatePicker firstDatePicker, DatePicker secondDatePicker) throws SQLException {
+    public Stats calculateTimeElipsed(DatePicker firstDatePicker, DatePicker secondDatePicker) throws SQLException {
         return pmcFacade.elipsedtime(firstDatePicker.getValue().minusDays(1),secondDatePicker.getValue().plusDays(1));
     }
 

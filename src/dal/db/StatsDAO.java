@@ -1,16 +1,16 @@
 package dal.db;
 
-import be.Time;
+import be.Stats;
 import dal.ConnectionManager;
-import dal.interfaces.ITimeDAO;
+import dal.interfaces.IStatsDAO;
 
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class TimeDAO implements ITimeDAO {
+public class StatsDAO implements IStatsDAO {
     ConnectionManager connectionManager;
-    public TimeDAO() throws IOException {
+    public StatsDAO() throws IOException {
         connectionManager= new ConnectionManager();
     }
 
@@ -26,8 +26,8 @@ public class TimeDAO implements ITimeDAO {
     }
 
     @Override
-    public Time elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException{
-        Time time = null;
+    public Stats elipsedtime(LocalDate firstDate, LocalDate secondDate) throws SQLException{
+        Stats time = null;
         long totalSeconds=0;
         int totalMovies=0;
         String sql="SELECT * FROM ElipsedTime WHERE lastConnection BETWEEN ? AND ?";
@@ -40,7 +40,7 @@ public class TimeDAO implements ITimeDAO {
             while (resultSet.next()){
                 totalMovies+= resultSet.getInt("movies");
                 totalSeconds+=resultSet.getLong("elipsedTime");
-                time= new Time(totalMovies,totalSeconds);
+                time= new Stats(totalMovies,totalSeconds);
             }
         }
 

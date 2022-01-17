@@ -1,10 +1,8 @@
 package gui.Controller;
 
-import be.Time;
-import dal.db.TimeDAO;
+import be.Stats;
 import gui.Model.TimeManagerModel;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -13,11 +11,8 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.MonthDay;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +31,7 @@ public class TimeManagerController implements Initializable {
     public void getFirstDate(ActionEvent actionEvent) throws SQLException {
         timeManagerModel.updateTime(start);
         try {
-            Time timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
+            Stats timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
             totalTime.setText(calculateTime(timeElipsed.getSeconds()));
             totalMovies.setText(String.valueOf(timeElipsed.getMovies()));
         }catch (NullPointerException ignored){}
@@ -46,7 +41,7 @@ public class TimeManagerController implements Initializable {
     public void getSecondDate(ActionEvent actionEvent) throws SQLException {
         timeManagerModel.updateTime(start);
         try {
-            Time timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
+            Stats timeElipsed =timeManagerModel.calculateTimeElipsed(firstDatePicker,secondDatePicker);
             totalTime.setText(calculateTime(timeElipsed.getSeconds()));
             totalMovies.setText(String.valueOf(timeElipsed.getMovies()));
         }catch (NullPointerException ignored){}
