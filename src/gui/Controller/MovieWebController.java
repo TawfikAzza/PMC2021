@@ -2,12 +2,20 @@ package gui.Controller;
 
 import bll.utils.IMDBScraper;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MovieWebController {
+
+    @FXML
+    private Text txt1;
+
+    @FXML
+    private Text txt2;
 
     public WebView movieView;
     ManageMovieController manageMovieController;

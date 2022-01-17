@@ -237,10 +237,11 @@ public class ManageMovieController implements Initializable {
         // manageMovieController.setTheme(topPane);
         Stage stage = new Stage();
         stage.setTitle("New Category");
-        File file = new File("data/playImagotype.png");
+        File file = new File("src/css/data/playImagotype.png");
         Image imagotype = new Image(file.toURI().toString());
         stage.getIcons().add(imagotype);
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -261,10 +262,11 @@ public class ManageMovieController implements Initializable {
             manageCategoryController.setFields(listCategory.getSelectionModel().getSelectedItem());
             Stage stage = new Stage();
             stage.setTitle("Edit Category");
-            File file = new File("data/playImagotype.png");
+            File file = new File("src/css/data/playImagotype.png");
             Image imagotype = new Image(file.toURI().toString());
             stage.getIcons().add(imagotype);
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.show();
         }
     }
@@ -289,8 +291,13 @@ public class ManageMovieController implements Initializable {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        File file = new File("src/css/data/playImagotype.png");
+        root.getStylesheets().add("css/manageMovie.css");
+        stage.setTitle("Search IMDB Rating");
+        Image imagotype = new Image(file.toURI().toString());
+        stage.getIcons().add(imagotype);
         stage.setScene(scene);
-
+        stage.setResizable(false);
         MovieWebController controller = loader.getController();
         controller.loadPage("https://www.imdb.com/find?q=" + txtTitle.getText() + "&ref_=nv_sr_sm");
         controller.provideController(this);
