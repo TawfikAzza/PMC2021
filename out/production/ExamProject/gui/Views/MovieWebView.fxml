@@ -5,12 +5,12 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="633.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MovieWebController">
+<AnchorPane prefHeight="633.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MovieWebController">
    <children>
       <WebView fx:id="movieView" layoutX="20.0" layoutY="23.0" prefHeight="419.0" prefWidth="779.0" />
       <Button layoutX="693.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleFoundMovie" text="Found Movie" />
       <Button layoutX="45.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
       <Text fx:id="txt1" layoutX="155.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Choose the movie that corresponds better with the movie you're trying to add/edit" wrappingWidth="508.0949249267578" />
-      <Text fx:id="txt2" layoutX="155.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Click on Accept" wrappingWidth="508.0949249267578" />
+      <Text fx:id="txt2" layoutX="155.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Click on Found Movie" wrappingWidth="508.0949249267578" />
    </children>
 </AnchorPane>

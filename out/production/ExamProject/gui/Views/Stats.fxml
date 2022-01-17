@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="266.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.TimeManagerController">
+<AnchorPane prefHeight="547.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.TimeManagerController">
    <children>
-      <DatePicker fx:id="firstDatePicker" layoutX="52.0" layoutY="86.0" onAction="#getFirstDate" prefHeight="26.0" prefWidth="121.0" promptText="Select a date" />
+      <DatePicker fx:id="firstDatePicker" layoutX="52.0" layoutY="86.0" onAction="#getFirstDate" prefHeight="26.0" prefWidth="113.0" promptText="Select a date" showWeekNumbers="true" />
       <Label layoutX="14.0" layoutY="91.0" text="From" />
-      <Label layoutX="184.0" layoutY="91.0" text="To" />
-      <DatePicker fx:id="secondDatePicker" layoutX="208.0" layoutY="87.0" onAction="#getSecondDate" prefHeight="26.0" prefWidth="121.0" promptText="Select a date" />
-      <Label layoutX="98.0" layoutY="27.0" text="Random stats" underline="true">
+      <Label layoutX="169.0" layoutY="91.0" text="To" />
+      <DatePicker fx:id="secondDatePicker" layoutX="189.0" layoutY="87.0" onAction="#getSecondDate" prefHeight="26.0" prefWidth="121.0" promptText="Select a date" />
+      <Label layoutX="77.0" layoutY="28.0" text="Personalised stats" underline="true">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
       <Label layoutX="14.0" layoutY="167.0" text="You have spent " />
       <Label layoutX="14.0" layoutY="196.0" text="watching a total of" />
-      <Label fx:id="totalTime" layoutX="105.0" layoutY="167.0" text="0d0h0m0s" />
-      <Label layoutX="105.0" layoutY="125.0" text="During this period:">
+      <Label fx:id="totalTime" layoutX="194.0" layoutY="167.0" text="0d0h0m0s" />
+      <Label layoutX="108.0" layoutY="123.0" text="During this period:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="totalMovies" layoutX="116.0" layoutY="196.0" text="00" />
-      <Button fx:id="closeWindowButton" layoutX="222.0" layoutY="213.0" mnemonicParsing="false" onAction="#closeWindow" text="Close window" />
-      <Label layoutX="189.0" layoutY="167.0" text="on this program" />
-      <Label layoutX="135.0" layoutY="196.0" text="movie(s)." />
+      <Label fx:id="totalMovies" layoutX="178.0" layoutY="197.0" text="00" />
+      <Button fx:id="closeWindowButton" layoutX="671.0" layoutY="525.0" mnemonicParsing="false" onAction="#closeWindow" text="Close window" />
+      <Label layoutX="101.0" layoutY="167.0" text="on this program:" />
+      <Label layoutX="118.0" layoutY="197.0" text="movie(s)=" />
+      <AreaChart fx:id="areaChart" layoutX="3.0" layoutY="267.0" prefHeight="270.0" prefWidth="350.0" title="Time spent on the program per day">
+        <xAxis>
+          <CategoryAxis label="Days" prefHeight="40.0" prefWidth="257.0" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Time" prefHeight="198.0" prefWidth="63.0" side="LEFT" />
+        </yAxis>
+      </AreaChart>
+      <Line endX="100.0" endY="262.5" layoutX="292.0" layoutY="246.0" startX="100.0" startY="-158.5" />
+      <Label layoutX="511.0" layoutY="28.0" text="General stats" underline="true">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
