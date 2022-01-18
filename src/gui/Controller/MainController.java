@@ -272,7 +272,11 @@ public class MainController implements Initializable {
         TimeManagerController timeManagerController= loader.getController();
         timeManagerController.setInstant(start);
         Stage stage = new Stage();
-        stage.setTitle("About me");
+        stage.setTitle("Stats");
+        File file = new File("src/css/data/playImagotype.png");
+        Image imagotype = new Image(file.toURI().toString());
+        stage.getIcons().add(imagotype);
+        stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.show();
     }

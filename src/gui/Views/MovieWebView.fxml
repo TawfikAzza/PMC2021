@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="633.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MovieWebController">
+<AnchorPane prefHeight="633.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.MovieWebController">
    <children>
       <WebView fx:id="movieView" layoutX="20.0" layoutY="23.0" prefHeight="419.0" prefWidth="779.0" />
       <Button layoutX="693.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleFoundMovie" text="Found Movie" />
       <Button layoutX="45.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-      <Text fx:id="txt1" layoutX="155.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Choose the movie that corresponds better with the movie you're trying to add/edit" wrappingWidth="508.0949249267578" />
-      <Text fx:id="txt2" layoutX="155.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Click on Found Movie" wrappingWidth="508.0949249267578" />
+      <Text fx:id="txt1" fill="WHITE" layoutX="45.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Choose by clicking the movie that corresponds better with the movie you're trying to add/edit" wrappingWidth="754.4949493408203">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <Text fx:id="txt2" fill="WHITE" layoutX="45.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Once you clicked on the movie, click on the button &quot;Found Movie&quot; in this window." wrappingWidth="754.4949493408203">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <Text fx:id="txt11" fill="WHITE" layoutX="28.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" wrappingWidth="85.60000000000014">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <Glow level="0.51" />
+         </effect>
+      </Text>
    </children>
 </AnchorPane>

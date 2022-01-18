@@ -1,0 +1,86 @@
+#txt{
+    -fx-font-size: 18;
+    -fx-fill: white;
+}
+#txt2{
+    -fx-font-size: 14;
+    -fx-fill: white;
+    -fx-text-alignment: center;
+}
+#deleteBtn{
+    -fx-font-size: 12.5;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#deleteBtn:hover{
+    -fx-font-size: 12;
+    -fx-background-color: #9E9E9E;
+}
+#cancelButton{
+    -fx-font-size: 12.5;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#cancelButton:hover{
+    -fx-font-size: 12;
+    -fx-background-color: #9E9E9E;
+}
+#nextButton{
+    -fx-font-size: 12.5;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#nextButton:hover{
+    -fx-font-size: 12;
+    -fx-background-color: #9E9E9E;
+}
+.table-view .column-header-background .label{
+    -fx-text-fill: white;
+}
+.table-view .column-header-background{
+    -fx-background-color: grey;
+    -fx-background-radius: 20px;
+}
+.table-view .column-header {
+    -fx-background-color: #282828;
+}
+.table-view{
+    -fx-background-color: #282828;
+}
+.table-row-cell:even{
+    -fx-background-color: #A9A9A9;
+}
+.table-row-cell:odd{
+    -fx-background-color: #BEBEBE;
+}
+.table-row-cell:empty{
+    -fx-background-color:#282828;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+.table-row-cell:even:hover{
+    -fx-background-color:white;
+}
+.table-row-cell:odd:hover{
+    -fx-background-color: white;
+}
+.table-row-cell:even:hover:empty{
+    -fx-background-color:#282828;
+}
+.table-row-cell:odd:hover:empty{
+    -fx-background-color:#282828;
+}
+.table-row-cell:selected {
+    -fx-background-color: #383838;
+    -fx-text-fill: white;
+    -fx-background-insets: 0;
+}
+.table-row-cell:selected:hover{
+    -fx-background-color: #484848;
+}
+.table-row-cell:selected .table-cell{
+    -fx-text-fill: white;
+}

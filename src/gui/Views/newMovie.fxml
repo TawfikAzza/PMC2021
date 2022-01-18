@@ -35,7 +35,7 @@
          <effect>
             <Glow level="0.5" />
          </effect></Label>
-      <Button fx:id="confirmBtn" layoutX="475.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveMovie" text="Confirm" />
+      <Button fx:id="confirmBtn" layoutX="475.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveMovie" prefHeight="26.0" prefWidth="105.0" text="Confirm" />
       <Button fx:id="cancelBtn" layoutX="378.0" layoutY="348.0" mnemonicParsing="false" onAction="#cancelEntry" text="Cancel" />
       <Button layoutX="631.0" layoutY="255.0" mnemonicParsing="false" onAction="#createCategory" prefHeight="26.0" prefWidth="119.0" text="Add Category" />
       <Button layoutX="632.0" layoutY="288.0" mnemonicParsing="false" onAction="#editCategory" prefHeight="26.0" prefWidth="119.0" text="Edit Category" />

@@ -8,63 +8,72 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="547.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.TimeManagerController">
+<AnchorPane fx:id="pane" prefHeight="632.0" prefWidth="893.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.TimeManagerController">
    <children>
       <DatePicker fx:id="firstDatePicker" layoutX="52.0" layoutY="86.0" onAction="#getFirstDate" prefHeight="26.0" prefWidth="113.0" promptText="Select a date" showWeekNumbers="true" />
-      <Label layoutX="14.0" layoutY="91.0" text="From" />
-      <Label layoutX="169.0" layoutY="91.0" text="To" />
+      <Label layoutX="14.0" layoutY="91.0" text="From" textFill="WHITE" />
+      <Label layoutX="169.0" layoutY="91.0" text="to" textFill="WHITE" />
       <DatePicker fx:id="secondDatePicker" layoutX="189.0" layoutY="87.0" onAction="#getSecondDate" prefHeight="26.0" prefWidth="121.0" promptText="Select a date" />
-      <Label layoutX="77.0" layoutY="28.0" text="Personalised stats" underline="true">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="14.0" layoutY="167.0" text="You have spent " />
-      <Label layoutX="14.0" layoutY="196.0" text="watching a total of" />
-      <Label fx:id="totalTime" layoutX="194.0" layoutY="167.0" text="0d0h0m0s" />
-      <Label layoutX="108.0" layoutY="123.0" text="During this period:">
+      <Label layoutX="125.0" layoutY="14.0" text="Personalised stats" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect>
       </Label>
-      <Label fx:id="totalMovies" layoutX="178.0" layoutY="197.0" text="00" />
-      <Button fx:id="closeWindowButton" layoutX="707.0" layoutY="507.0" mnemonicParsing="false" onAction="#closeWindow" text="Close window" />
-      <Label layoutX="101.0" layoutY="167.0" text="on this program:" />
-      <Label layoutX="118.0" layoutY="197.0" text="movie(s)=" />
-      <AreaChart fx:id="areaChart" layoutX="3.0" layoutY="267.0" prefHeight="270.0" prefWidth="350.0" title="Time spent on the program per day">
+      <Label layoutX="87.0" layoutY="508.0" text="You have spent " textFill="WHITE" />
+      <Label layoutX="94.0" layoutY="530.0" text="watching a total of" textFill="WHITE" />
+      <Label fx:id="totalTime" layoutX="270.0" layoutY="508.0" text="0d0h0m0s" textFill="WHITE" />
+      <Label layoutX="140.0" layoutY="481.0" text="During this period:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalMovies" layoutX="256.0" layoutY="530.0" text="00" textFill="WHITE" />
+      <Button fx:id="closeWindowButton" layoutX="766.0" layoutY="573.0" mnemonicParsing="false" onAction="#closeWindow" style="-fx-background-color: grey;" text="Close window" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Label layoutX="173.0" layoutY="508.0" text="on this program:" textFill="WHITE" />
+      <Label layoutX="198.0" layoutY="530.0" text="movie(s)=" textFill="WHITE" />
+      <AreaChart fx:id="areaChart" layoutX="23.0" layoutY="165.0" prefHeight="270.0" prefWidth="350.0" title="Time spent on the program per day">
         <xAxis>
-          <CategoryAxis label="Days" prefHeight="40.0" prefWidth="257.0" side="BOTTOM" />
+          <CategoryAxis label="Days" prefHeight="40.0" prefWidth="257.0" side="BOTTOM" tickLabelFill="WHITE" />
         </xAxis>
         <yAxis>
           <NumberAxis label="Time" prefHeight="198.0" prefWidth="63.0" side="LEFT" />
         </yAxis>
       </AreaChart>
-      <Line endX="100.0" endY="262.5" layoutX="292.0" layoutY="246.0" startX="100.0" startY="-158.5" />
-      <Label layoutX="511.0" layoutY="28.0" text="General stats" underline="true">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <PieChart fx:id="moviesPerCategories" layoutX="374.0" layoutY="-9.0" prefHeight="371.0" prefWidth="441.0" />
-      <ComboBox fx:id="selectCategoriesComboBox" layoutX="406.0" layoutY="378.0" onAction="#selectCategory" prefWidth="150.0" promptText="select a category" />
-      <Label layoutX="408.0" layoutY="420.0" text="Movies available:" />
-      <Label layoutX="613.0" layoutY="380.0" text="In this category:">
+      <Line endX="99.99996948242188" endY="356.4000244140625" layoutX="292.0" layoutY="246.0" startX="100.0" startY="-158.5" stroke="WHITE">
+         <effect>
+            <Glow level="0.5" />
+         </effect></Line>
+      <Label layoutX="596.0" layoutY="14.0" text="General stats" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
+         <effect>
+            <Glow level="0.5" />
+         </effect>
       </Label>
-      <Label layoutX="607.0" layoutY="420.0" text="Personal average rating:" />
-      <Label layoutX="607.0" layoutY="437.0" text="Imdb average rating:" />
-      <Label layoutX="408.0" layoutY="478.0" text="Lowest rated movie:" />
-      <Label layoutX="408.0" layoutY="461.0" text="Highest rated movie:" />
-      <Label fx:id="moviesAvailable" layoutX="505.0" layoutY="420.0" text="00" />
-      <Label fx:id="personalAverageRating" layoutX="739.0" layoutY="420.0" text="00" />
-      <Label fx:id="ImdbAverageRating" layoutX="723.0" layoutY="438.0" text="00" />
-      <Label fx:id="highestRatedMovie" layoutX="523.0" layoutY="461.0" text="Not available unless you select a category" />
-      <Label fx:id="lowestRatedMovie" layoutX="523.0" layoutY="478.0" text="Nont available unless you select a category" />
+      <PieChart fx:id="moviesPerCategories" layoutX="433.0" layoutY="41.0" prefHeight="371.0" prefWidth="441.0" />
+      <ComboBox fx:id="selectCategoriesComboBox" layoutX="455.0" layoutY="423.0" onAction="#selectCategory" prefWidth="150.0" promptText="select a category" />
+      <Label layoutX="457.0" layoutY="465.0" text="Movies available:" textFill="WHITE" />
+      <Label layoutX="662.0" layoutY="425.0" text="In this category:" textFill="WHITE" />
+      <Label layoutX="656.0" layoutY="465.0" text="Personal average rating:" textFill="WHITE" />
+      <Label layoutX="656.0" layoutY="482.0" text="Imdb average rating:" textFill="WHITE" />
+      <Label layoutX="457.0" layoutY="523.0" text="Lowest rated movie:" textFill="WHITE" />
+      <Label layoutX="457.0" layoutY="506.0" text="Highest rated movie:" textFill="WHITE" />
+      <Label fx:id="moviesAvailable" layoutX="554.0" layoutY="465.0" text="00" textFill="WHITE" />
+      <Label fx:id="personalAverageRating" layoutX="788.0" layoutY="465.0" text="00" textFill="WHITE" />
+      <Label fx:id="ImdbAverageRating" layoutX="772.0" layoutY="483.0" text="00" textFill="WHITE" />
+      <Label fx:id="highestRatedMovie" layoutX="572.0" layoutY="506.0" text="Not available unless you select a category" textFill="WHITE" />
+      <Label fx:id="lowestRatedMovie" layoutX="572.0" layoutY="523.0" text="Nont available unless you select a category" textFill="WHITE" />
    </children>
 </AnchorPane>

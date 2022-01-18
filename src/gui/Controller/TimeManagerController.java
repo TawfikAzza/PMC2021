@@ -17,10 +17,9 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import jdk.jfr.Frequency;
-import net.sourceforge.htmlunit.corejs.javascript.engine.BindingsObject;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,12 +27,13 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 public class TimeManagerController implements Initializable {
+    @FXML
+    public AnchorPane pane;
     @FXML
     private DatePicker secondDatePicker;
     @FXML
@@ -91,6 +91,7 @@ public class TimeManagerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        pane.getStylesheets().add(getClass().getResource("/css/stats.css").toExternalForm());
         try {
             movieModel = new MovieModel();
         } catch (IOException e) {
