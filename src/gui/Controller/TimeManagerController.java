@@ -11,6 +11,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.PieChart;
@@ -18,6 +19,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import jdk.jfr.Frequency;
 import net.sourceforge.htmlunit.corejs.javascript.engine.BindingsObject;
 
 import java.io.IOException;
@@ -32,19 +34,32 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 public class TimeManagerController implements Initializable {
-    public DatePicker secondDatePicker;
-    public DatePicker firstDatePicker;
-    public Label totalTime;
-    public Label totalMovies;
-    public Button closeWindowButton;
-    public AreaChart areaChart;
-    public PieChart moviesPerCategories;
-    public Label moviesAvailable;
-    public Label personalAverageRating;
-    public Label ImdbAverageRating;
-    public Label highestRatedMovie;
-    public Label lowestRatedMovie;
-    public ComboBox selectCategoriesComboBox;
+    @FXML
+    private DatePicker secondDatePicker;
+    @FXML
+    private DatePicker firstDatePicker;
+    @FXML
+    private Label totalTime;
+    @FXML
+    private Label totalMovies;
+    @FXML
+    private Button closeWindowButton;
+    @FXML
+    private AreaChart areaChart;
+    @FXML
+    private PieChart moviesPerCategories;
+    @FXML
+    private Label moviesAvailable;
+    @FXML
+    private Label personalAverageRating;
+    @FXML
+    private Label ImdbAverageRating;
+    @FXML
+    private Label highestRatedMovie;
+    @FXML
+    private Label lowestRatedMovie;
+    @FXML
+    private ComboBox<CategoryMovie> selectCategoriesComboBox;
     MovieModel movieModel;
 
 

@@ -52,7 +52,7 @@
       <Button fx:id="search" layoutX="355.0" layoutY="24.0" prefHeight="27.0" prefWidth="27.0" AnchorPane.leftAnchor="355.0" />
       <CheckComboBox fx:id="categoriesCheckComboBox" layoutX="431.0" layoutY="23.0" prefHeight="26.0" prefWidth="194.0" title="Sort by categories" AnchorPane.leftAnchor="431.0" />
       <Button fx:id="searchButton" layoutX="633.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchCategories" prefHeight="26.0" prefWidth="27.0" AnchorPane.leftAnchor="633.0" />
-      <Button fx:id="aboutMeBtn" layoutX="471.0" layoutY="515.0" mnemonicParsing="false" onAction="#openStatsWindow" prefHeight="48.0" prefWidth="136.0" text="About me" AnchorPane.leftAnchor="471.0" />
+      <Button fx:id="aboutMeBtn" layoutX="471.0" layoutY="515.0" mnemonicParsing="false" onAction="#openStatsWindow" prefHeight="48.0" prefWidth="136.0" text="Stats" AnchorPane.leftAnchor="471.0" />
       <TextFlow fx:id="txtSummary" layoutX="690.0" layoutY="348.0" prefHeight="231.0" prefWidth="368.0" AnchorPane.bottomAnchor="21.83906250000001" AnchorPane.rightAnchor="20.0" />
       <Text fx:id="txtComments" layoutX="845.0" layoutY="327.0" text="Comments" AnchorPane.rightAnchor="175.642578125">
          <effect>
