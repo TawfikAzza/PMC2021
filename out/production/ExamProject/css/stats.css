@@ -2,6 +2,9 @@
     -fx-text-fill: white;
     -fx-font-size: 1.6em;
 }
+.chart-content {
+    -fx-padding: 0px;
+}
 
 .axis-label {
     -fx-text-fill: white;

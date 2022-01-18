@@ -8,16 +8,23 @@ import bll.exceptions.MovieException;
 import gui.Model.MovieModel;
 import gui.Model.TimeManagerModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.effect.Glow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -30,6 +37,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class TimeManagerController implements Initializable {
     @FXML
@@ -120,7 +128,8 @@ public class TimeManagerController implements Initializable {
                 pieChartData.add(new PieChart.Data(categoryMovie.getName(),counter));
             }
             int finalTotal = total;
-            pieChartData.forEach(data -> data.nameProperty().bind(Bindings.concat(data.getName()," / %",data.pieValueProperty().divide(finalTotal).multiply(100))));
+             pieChartData.forEach(data -> data.nameProperty().bind(Bindings.concat(data.getName()," ",Bindings.format("%.2f",data.pieValueProperty().divide(finalTotal).multiply(100)),"%.")));
+            //pieChartData.forEach();
             moviesPerCategories.getData().addAll(pieChartData);
             try {
                 timeManagerModel= new TimeManagerModel();
