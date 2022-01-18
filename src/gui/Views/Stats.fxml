@@ -32,7 +32,7 @@
          </font>
       </Label>
       <Label fx:id="totalMovies" layoutX="178.0" layoutY="197.0" text="00" />
-      <Button fx:id="closeWindowButton" layoutX="671.0" layoutY="509.0" mnemonicParsing="false" onAction="#closeWindow" text="Close window" />
+      <Button fx:id="closeWindowButton" layoutX="707.0" layoutY="507.0" mnemonicParsing="false" onAction="#closeWindow" text="Close window" />
       <Label layoutX="101.0" layoutY="167.0" text="on this program:" />
       <Label layoutX="118.0" layoutY="197.0" text="movie(s)=" />
       <AreaChart fx:id="areaChart" layoutX="3.0" layoutY="267.0" prefHeight="270.0" prefWidth="350.0" title="Time spent on the program per day">
@@ -50,21 +50,21 @@
          </font>
       </Label>
       <PieChart fx:id="moviesPerCategories" layoutX="374.0" layoutY="-9.0" prefHeight="371.0" prefWidth="441.0" />
-      <ComboBox layoutX="508.0" layoutY="360.0" prefWidth="150.0" promptText="select a category" />
-      <Label layoutX="413.0" layoutY="420.0" text="Movies available" />
-      <Label layoutX="516.0" layoutY="437.0" text="Average rating by">
+      <ComboBox fx:id="selectCategoriesComboBox" layoutX="406.0" layoutY="378.0" onAction="#selectCategory" prefWidth="150.0" promptText="select a category" />
+      <Label layoutX="408.0" layoutY="420.0" text="Movies available:" />
+      <Label layoutX="613.0" layoutY="380.0" text="In this category:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="523.0" layoutY="391.0" text="In this category:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="671.0" layoutY="460.0" text="Personal" />
-      <Label layoutX="413.0" layoutY="460.0" text="Imdb" />
-      <Label layoutX="413.0" layoutY="514.0" text="Lowest rated movie" />
-      <Label layoutX="411.0" layoutY="492.0" text="Highest rated movie" />
+      <Label layoutX="607.0" layoutY="420.0" text="Personal average rating:" />
+      <Label layoutX="607.0" layoutY="437.0" text="Imdb average rating:" />
+      <Label layoutX="408.0" layoutY="478.0" text="Lowest rated movie:" />
+      <Label layoutX="408.0" layoutY="461.0" text="Highest rated movie:" />
+      <Label fx:id="moviesAvailable" layoutX="505.0" layoutY="420.0" text="00" />
+      <Label fx:id="personalAverageRating" layoutX="739.0" layoutY="420.0" text="00" />
+      <Label fx:id="ImdbAverageRating" layoutX="723.0" layoutY="438.0" text="00" />
+      <Label fx:id="highestRatedMovie" layoutX="523.0" layoutY="461.0" text="Not available unless you select a category" />
+      <Label fx:id="lowestRatedMovie" layoutX="523.0" layoutY="478.0" text="Nont available unless you select a category" />
    </children>
 </AnchorPane>

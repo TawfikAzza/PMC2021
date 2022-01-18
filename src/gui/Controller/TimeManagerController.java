@@ -39,6 +39,12 @@ public class TimeManagerController implements Initializable {
     public Button closeWindowButton;
     public AreaChart areaChart;
     public PieChart moviesPerCategories;
+    public Label moviesAvailable;
+    public Label personalAverageRating;
+    public Label ImdbAverageRating;
+    public Label highestRatedMovie;
+    public Label lowestRatedMovie;
+    public ComboBox selectCategoriesComboBox;
     MovieModel movieModel;
 
 
@@ -70,12 +76,22 @@ public class TimeManagerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            movieModel = new MovieModel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            selectCategoriesComboBox.getItems().addAll(movieModel.getAllCategories());
+        } catch (CategoryException e) {
+            e.printStackTrace();
+        }
         int total=0;
         ObservableList <PieChart.Data>pieChartData= FXCollections.observableArrayList();
         firstDatePicker.getEditor().setDisable(true);
         secondDatePicker.getEditor().setDisable(true);
         try {
-            movieModel = new MovieModel();
             List<Movie>allMovies=movieModel.getAllMovies();
             List<CategoryMovie>allCategories=movieModel.getAllCategories();
             for (CategoryMovie categoryMovie: allCategories){
@@ -95,7 +111,7 @@ public class TimeManagerController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch ( IOException | CategoryException | MovieException e) {
+        } catch ( CategoryException | MovieException e) {
             e.printStackTrace();
         }
         LocalDate firstDate = null;
@@ -169,4 +185,33 @@ public class TimeManagerController implements Initializable {
 
     }
 
+    public void selectCategory(ActionEvent actionEvent) throws MovieException {
+        double counter = 0,imdbRating=0,personalRating=0;
+        double lowestRating=11;
+        double highestRating=-1;
+        String highestRatedMovieName="",lowestRatedMovieName="";
+        List<Movie>allMovies=movieModel.getAllMovies();
+            for (Movie movie: allMovies){
+                if(movie.getMovieGenres().get(((CategoryMovie) selectCategoriesComboBox.getSelectionModel().getSelectedItem()).getId())!=null){
+                    counter += 1;
+                    imdbRating += movie.getImdbRating();
+                    personalRating += movie.getRating();
+                    if (movie.getRating()>highestRating){
+                        highestRatedMovieName=movie.getName();
+                        highestRating=movie.getRating();
+                    }
+                    if (movie.getRating()<lowestRating){
+                        lowestRatedMovieName=movie.getName();
+                        lowestRating=movie.getRating();
+                    }
+                }
+            }
+        moviesAvailable.setText(String.valueOf(counter));
+        highestRatedMovie.setText(highestRatedMovieName);
+        lowestRatedMovie.setText(lowestRatedMovieName);
+        ImdbAverageRating.setText(String.format("%.2f",imdbRating/counter));
+        personalAverageRating.setText(String.format("%.2f",personalRating/counter));
+
+    }
 }
+
