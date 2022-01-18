@@ -1,14 +1,24 @@
 package gui.Controller;
 
+import be.CategoryMovie;
+import be.Movie;
 import be.Stats;
+import bll.exceptions.CategoryException;
+import bll.exceptions.MovieException;
+import gui.Model.MovieModel;
 import gui.Model.TimeManagerModel;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import net.sourceforge.htmlunit.corejs.javascript.engine.BindingsObject;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +26,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +38,8 @@ public class TimeManagerController implements Initializable {
     public Label totalMovies;
     public Button closeWindowButton;
     public AreaChart areaChart;
+    public PieChart moviesPerCategories;
+    MovieModel movieModel;
 
 
     TimeManagerModel timeManagerModel;
@@ -57,12 +70,32 @@ public class TimeManagerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        int total=0;
+        ObservableList <PieChart.Data>pieChartData= FXCollections.observableArrayList();
         firstDatePicker.getEditor().setDisable(true);
         secondDatePicker.getEditor().setDisable(true);
-
         try {
-            timeManagerModel= new TimeManagerModel();
-        } catch (IOException e) {
+            movieModel = new MovieModel();
+            List<Movie>allMovies=movieModel.getAllMovies();
+            List<CategoryMovie>allCategories=movieModel.getAllCategories();
+            for (CategoryMovie categoryMovie: allCategories){
+                int counter = 0;
+                for (Movie movie: allMovies){
+                    if(movie.getMovieGenres().get(categoryMovie.getId())!=null){
+                        counter+=1;
+                        total+=1;}
+                }
+                pieChartData.add(new PieChart.Data(categoryMovie.getName(),counter));
+            }
+            int finalTotal = total;
+            pieChartData.forEach(data -> data.nameProperty().bind(Bindings.concat(data.getName()," / %",data.pieValueProperty().divide(finalTotal).multiply(100))));
+            moviesPerCategories.getData().addAll(pieChartData);
+            try {
+                timeManagerModel= new TimeManagerModel();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch ( IOException | CategoryException | MovieException e) {
             e.printStackTrace();
         }
         LocalDate firstDate = null;
