@@ -4,7 +4,6 @@ import be.CategoryMovie;
 import be.Movie;
 import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
-import dal.db.StatsDAO;
 import gui.Model.MovieModel;
 import gui.Model.TimeManagerModel;
 import gui.Model.VideoModel;
@@ -58,10 +57,7 @@ public class MainController implements Initializable {
     private TableView<Movie> tableMovie;
     @FXML
     private WebView trailerView;
-
-    private ChangeListener<Duration> progressListener;
     private MovieModel movieModel;
-    private TimeManagerModel timeManagerModel;
     Instant start;
 
     @Override
@@ -74,7 +70,6 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
-        VideoModel videoModel = new VideoModel();
         setUpTable();
 
         try {
@@ -130,7 +125,6 @@ public class MainController implements Initializable {
         rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
-        List<Movie> testMovie = movieModel.getAllMovies();
 
         tableMovie.setItems(movieModel.getAllMovies());
     }
@@ -212,7 +206,6 @@ public class MainController implements Initializable {
 
     public void displaySummary(MouseEvent mouseEvent) {
         txtSummary.getChildren().clear();
-        //System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
         try {
             Text summary = new Text(tableMovie.getSelectionModel().getSelectedItem().getSummary());
             txtSummary.getChildren().add(summary);
@@ -251,35 +244,24 @@ public class MainController implements Initializable {
             for (Movie mov : tableMovie.getItems()) {
                 boolean fullCheck = true;
                 for (Object cat : categoriesCheckComboBox.getCheckModel().getCheckedItems()) {
-                    cat = (CategoryMovie) cat;
+
                     if (mov.getMovieGenres().size() != categoriesCheckComboBox.getCheckModel().getCheckedItems().size()) {
                         fullCheck = false;
+                        break;
                     }
                     if (mov.getMovieGenres().get(((CategoryMovie) cat).getId()) == null) {
                         fullCheck = false;
+                        break;
                     }
                 }
                 if (!fullCheck) {
                     tmpMovies.add(mov);
                 }
-                fullCheck = true;
             }
             for (Movie mov : tmpMovies) {
                 tableMovie.getItems().remove(mov);
             }
             allMovies.addAll(tableMovie.getItems());
-            // tableMovie.setItems(allMovies);
-            keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) {
-                    ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
-                    for (Movie movie : allMovies) {
-                        if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
-                            moviesFiltered.add(movie);
-                    }
-                    tableMovie.setItems(moviesFiltered);
-                }
-            });
 
         } else {
             updateTableMovie();
@@ -287,19 +269,19 @@ public class MainController implements Initializable {
                 if (categoriesCheckComboBox.getCheckModel().isChecked(category))
                     categoriesCheckComboBox.getCheckModel().clearCheck(category);
                 allMovies.setAll(movieModel.getAllMovies());
-                keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent event) {
-                        ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
-                        for (Movie movie : allMovies) {
-                            if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
-                                moviesFiltered.add(movie);
-                        }
-                        tableMovie.setItems(moviesFiltered);
-                    }
-                });
             }
         }
+        keywordTextField.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
+                for (Movie movie : allMovies) {
+                    if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
+                        moviesFiltered.add(movie);
+                }
+                tableMovie.setItems(moviesFiltered);
+            }
+        });
     }
 
     public void setInstant(Instant start) {

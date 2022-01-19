@@ -74,7 +74,7 @@
       <Label layoutX="457.0" layoutY="523.0" text="Lowest rated movie:" textFill="WHITE" />
       <Label layoutX="457.0" layoutY="506.0" text="Highest rated movie:" textFill="WHITE" />
       <Label fx:id="moviesAvailable" layoutX="554.0" layoutY="465.0" text="00" textFill="WHITE" />
-      <Label fx:id="personalAverageRating" layoutX="788.0" layoutY="465.0" text="00" textFill="WHITE" />
+      <Label fx:id="personalAverageRating" layoutX="790.0" layoutY="465.0" text="00" textFill="WHITE" />
       <Label fx:id="ImdbAverageRating" layoutX="772.0" layoutY="483.0" text="00" textFill="WHITE" />
       <Label fx:id="highestRatedMovie" layoutX="572.0" layoutY="506.0" text="Not available unless you select a category" textFill="WHITE" />
       <Label fx:id="lowestRatedMovie" layoutX="572.0" layoutY="523.0" text="Nont available unless you select a category" textFill="WHITE" />
