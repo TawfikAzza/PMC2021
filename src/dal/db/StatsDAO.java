@@ -39,7 +39,7 @@ public class StatsDAO implements IStatsDAO {
             preparedStatement.execute();
             ResultSet resultSet= preparedStatement.getResultSet();
             while (resultSet.next()){
-                allStats.add(new Stats(resultSet.getInt("movies"),resultSet.getLong("elipsedTime"),resultSet.getDate("lastConnection")));
+                allStats.add(new Stats(resultSet.getInt("movies"),resultSet.getLong("elapsedTime"),resultSet.getDate("lastConnection")));
             }
         }
         return allStats;
@@ -47,7 +47,7 @@ public class StatsDAO implements IStatsDAO {
 
     @Override
     public void updateTime(long seconds) throws SQLException {
-        String sql = "UPDATE Stats SET elipsedTime=elipsedTime+? WHERE ID= (SELECT MAX(id) FROM Stats)";
+        String sql = "UPDATE Stats SET elapsedTime=elapsedTime+? WHERE ID= (SELECT MAX(id) FROM Stats)";
         try (Connection connection= connectionManager.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1,seconds);
