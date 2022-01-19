@@ -290,9 +290,6 @@ public class MainController implements Initializable {
         tableMovie.getItems().clear();
         tableMovie.setItems(movieModel.getAllMovies());
         if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()) {
-           /* for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
-                allMovies.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
-            */
             List<Movie> tmpMovies = new ArrayList<>();
             for(Movie mov: tableMovie.getItems()) {
                 boolean fullCheck= true;
