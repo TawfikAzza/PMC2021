@@ -33,20 +33,37 @@ public class OutdatedMoviesController implements Initializable {
     @FXML
     private TableColumn<Movie, String> title, lastview;
     @FXML
-    private Button cancelButton,nextButton, deleteBtn;
+    private Button cancelButton, nextButton;
 
-    public OutdatedMoviesModel outdatedMoviesModel;
-    public MovieModel movieModel;
+    private OutdatedMoviesModel outdatedMoviesModel;
+    private MovieModel movieModel;
 
-    public OutdatedMoviesController() throws IOException {
-        outdatedMoviesModel = new OutdatedMoviesModel();
-        movieModel = new MovieModel();
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            outdatedMoviesModel = new OutdatedMoviesModel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            movieModel = new MovieModel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        nextButton.setDisable(true);
+        nextButton.setVisible(false);
+        pane.getStylesheets().add(getClass().getResource("/css/outdated.css").toExternalForm());
+        populateTableView();
+
     }
 
     public void deleteMovie(ActionEvent actionEvent) throws MovieException, IOException {
         if (moviesTableView.getSelectionModel().getSelectedIndex() != -1) {
             movieModel.deleteMovie(moviesTableView.getSelectionModel().getSelectedItem());
             moviesTableView.getItems().remove(moviesTableView.getSelectionModel().getSelectedIndex());
+            switchButtons();
         }
         if (moviesTableView.getItems().isEmpty()) {
             {
@@ -88,8 +105,6 @@ public class OutdatedMoviesController implements Initializable {
             stage.setResizable(false);
             stage.show();
         }
-
-
     }
 
     public void next(ActionEvent actionEvent) throws IOException {
@@ -109,12 +124,6 @@ public class OutdatedMoviesController implements Initializable {
         stage.show();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        pane.getStylesheets().add(getClass().getResource("/css/outdated.css").toExternalForm());
-        populateTableView();
-    }
-
     private void populateTableView() {
         title.setCellValueFactory(new PropertyValueFactory<>("name"));
         lastview.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
@@ -122,5 +131,12 @@ public class OutdatedMoviesController implements Initializable {
             moviesTableView.getItems().setAll(outdatedMoviesModel.getAllOutdatedMovies());
         } catch (SQLException ignored) {
         }
+    }
+
+    private void switchButtons() {
+        nextButton.setDisable(false);
+        nextButton.setVisible(true);
+        cancelButton.setDisable(true);
+        cancelButton.setVisible(false);
     }
 }

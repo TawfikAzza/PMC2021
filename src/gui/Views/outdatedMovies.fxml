@@ -16,8 +16,8 @@
         </columns>
       </TableView>
       <Button fx:id="deleteBtn" layoutX="373.0" layoutY="126.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="34.0" prefWidth="91.0" text="Delete" />
-      <Button fx:id="cancelButton" layoutX="373.0" layoutY="343.0" mnemonicParsing="false" onAction="#openMainWindow" prefHeight="34.0" prefWidth="91.0" text="Go to PMC" />
-      <Button fx:id="nextButton" layoutX="373.0" layoutY="387.0" mnemonicParsing="false" onAction="#next" prefHeight="34.0" prefWidth="91.0" text="Skip" />
+      <Button fx:id="cancelButton" layoutX="373.0" layoutY="343.0" mnemonicParsing="false" onAction="#openMainWindow" prefHeight="34.0" prefWidth="91.0" text="Skip" />
+      <Button fx:id="nextButton" layoutX="373.0" layoutY="387.0" mnemonicParsing="false" onAction="#next" prefHeight="34.0" prefWidth="91.0" text="Go to PMCGo to PMC" />
       <Text fx:id="txt" layoutX="72.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to you private movie collection!">
          <effect>
             <Glow level="0.5" />
