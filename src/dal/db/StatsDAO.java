@@ -18,7 +18,7 @@ public class StatsDAO implements IStatsDAO {
 
     @Override
     public void newTime(int movies, long seconds) throws SQLException {
-        String sql = "INSERT INTO ElipsedTime VALUES (?,?,getDate())";
+        String sql = "INSERT INTO Stats VALUES (?,?,getDate())";
         try (Connection connection= connectionManager.getConnection()){
             PreparedStatement preparedStatement= connection.prepareStatement(sql);
             preparedStatement.setInt(1,movies);
@@ -31,7 +31,7 @@ public class StatsDAO implements IStatsDAO {
     public List<Stats> getAllStats(LocalDate firstDate, LocalDate secondDate) throws SQLException{
         List<Stats>allStats= new ArrayList<>();
 
-        String sql="SELECT * FROM ElipsedTime WHERE lastConnection BETWEEN ? AND ?";
+        String sql="SELECT * FROM Stats WHERE lastConnection BETWEEN ? AND ?";
         try (Connection connection= connectionManager.getConnection()){
             PreparedStatement preparedStatement= connection.prepareStatement(sql);
             preparedStatement.setDate(1, Date.valueOf(firstDate));
@@ -47,7 +47,7 @@ public class StatsDAO implements IStatsDAO {
 
     @Override
     public void updateTime(long seconds) throws SQLException {
-        String sql = "UPDATE ElipsedTime SET elipsedTime=elipsedTime+? WHERE ID= (SELECT MAX(id) FROM ElipsedTime)";
+        String sql = "UPDATE Stats SET elipsedTime=elipsedTime+? WHERE ID= (SELECT MAX(id) FROM Stats)";
         try (Connection connection= connectionManager.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1,seconds);
@@ -57,7 +57,7 @@ public class StatsDAO implements IStatsDAO {
 
     @Override
     public void updateMovies() throws SQLException {
-        String sql = "UPDATE ElipsedTime SET movies=movies+1 WHERE ID= (SELECT MAX(id) FROM ElipsedTime)";
+        String sql = "UPDATE Stats SET movies=movies+1 WHERE ID= (SELECT MAX(id) FROM Stats)";
         try (Connection connection= connectionManager.getConnection()){
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
@@ -67,7 +67,7 @@ public class StatsDAO implements IStatsDAO {
     @Override
     public java.util.Date getFirstDate() throws SQLException {
         Date firstDate=null;
-        String sql= "SELECT TOP 1 * FROM ElipsedTime";
+        String sql= "SELECT TOP 1 * FROM Stats";
         try (Connection connection= connectionManager.getConnection()){
             Statement statement = connection.createStatement();
             statement.execute(sql);
