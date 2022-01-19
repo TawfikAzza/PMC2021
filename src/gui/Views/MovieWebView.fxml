@@ -11,7 +11,7 @@
    <children>
       <WebView fx:id="movieView" layoutX="20.0" layoutY="23.0" prefHeight="419.0" prefWidth="779.0" />
       <Button layoutX="693.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleFoundMovie" text="Found Movie" />
-      <Button layoutX="45.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+      <Button fx:id="cancelBtn" layoutX="45.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
       <Text fx:id="txt1" fill="WHITE" layoutX="45.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Choose by clicking the movie that corresponds better with the movie you're trying to add/edit" wrappingWidth="754.4949493408203">
          <font>
             <Font size="14.0" />

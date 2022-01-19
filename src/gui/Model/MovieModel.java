@@ -57,4 +57,7 @@ public class MovieModel {
     public void updateLastView(Movie selectedItem) throws SQLException {
         pmcFacade.updateLastView(selectedItem);
     }
+    public void updateMovies() throws SQLException {
+        pmcFacade.updateMovies();
+    }
 }

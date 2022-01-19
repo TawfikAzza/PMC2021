@@ -6,6 +6,7 @@ import bll.exceptions.CategoryException;
 import bll.exceptions.MovieException;
 import dal.db.StatsDAO;
 import gui.Model.MovieModel;
+import gui.Model.TimeManagerModel;
 import gui.Model.VideoModel;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -19,11 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.image.Image;
-
 import javafx.scene.control.cell.TextFieldTableCell;
-
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -44,7 +42,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    public CheckComboBox<Object> categoriesCheckComboBox;
+    @FXML
+    private CheckComboBox<Object> categoriesCheckComboBox;
     @FXML
     public Button searchButton;
     @FXML
@@ -62,11 +61,8 @@ public class MainController implements Initializable {
 
     private ChangeListener<Duration> progressListener;
     private MovieModel movieModel;
+    private TimeManagerModel timeManagerModel;
     Instant start;
-    StatsDAO timeDAO= new StatsDAO();
-
-    public MainController() throws IOException {
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,60 +89,21 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
-        ObservableList<Movie>allMovies=FXCollections.observableArrayList();
+        ObservableList<Movie> allMovies = FXCollections.observableArrayList();
         try {
             allMovies.setAll(movieModel.getAllMovies());
         } catch (MovieException e) {
             e.printStackTrace();
         }
-        keywordTextField.setOnKeyPressed(event -> {
-            ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
-            for (Movie movie:allMovies){
-                    if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
-                        moviesFiltered.add(movie);
-            }
-            tableMovie.setItems(moviesFiltered);
-        });
-
-        /*** Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Movie> filteredData;
-        filteredData = new FilteredList<>(tableMovie.getItems(), b -> true);
-
-        // 2. Set the filter Predicate whenever the filter changes.
-        FilteredList<Movie> finalFilteredData = filteredData;
-        keywordTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            finalFilteredData.setPredicate(movie -> {
-                // If filter text is empty, display all persons.
-
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (movie.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else return false;
-            });
-        });
-
-        // 3. Wrap the FilteredList in a SortedList.
-
-        SortedList<Movie> sortedData = new SortedList<>(filteredData);
-
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        //    Otherwise, sorting the TableView would have no effect.
-        sortedData.comparatorProperty().bind(tableMovie.comparatorProperty());
-
-        // 5. Add sorted (and filtered) data to the table.
-        tableMovie.setItems(sortedData);*/
+        addFilter(allMovies);
     }
 
     private void setUpTable() {
         tableMovie.setEditable(true);
         title.setCellFactory(TextFieldTableCell.forTableColumn());
-        title.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movie,String>>() {
+        title.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movie, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Movie,String> event) {
+            public void handle(TableColumn.CellEditEvent<Movie, String> event) {
                 Movie movie = event.getRowValue();
                 movie.setName(event.getNewValue());
                 try {
@@ -159,8 +116,6 @@ public class MainController implements Initializable {
                 }
             }
         });
-
-
     }
 
     @FXML
@@ -176,7 +131,6 @@ public class MainController implements Initializable {
         imdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         lastViewed.setCellValueFactory(new PropertyValueFactory<>("lastWatched"));
         List<Movie> testMovie = movieModel.getAllMovies();
-
 
         tableMovie.setItems(movieModel.getAllMovies());
     }
@@ -246,7 +200,7 @@ public class MainController implements Initializable {
             updateTableMovie();
             try {
                 movieModel.playMovie(movie);
-                timeDAO.updateMovies();
+                movieModel.updateMovies();
             } catch (IllegalArgumentException iae) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error window");
@@ -259,8 +213,11 @@ public class MainController implements Initializable {
     public void displaySummary(MouseEvent mouseEvent) {
         txtSummary.getChildren().clear();
         //System.out.println(tableMovie.getSelectionModel().getSelectedItem().getSummary());
-        Text summary = new Text(tableMovie.getSelectionModel().getSelectedItem().getSummary());
-        txtSummary.getChildren().add(summary);
+        try {
+            Text summary = new Text(tableMovie.getSelectionModel().getSelectedItem().getSummary());
+            txtSummary.getChildren().add(summary);
+        } catch (NullPointerException ignored) {
+        }
     }
 
 
@@ -269,7 +226,7 @@ public class MainController implements Initializable {
         loader.setLocation(getClass().getClassLoader().getResource("gui/Views/Stats.fxml"));
         Parent root;
         root = loader.load();
-        TimeManagerController timeManagerController= loader.getController();
+        TimeManagerController timeManagerController = loader.getController();
         timeManagerController.setInstant(start);
         Stage stage = new Stage();
         stage.setTitle("Stats");
@@ -291,32 +248,32 @@ public class MainController implements Initializable {
         tableMovie.setItems(movieModel.getAllMovies());
         if (!categoriesCheckComboBox.getCheckModel().getCheckedItems().isEmpty()) {
             List<Movie> tmpMovies = new ArrayList<>();
-            for(Movie mov: tableMovie.getItems()) {
-                boolean fullCheck= true;
-                 for(Object cat: categoriesCheckComboBox.getCheckModel().getCheckedItems()){
-                        cat = (CategoryMovie) cat;
-                        if(mov.getMovieGenres().size()!=categoriesCheckComboBox.getCheckModel().getCheckedItems().size()) {
-                            fullCheck=false;
-                        }
-                        if(mov.getMovieGenres().get(((CategoryMovie) cat).getId())==null) {
-                            fullCheck= false;
-                        }
-                 }
-                 if(!fullCheck) {
-                     tmpMovies.add(mov);
-                 }
-                 fullCheck=true;
+            for (Movie mov : tableMovie.getItems()) {
+                boolean fullCheck = true;
+                for (Object cat : categoriesCheckComboBox.getCheckModel().getCheckedItems()) {
+                    cat = (CategoryMovie) cat;
+                    if (mov.getMovieGenres().size() != categoriesCheckComboBox.getCheckModel().getCheckedItems().size()) {
+                        fullCheck = false;
+                    }
+                    if (mov.getMovieGenres().get(((CategoryMovie) cat).getId()) == null) {
+                        fullCheck = false;
+                    }
+                }
+                if (!fullCheck) {
+                    tmpMovies.add(mov);
+                }
+                fullCheck = true;
             }
-            for(Movie mov:tmpMovies) {
+            for (Movie mov : tmpMovies) {
                 tableMovie.getItems().remove(mov);
             }
             allMovies.addAll(tableMovie.getItems());
-           // tableMovie.setItems(allMovies);
+            // tableMovie.setItems(allMovies);
             keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
-                    ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
-                    for (Movie movie:allMovies){
+                    ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
+                    for (Movie movie : allMovies) {
                         if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
                             moviesFiltered.add(movie);
                     }
@@ -333,8 +290,8 @@ public class MainController implements Initializable {
                 keywordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
-                        ObservableList<Movie>moviesFiltered=FXCollections.observableArrayList();
-                        for (Movie movie:allMovies){
+                        ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
+                        for (Movie movie : allMovies) {
                             if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
                                 moviesFiltered.add(movie);
                         }
@@ -343,29 +300,25 @@ public class MainController implements Initializable {
                 });
             }
         }
-
-
     }
 
     public void setInstant(Instant start) {
-        this.start=start;
+        this.start = start;
     }
 
-    /***public void search(ActionEvent actionEvent) throws MovieException, SQLException {
-        ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
-        ObservableList<Movie> moviesBeforeFilter = FXCollections.observableArrayList();
-        moviesBeforeFilter.setAll(tableMovie.getItems());
-        if (!keywordTextField.getText().isEmpty()) {
-            for (Movie movie : tableMovie.getItems()) {
-                if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase()))
+    private void addFilter(ObservableList<Movie> allMovies) {
+        keywordTextField.setOnKeyTyped(event -> {
+            ObservableList<Movie> moviesFiltered = FXCollections.observableArrayList();
+            for (Movie movie : allMovies) {
+                if (movie.getName().toLowerCase().contains(keywordTextField.getText().toLowerCase())) {
                     moviesFiltered.add(movie);
+                }
+
             }
             tableMovie.setItems(moviesFiltered);
-        } else {
-            for (Object category : categoriesCheckComboBox.getCheckModel().getCheckedItems())
-                moviesFiltered.addAll(movieModel.allMoviesCategory((CategoryMovie) category));
-            tableMovie.setItems(moviesFiltered);
-        }*/
+        });
+
     }
+}
 
 

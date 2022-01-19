@@ -37,8 +37,6 @@ public class ManageMovieController implements Initializable {
     private ListView<CategoryMovie> listCategory, movieCategory;
     @FXML
     private Button cancelBtn, confirmBtn;
-    @FXML
-    private Label commentsTxt,trailerTxt,movieTxt,ratingTxt,imdbTxt,titleTxt,topTxt,topTxt1,topTxt2;
 
     private Boolean newMovie = true;
     private MainController mainController;
@@ -91,7 +89,7 @@ public class ManageMovieController implements Initializable {
 
 
     public void removeCategory(ActionEvent actionEvent) throws CategoryException {
-        if(movieCategory.getSelectionModel().getSelectedIndex()!=-1){
+        if (movieCategory.getSelectionModel().getSelectedIndex() != -1) {
             listCategory.getItems().add(movieCategory.getSelectionModel().getSelectedItem());
             movieCategory.getItems().remove(movieCategory.getSelectionModel().getSelectedItem());
         }
@@ -272,8 +270,8 @@ public class ManageMovieController implements Initializable {
     }
 
 
-    public void deleteCategory(ActionEvent actionEvent) throws  CategoryException {
-        if(listCategory.getSelectionModel().getSelectedIndex()!=-1) {
+    public void deleteCategory(ActionEvent actionEvent) throws CategoryException {
+        if (listCategory.getSelectionModel().getSelectedIndex() != -1) {
             categoryModel.removeCategory(listCategory.getSelectionModel().getSelectedItem());
             categoryModel.deleteCategory(listCategory.getSelectionModel().getSelectedItem());
             listCategory.getItems().remove(listCategory.getSelectionModel().getSelectedIndex());
@@ -302,17 +300,14 @@ public class ManageMovieController implements Initializable {
         controller.loadPage("https://www.imdb.com/find?q=" + txtTitle.getText() + "&ref_=nv_sr_sm");
         controller.provideController(this);
         stage.show();
-
-
     }
 
     public void fillFields(IMDBScraper scraper) {
-        try{
+        try {
             txtTitle.setText(scraper.extractTitle());
             txtSummary.setText(scraper.extractPlot());
             txtImdb.setText(scraper.extractRating());
-        }
-        catch (IndexOutOfBoundsException i){
+        } catch (IndexOutOfBoundsException i) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error window");
             alert.setHeaderText("Some information about this movie could not be accessed");

@@ -27,8 +27,8 @@ public class ManageCategoryController implements Initializable {
     private CategoryMovie currentCategory;
     private String operationType;
     private CategoryModel categoryModel;
-    ManageMovieController manageMovieController;
-    MainController mainController;
+    private ManageMovieController manageMovieController;
+    private MainController mainController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -169,6 +169,5 @@ public class ManageCategoryController implements Initializable {
         new_editLabel.setText("Edit existing category");
         currentCategory=selectedItem;
         newCatName.setText(selectedItem.getName());
-
     }
 }

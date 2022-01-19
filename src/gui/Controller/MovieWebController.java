@@ -3,7 +3,9 @@ package gui.Controller;
 import bll.utils.IMDBScraper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -11,18 +13,14 @@ import java.io.IOException;
 
 public class MovieWebController {
 
-    @FXML
-    private Text txt1;
-
-    @FXML
-    private Text txt2;
-
     public WebView movieView;
+    @FXML
+    private Button cancelBtn;
     ManageMovieController manageMovieController;
 
     public void handleFoundMovie(ActionEvent actionEvent) throws IOException {
         String url = movieView.getEngine().getLocation();
-        if (url.contains("https://www.imdb.com/title/tt")){
+        if (url.contains("https://www.imdb.com/title/tt")) {
             IMDBScraper scraper = new IMDBScraper(url);
             manageMovieController.fillFields(scraper);
             Stage stage = ((Stage) movieView.getParent().getScene().getWindow());
@@ -31,6 +29,15 @@ public class MovieWebController {
     }
 
     public void handleCancel(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Alert window");
+        alert.setHeaderText("Are you sure you want to close the window ?");
+
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            Stage stage = (Stage) cancelBtn.getScene().getWindow();
+            stage.close();
+        }
     }
 
     public void provideController(ManageMovieController manageMovieController) {
