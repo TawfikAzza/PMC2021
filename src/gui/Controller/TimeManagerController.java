@@ -192,6 +192,10 @@ public class TimeManagerController implements Initializable {
 
     }
 
+    /**
+     * Disable dates previous to when the user starts using the program and future dates.
+     * @param datePicker
+     */
     private void setLimitsDatePicker(DatePicker datePicker) {
         LocalDate firstDate = null;
         try {
