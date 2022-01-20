@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="166.0" prefWidth="320.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.ManageCategoryController">
+<AnchorPane fx:id="pane" prefHeight="166.0" prefWidth="320.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.ManageCategoryController">
    <children>
       <TextField fx:id="newCatName" layoutX="60.0" layoutY="62.0" prefHeight="26.0" prefWidth="241.0" />
-      <Button fx:id="acceptBtn" layoutX="260.0" layoutY="125.0" mnemonicParsing="false" onAction="#createCategory" onMouseEntered="#acceptBtnE" onMouseExited="#acceptBtnX" prefHeight="27.0" prefWidth="28.0" style="-fx-background-color: #282828;" />
-      <Button fx:id="closeBtn" layoutX="14.0" layoutY="125.0" mnemonicParsing="false" onAction="#closeWindow" onMouseEntered="#cancelBtnE" onMouseExited="#cancelBtnX" prefHeight="27.0" prefWidth="28.0" style="-fx-background-color: #282828;" />
+      <Button fx:id="acceptBtn" layoutX="233.0" layoutY="125.0" mnemonicParsing="false" onAction="#createCategory" prefHeight="27.0" prefWidth="68.0" text="Accept" />
+      <Button fx:id="closeBtn" layoutX="14.0" layoutY="125.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="27.0" prefWidth="68.0" text="Cancel" />
       <Label layoutX="14.0" layoutY="67.0" text="Name:" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />

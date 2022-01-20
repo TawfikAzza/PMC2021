@@ -7,12 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +21,9 @@ public class ManageCategoryController implements Initializable {
     private Button acceptBtn,closeBtn;
     @FXML
     private TextField newCatName;
+
+    @FXML
+    private AnchorPane pane;
     private CategoryMovie currentCategory;
     private String operationType;
     private CategoryModel categoryModel;
@@ -32,13 +32,13 @@ public class ManageCategoryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        pane.getStylesheets().add(getClass().getResource("/css/categories.css").toExternalForm());
         try {
             categoryModel = new CategoryModel();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        initButtons();
     }
 
     public void createCategory(ActionEvent actionEvent)  {
@@ -82,66 +82,6 @@ public class ManageCategoryController implements Initializable {
             Stage stage = (Stage) closeBtn.getScene().getWindow();
             stage.close();
         }
-    }
-
-    public void initButtons(){
-        setAcceptBtn();
-        setCancelBtn();
-    }
-
-    public void setCancelBtn(){
-        File file = new File("data/cancelPMC.png");
-        Image img = new Image(file.toURI().toString());
-        ImageView iv = new ImageView(img);
-        iv.setFitWidth(35);
-        iv.setFitHeight(35);
-        closeBtn.setGraphic(iv);
-    }
-
-    public void setCancelAnim(){
-        File file = new File("data/cancel2PMC.png");
-        Image img = new Image(file.toURI().toString());
-        ImageView iv = new ImageView(img);
-        iv.setFitWidth(35);
-        iv.setFitHeight(35);
-        closeBtn.setGraphic(iv);
-    }
-
-    public void setAcceptBtn(){
-        File file = new File("data/acceptPMC.png");
-        Image img = new Image(file.toURI().toString());
-        ImageView iv = new ImageView(img);
-        iv.setFitWidth(35);
-        iv.setFitHeight(35);
-        acceptBtn.setGraphic(iv);
-    }
-
-    public void setAcceptAnim(){
-        File file = new File("data/accept2PMC.png");
-        Image img = new Image(file.toURI().toString());
-        ImageView iv = new ImageView(img);
-        iv.setFitWidth(35);
-        iv.setFitHeight(35);
-        acceptBtn.setGraphic(iv);
-    }
-    @FXML
-    void acceptBtnE(MouseEvent event) {
-        setAcceptAnim();
-    }
-
-    @FXML
-    void acceptBtnX(MouseEvent event) {
-        setAcceptBtn();
-    }
-
-    @FXML
-    void cancelBtnE(MouseEvent event) {
-        setCancelAnim();
-    }
-
-    @FXML
-    void cancelBtnX(MouseEvent event) {
-        setCancelBtn();
     }
 
     public void closeWindow(ActionEvent actionEvent) {

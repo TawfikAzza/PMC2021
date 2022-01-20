@@ -1,0 +1,20 @@
+#acceptBtn{
+    -fx-font-size: 12.5;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#acceptBtn:hover{
+    -fx-font-size: 12;
+    -fx-background-color: #9E9E9E;
+}
+#closeBtn{
+    -fx-font-size: 12.5;
+    -fx-font-weight: bold;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+#closeBtn:hover{
+    -fx-font-size: 12;
+    -fx-background-color: #9E9E9E;
+}
